@@ -115,8 +115,8 @@ class User extends REST_Controller {
 	public function login_post() {
 		
 		// set validation rules
-		$this->form_validation->set_rules('username', 'Username', 'required|alpha_numeric');
-		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('user_email', 'E-mail', 'required|alpha_numeric');
+		$this->form_validation->set_rules('user_password', 'Senha', 'required');
 		
 		if ($this->form_validation->run() == false) {
 			
@@ -126,37 +126,37 @@ class User extends REST_Controller {
 		} else {
 			
 			// set variables from the form
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
+			$user_email = $this->input->post('user_email');
+			$user_password = $this->input->post('user_password');
 			
-			if ($this->user_model->resolve_user_login($username, $password)) {
+			if ($this->user_model->resolve_user_login($user_email, $user_password)) {
 				
-				$user_id = $this->user_model->get_user_id_from_username($username);
+				$user_id = $this->user_model->get_user_id_from_username($user_email);
 				$user    = $this->user_model->get_user($user_id);
 				
 				// set session user datas
 				$_SESSION['user_id']      = (int)$user->id;
-				$_SESSION['username']     = (string)$user->username;
+				$_SESSION['user_email']     = (string)$user->user_email;
 				$_SESSION['logged_in']    = (bool)true;
-				$_SESSION['is_confirmed'] = (bool)$user->is_confirmed;
-				$_SESSION['is_admin']     = (bool)$user->is_admin;
+				// $_SESSION['is_confirmed'] = (bool)$user->is_confirmed;
+				// $_SESSION['is_admin']     = (bool)$user->is_admin;
 				
 				// user login ok
                 $token_data['uid'] = $user_id;
-                $token_data['username'] = $user->username; 
+                $token_data['user_email'] = $user->user_email; 
                 $tokenData = $this->authorization_token->generateToken($token_data);
                 $final = array();
                 $final['access_token'] = $tokenData;
                 $final['status'] = true;
-                $final['message'] = 'Login success!';
-                $final['note'] = 'You are now logged in.';
+                $final['message'] = 'Logado com sucesso!';
+                $final['note'] = 'Você está logado.';
 
                 $this->response($final, REST_Controller::HTTP_OK); 
 				
 			} else {
 				
 				// login failed
-                $this->response(['Wrong username or password.'], REST_Controller::HTTP_OK);
+                $this->response(['E-mail ou senha estão incorretos .'], REST_Controller::HTTP_OK);
 				
 			}
 			
