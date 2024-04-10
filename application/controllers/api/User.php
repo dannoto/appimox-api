@@ -155,8 +155,11 @@ class User extends REST_Controller {
 				
 			} else {
 				
+				$final['status'] = false;
+                $final['message'] = 'E-mail ou senha estão incorretos.';
+                $final['note'] = 'E-mail ou senha estão incorretos.';
 				// login failed
-                $this->response(['E-mail ou senha estão incorretos .'], REST_Controller::HTTP_OK);
+                $this->response([$final], REST_Controller::HTTP_OK);
 				
 			}
 			
