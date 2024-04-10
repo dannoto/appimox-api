@@ -115,7 +115,7 @@ class User extends REST_Controller {
 	public function login_post() {
 		
 		// set validation rules
-		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|alpha_numeric|valid_email');
+		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
 		$this->form_validation->set_rules('user_password', 'Senha', 'trim|required');
 		
 		if ($this->form_validation->run() == false) {
