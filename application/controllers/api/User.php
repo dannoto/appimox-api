@@ -129,9 +129,9 @@ class User extends REST_Controller {
 			$user_email = $this->input->post('user_email');
 			$user_password = $this->input->post('user_password');
 			
-			if ($this->user_model->resolve_user_login($user_email, $user_password)) {
+			if ($this->user_model->auth($user_email, $user_password)) {
 				
-				$user_id = $this->user_model->get_user_id_from_username($user_email);
+				$user_id = $this->user_model->get_user_id_from_email($user_email);
 				$user    = $this->user_model->get_user($user_id);
 				
 				// set session user datas
