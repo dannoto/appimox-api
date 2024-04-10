@@ -119,7 +119,7 @@ class User extends REST_Controller {
 		$this->form_validation->set_rules('user_password', 'Senha', 'trim|required');
 		
 		if ($this->form_validation->run() == false) {
-			
+			log_message('error', validation_errors());
 			// validation not ok, send validation errors to the view
             $this->response(['Validation rules violated'], REST_Controller::HTTP_OK);
 
