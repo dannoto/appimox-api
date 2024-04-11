@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /* On your database, open a SQL terminal paste this and execute: */
 // CREATE TABLE IF NOT EXISTS `users` (
@@ -29,10 +29,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @extends REST_Controller
  */
-    require(APPPATH.'/libraries/REST_Controller.php');
-    use Restserver\Libraries\REST_Controller;
+require(APPPATH . '/libraries/REST_Controller.php');
 
-class User extends REST_Controller {
+use Restserver\Libraries\REST_Controller;
+
+class User extends REST_Controller
+{
 
 	/**
 	 * __construct function.
@@ -40,9 +42,10 @@ class User extends REST_Controller {
 	 * @access public
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
-        $this->load->library('Authorization_Token');
+		$this->load->library('Authorization_Token');
 		$this->load->model('user_model');
 	}
 
@@ -52,7 +55,8 @@ class User extends REST_Controller {
 	 * @access public
 	 * @return void
 	 */
-	public function register_post() {
+	public function register_post()
+	{
 
 		// set validation rules
 		$this->form_validation->set_rules('user_name', 'Nome do Usuário', 'trim|required|min_length[6]');
@@ -66,15 +70,14 @@ class User extends REST_Controller {
 		// $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
 		// $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]');
 		// $this->form_validation->set_rules('password_confirm', 'Confirm Password', 'trim|required|min_length[6]|matches[password]');
-		
+
 		if ($this->form_validation->run() === false) {
 			log_message('error', validation_errors());
 
 			// validation not ok, send validation errors to the view
-            $this->response([validation_errors()], REST_Controller::HTTP_OK);
-			
+			$this->response([validation_errors()], REST_Controller::HTTP_OK);
 		} else {
-			
+
 			// set variables from the form
 			$user_name = $this->input->post('user_name');
 			$user_email    = $this->input->post('user_email');
@@ -82,118 +85,117 @@ class User extends REST_Controller {
 			$user_auth_type = $this->input->post('user_auth_type');
 
 			if ($res = $this->user_model->add_user($user_name, $user_email, $user_password, $user_auth_type)) {
-				
+
 				// user creation ok
-                $token_data['uid'] = $res; 
-                $token_data['user_name'] = $user_name;
-                $tokenData = $this->authorization_token->generateToken($token_data);
-                $final = array();
-                $final['access_token'] = $tokenData;
-                $final['status'] = true;
-                $final['uid'] = $res;
-                $final['message'] = 'Obrigado por se registrar!';
-                $final['note'] = 'Sua conta foi criada com sucesso. Verifique seu e-mail para confirmar sua conta.';
+				$token_data['uid'] = $res;
+				$token_data['user_name'] = $user_name;
+				$tokenData = $this->authorization_token->generateToken($token_data);
+				$final = array();
+				$final['access_token'] = $tokenData;
+				$final['status'] = true;
+				$final['uid'] = $res;
+				$final['message'] = 'Obrigado por se registrar!';
+				$final['note'] = 'Sua conta foi criada com sucesso. Verifique seu e-mail para confirmar sua conta.';
 
-                $this->response($final, REST_Controller::HTTP_OK); 
-
+				$this->response($final, REST_Controller::HTTP_OK);
 			} else {
-				
+
 				// user creation failed, this should never happen
-                $this->response(['Houve um problema ao criar sua conta. Tente novamente.'], REST_Controller::HTTP_OK);
+				$this->response(['Houve um problema ao criar sua conta. Tente novamente.'], REST_Controller::HTTP_OK);
 			}
-			
 		}
-		
 	}
-		
+
 	/**
 	 * login function.
 	 * 
 	 * @access public
 	 * @return void
 	 */
-	public function login_post() {
-		
+	public function login_post()
+	{
+
 		// set validation rules
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
 		$this->form_validation->set_rules('user_password', 'Senha', 'trim|required');
-		
+
 		if ($this->form_validation->run() == false) {
 			log_message('error', validation_errors());
 			// validation not ok, send validation errors to the view
-            $this->response([validation_errors()], REST_Controller::HTTP_OK);
-
+			$this->response([validation_errors()], REST_Controller::HTTP_OK);
 		} else {
-			
+
 			// set variables from the form
 			$user_email = $this->input->post('user_email');
 			$user_password = $this->input->post('user_password');
-			
+
 			if ($this->user_model->auth($user_email, $user_password)) {
-				
+
 				$user_id = $this->user_model->get_user_id_from_email($user_email);
 				$user    = $this->user_model->get_user($user_id);
-				
+
 				// set session user datas
 				$_SESSION['user_id']      = (int)$user->id;
 				$_SESSION['user_email']     = (string)$user->user_email;
 				$_SESSION['logged_in']    = (bool)true;
 				// $_SESSION['is_confirmed'] = (bool)$user->is_confirmed;
 				// $_SESSION['is_admin']     = (bool)$user->is_admin;
-				
-				// user login ok
-                $token_data['uid'] = $user_id;
-                $token_data['user_email'] = $user->user_email; 
-                $tokenData = $this->authorization_token->generateToken($token_data);
-                $final = array();
-                $final['access_token'] = $tokenData;
-				$final['user_type'] = $user['user_type'];
-                $final['status'] = true;
-                $final['message'] = 'Logado com sucesso!';
-                $final['note'] = 'Você está logado.';
 
-                $this->response($final, REST_Controller::HTTP_OK); 
-				
+				// user login ok
+				$token_data['uid'] = $user_id;
+				$token_data['user_email'] = $user->user_email;
+				$tokenData = $this->authorization_token->generateToken($token_data);
+				$final = array();
+				$final['access_token'] = $tokenData;
+				$final['user_type'] = $user['user_type'];
+				$final['status'] = true;
+				$final['message'] = 'Logado com sucesso!';
+				$final['note'] = 'Você está logado.';
+
+				$this->response($final, REST_Controller::HTTP_OK);
 			} else {
-				
+
 				$final['status'] = false;
-                $final['message'] = 'E-mail ou senha estão incorretos.';
-                $final['note'] = 'E-mail ou senha estão incorretos.';
+				$final['message'] = 'E-mail ou senha estão incorretos.';
+				$final['note'] = 'E-mail ou senha estão incorretos.';
 				// login failed
-                $this->response($final, REST_Controller::HTTP_OK);
-				
+				$this->response($final, REST_Controller::HTTP_OK);
 			}
-			
 		}
-		
 	}
-	
+
 	/**
 	 * logout function.
 	 * 
 	 * @access public
 	 * @return void
 	 */
-	public function logout_post() {
+	public function logout_post()
+	{
 
 		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-			
+
 			// remove session datas
 			foreach ($_SESSION as $key => $value) {
 				unset($_SESSION[$key]);
 			}
-			
+
 			// user logout ok
-            $this->response(['Logout success!'], REST_Controller::HTTP_OK);
-			
+			$final['status'] = true;
+			$final['message'] = 'Deslogado com sucesso!.';
+			$final['note'] = 'Sessão foi resetada.';
+
+			$this->response(['Logout success!'], REST_Controller::HTTP_OK);
 		} else {
-			
+
 			// there user was not logged in, we cannot logged him out,
 			// redirect him to site root
 			// redirect('/');
-            $this->response(['There was a problem. Please try again.'], REST_Controller::HTTP_OK);	
+			$final['status'] = false;
+			$final['message'] = 'Não existe sessão ativa.';
+			$final['note'] = 'Usuário provavelmente já está deslogado.';
+
+			$this->response(['There was a problem. Please try again.'], REST_Controller::HTTP_OK);
 		}
-		
 	}
-	
 }
