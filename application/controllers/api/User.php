@@ -185,7 +185,7 @@ class User extends REST_Controller
 			$final['message'] = 'Deslogado com sucesso!.';
 			$final['note'] = 'Sessão foi resetada.';
 
-			$this->response(['Logout success!'], REST_Controller::HTTP_OK);
+			$this->response($final, REST_Controller::HTTP_OK);
 		} else {
 
 			// there user was not logged in, we cannot logged him out,
@@ -195,7 +195,7 @@ class User extends REST_Controller
 			$final['message'] = 'Não existe sessão ativa.';
 			$final['note'] = 'Usuário provavelmente já está deslogado.';
 
-			$this->response(['There was a problem. Please try again.'], REST_Controller::HTTP_OK);
+			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
 }
