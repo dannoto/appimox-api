@@ -147,7 +147,7 @@ class User extends REST_Controller
 				$tokenData = $this->authorization_token->generateToken($token_data);
 				$final = array();
 				$final['access_token'] = $tokenData;
-				$final['user_type'] = $user['user_type'];
+				$final['user_type'] = $user->user_type;
 				$final['status'] = true;
 				$final['message'] = 'Logado com sucesso!';
 				$final['note'] = 'Você está logado.';
