@@ -5,10 +5,15 @@ require(APPPATH . '/libraries/REST_Controller.php');
 
 use Restserver\Libraries\REST_Controller;
 
-class User extends REST_Controller
+class Property extends REST_Controller
 {
 
-
+	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -16,7 +21,12 @@ class User extends REST_Controller
 		$this->load->model('user_model');
 	}
 
-
+	/**
+	 * register function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function register_post()
 	{
 
@@ -40,6 +50,7 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+			
 		} else {
 
 			// set variables from the form
@@ -73,7 +84,12 @@ class User extends REST_Controller
 		}
 	}
 
-
+	/**
+	 * login function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function login_post()
 	{
 
@@ -129,7 +145,12 @@ class User extends REST_Controller
 		}
 	}
 
-
+	/**
+	 * logout function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function logout_post()
 	{
 
@@ -159,7 +180,12 @@ class User extends REST_Controller
 		}
 	}
 
-
+	/**
+	 * recovery e-mail  function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function recovery_post()
 	{
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
@@ -203,105 +229,5 @@ class User extends REST_Controller
 				$this->response($final, REST_Controller::HTTP_OK);
 			}
 		}
-	}
-
-
-	public function preferences_post()
-	{
-		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
-
-		if ($this->form_validation->run() == false) {
-
-			$final['status'] = false;
-			$final['message'] = validation_errors();
-			$final['note'] = 'Erro no formulário.';
-
-			$this->response($final, REST_Controller::HTTP_OK);
-		} else {
-
-			// set variables from the form
-			$user_email = $this->input->post('user_email');
-
-			if ($res = $this->user_model->get_user_id_from_email($user_email)) {
-
-
-				if ($this->email_model->send_user_recovery($user_email)) {
-
-					$final['status'] = true;
-					$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
-					$final['note'] = 'O e-mail foi encontrado em get_user_id_from_email()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-				} else {
-
-					$final['status'] = false;
-					$final['message'] = 'Houve um erro ao enviar email. Tente novamente.';
-					$final['note'] = 'Erro em send_user_recovery()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-				}
-			} else {
-
-				$final['status'] = true;
-				$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
-				$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
-				// login failed
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
-		}
-	}
-
-	public function preferences_get()
-	{
-
-		$headers = $this->input->request_headers();
-
-		if (isset($headers['Authorization'])) {
-
-			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-
-			if ($decodedToken['status']) {
-
-				$db_preferences =  $this->user_model->get_db_preferences();
-				// ------- Main Logic part -------
-				if ($db_preferences) {
-
-					$final['status'] = true;
-					$final['message'] = 'Preferencias encontradas com sucesso.';
-					$final['response'] = $db_preferences;
-					$final['note'] = 'Dados encontrados get_db_preferences()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-
-				} else {
-
-					$final['status'] = false;
-					$final['message'] = 'Nenhuma preferência encontrada.';
-					$final['note'] = 'Erro em get_db_preferences()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-
-				}
-				// ------------- End -------------
-			} else {
-
-				$final['status'] = false;
-				$final['message'] = 'Sua sessão expirou.';
-				$final['note'] = 'Erro em $decodedToken["status"]';
-
-				$this->response($decodedToken);
-			}
-
-		} else {
-
-			$final['status'] = false;
-			$final['message'] = 'Falha na autenticação.';
-			$final['note'] = 'Erro em validateToken()';
-
-			$this->response($final, REST_Controller::HTTP_OK);
-		}
-
-
-	
 	}
 }
