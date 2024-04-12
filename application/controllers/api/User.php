@@ -14,6 +14,8 @@ class User extends REST_Controller
 		parent::__construct();
 		$this->load->library('Authorization_Token');
 		$this->load->model('user_model');
+		$this->load->model('email_model');
+
 	}
 
 
@@ -194,6 +196,7 @@ class User extends REST_Controller
 
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
+
 			} else {
 
 				$final['status'] = true;
