@@ -28,6 +28,7 @@ class User extends REST_Controller
 
 		$this->form_validation->set_rules('user_password', 'Senha', 'trim|required|min_length[6]');
 		$this->form_validation->set_rules('user_password_confirm', 'Confirmação de Senha', 'trim|required|min_length[6]|matches[user_password]');
+		$this->form_validation->set_rules('user_auth_type', 'Tipo de Cadastro', 'trim|required');
 
 		// $this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|min_length[4]|is_unique[users.username]', array('is_unique' => 'This username already exists. Please choose another one.'));
 		// $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
@@ -48,8 +49,9 @@ class User extends REST_Controller
 			$user_name = $this->input->post('user_name');
 			$user_email    = $this->input->post('user_email');
 			$user_password = $this->input->post('user_password');
+			$user_auth_type = $this->input->post('user_auth_type');
 
-			if ($res = $this->user_model->add_user($user_name, $user_email, $user_password)) {
+			if ($res = $this->user_model->add_user($user_name, $user_email, $user_password, $user_auth_type)) {
 
 				// user creation ok
 				$token_data['uid'] = $res;
@@ -59,7 +61,7 @@ class User extends REST_Controller
 				$final['access_token'] = $tokenData;
 				$final['status'] = true;
 				$final['uid'] = $res;
-				$final['message'] = 'Obrigado por se registrar!';
+				$final['message'] = 'Conta criada com sucesso!';
 				$final['note'] = 'Sua conta foi criada com sucesso. Verifique seu e-mail para confirmar sua conta.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
@@ -67,7 +69,7 @@ class User extends REST_Controller
 
 				$final['status'] = false;
 				$final['message'] = 'Houve um problema ao criar sua conta. Tente novamente.';
-				$final['note'] = 'Houve um problema ao adicionar usuário ao banco.';
+				$final['note'] = 'Houve um problema em add_user().';
 
 				// user creation failed, this should never happen
 				$this->response($final, REST_Controller::HTTP_OK);
@@ -184,7 +186,7 @@ class User extends REST_Controller
 				if ($this->email_model->send_user_recovery($user_email)) {
 
 					$final['status'] = true;
-					$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
+					$final['message'] = 'Se existir o e-mail, você receberá um link para alterar sua senha.';
 					$final['note'] = 'O e-mail foi encontrado em get_user_id_from_email()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
@@ -200,7 +202,7 @@ class User extends REST_Controller
 			} else {
 
 				$final['status'] = true;
-				$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
+				$final['message'] = 'Se existir o e-mail, você receberá um link para alterar sua senha.';
 				$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
