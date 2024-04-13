@@ -8,16 +8,13 @@ use Restserver\Libraries\REST_Controller;
 class User extends REST_Controller
 {
 
-
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->library('Authorization_Token');
 		$this->load->model('user_model');
 		$this->load->model('email_model');
-
 	}
-
 
 	public function register_post()
 	{
@@ -77,7 +74,6 @@ class User extends REST_Controller
 		}
 	}
 
-
 	public function login_post()
 	{
 
@@ -133,7 +129,6 @@ class User extends REST_Controller
 		}
 	}
 
-
 	public function logout_post()
 	{
 
@@ -162,7 +157,6 @@ class User extends REST_Controller
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
-
 
 	public function recovery_post()
 	{
@@ -198,57 +192,10 @@ class User extends REST_Controller
 
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
-
 			} else {
 
 				$final['status'] = true;
 				$final['message'] = 'Se existir o e-mail, você receberá um link para alterar sua senha.';
-				$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
-				// login failed
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
-		}
-	}
-
-
-	public function preferences_post()
-	{
-		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
-
-		if ($this->form_validation->run() == false) {
-
-			$final['status'] = false;
-			$final['message'] = validation_errors();
-			$final['note'] = 'Erro no formulário.';
-
-			$this->response($final, REST_Controller::HTTP_OK);
-		} else {
-
-			// set variables from the form
-			$user_email = $this->input->post('user_email');
-
-			if ($res = $this->user_model->get_user_id_from_email($user_email)) {
-
-
-				if ($this->email_model->send_user_recovery($user_email)) {
-
-					$final['status'] = true;
-					$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
-					$final['note'] = 'O e-mail foi encontrado em get_user_id_from_email()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-				} else {
-
-					$final['status'] = false;
-					$final['message'] = 'Houve um erro ao enviar email. Tente novamente.';
-					$final['note'] = 'Erro em send_user_recovery()';
-
-					$this->response($final, REST_Controller::HTTP_OK);
-				}
-			} else {
-
-				$final['status'] = true;
-				$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
 				$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
@@ -277,7 +224,6 @@ class User extends REST_Controller
 					$final['note'] = 'Dados encontrados get_db_preferences()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
-
 				} else {
 
 					$final['status'] = false;
@@ -285,9 +231,7 @@ class User extends REST_Controller
 					$final['note'] = 'Erro em get_db_preferences()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
-
 				}
-
 			} else {
 
 				$final['status'] = false;
@@ -296,8 +240,6 @@ class User extends REST_Controller
 
 				$this->response($decodedToken);
 			}
-
-
 		} else {
 
 			$final['status'] = false;
@@ -306,8 +248,64 @@ class User extends REST_Controller
 
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
+	}
+
+	public function preferences_post()
+	{
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required|alpha_numeric');
+		$this->form_validation->set_rules('user_auth_type', 'User AUTH', 'trim|required|alpha_numeric');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$user_id = $this->input->post('user_id');
+			$user_auth_type = $this->input->post('user_auth_type');
+			$preferences_data = $this->input->post('preferences_data');
 
 
-	
+			// if ($res = $this->user_model->get_user_id_from_email($user_email)) {
+
+
+			// 	if ($this->email_model->send_user_recovery($user_email)) {
+
+			// 		$final['status'] = true;
+			// 		$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
+			// 		$final['note'] = 'O e-mail foi encontrado em get_user_id_from_email()';
+
+			// 		$this->response($final, REST_Controller::HTTP_OK);
+
+			// 	} else {
+
+			// 		$final['status'] = false;
+			// 		$final['message'] = 'Houve um erro ao enviar email. Tente novamente.';
+			// 		$final['note'] = 'Erro em send_user_recovery()';
+
+			// 		$this->response($final, REST_Controller::HTTP_OK);
+			// 	}
+
+			// } else {
+
+			// 	$final['status'] = true;
+			// 	$final['message'] = 'Se existir o e-mail. Você receberá um link para alterar sua senha.';
+			// 	$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
+			// 	// login failed
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// }
+
+			$data = array(
+				'user_id' => $user_id,
+				'user_auth_type' => $user_auth_type,
+				'preferences_data' => $preferences_data
+			);
+
+
+			$this->response($data, REST_Controller::HTTP_OK);
+		}
 	}
 }

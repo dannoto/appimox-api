@@ -8,12 +8,6 @@ use Restserver\Libraries\REST_Controller;
 class Property extends REST_Controller
 {
 
-	/**
-	 * __construct function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
 	public function __construct()
 	{
 		parent::__construct();
@@ -21,12 +15,6 @@ class Property extends REST_Controller
 		$this->load->model('user_model');
 	}
 
-	/**
-	 * register function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
 	public function register_post()
 	{
 
@@ -84,12 +72,6 @@ class Property extends REST_Controller
 		}
 	}
 
-	/**
-	 * login function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
 	public function login_post()
 	{
 
@@ -145,12 +127,6 @@ class Property extends REST_Controller
 		}
 	}
 
-	/**
-	 * logout function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
 	public function logout_post()
 	{
 
@@ -180,12 +156,6 @@ class Property extends REST_Controller
 		}
 	}
 
-	/**
-	 * recovery e-mail  function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
 	public function recovery_post()
 	{
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required|valid_email');
