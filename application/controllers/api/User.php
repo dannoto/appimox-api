@@ -297,7 +297,7 @@ class User extends REST_Controller
 			// 	$this->response($decodedToken);
 			// }
 
-			$this->response([$decodedToken], REST_Controller::HTTP_OK);
+			$this->response([$decodedToken['data']], REST_Controller::HTTP_OK);
 
 		} else {
 
