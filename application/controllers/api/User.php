@@ -268,7 +268,7 @@ class User extends REST_Controller
 			$user_auth_type = $this->input->post('user_auth_type');
 			$preferences_data = $this->input->post('preferences_data');
 
-			$preferences_count = explode(",", $preferences_data);
+			$preferences_count = explode( $preferences_data, ",");
 
 
 			// if ($res = $this->user_model->get_user_id_from_email($user_email)) {
