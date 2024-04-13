@@ -304,7 +304,7 @@ class User extends REST_Controller
 				'user_idx' => $user_id,
 				'user_auth_typey' => $user_auth_type,
 				'preferences_dataz' => $preferences_data,
-				'count' => count($preferences_data)
+				'count' => count($preferences_count)
 			);
 
 
