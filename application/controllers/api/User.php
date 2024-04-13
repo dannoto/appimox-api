@@ -263,7 +263,7 @@ class User extends REST_Controller
 
 		if (isset($headers['Authorization'])) {
 
-			// $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
 			// if ($decodedToken['status']) {
 
@@ -297,7 +297,7 @@ class User extends REST_Controller
 			// 	$this->response($decodedToken);
 			// }
 
-			$this->response(['meu ovo'], REST_Controller::HTTP_OK);
+			$this->response([$decodedToken], REST_Controller::HTTP_OK);
 
 		} else {
 
