@@ -265,37 +265,37 @@ class User extends REST_Controller
 
 			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-			// if ($decodedToken['status']) {
+			if (!$decodedToken['status']) {
 
-			// 	$db_preferences =  $this->user_model->get_db_preferences();
-			// 	// ------- Main Logic part -------
-			// 	if ($db_preferences) {
+				$db_preferences =  $this->user_model->get_db_preferences();
+				// ------- Main Logic part -------
+				// if ($db_preferences) {
 
-			// 		$final['status'] = true;
-			// 		$final['message'] = 'Preferencias encontradas com sucesso.';
-			// 		$final['response'] = $db_preferences;
-			// 		$final['note'] = 'Dados encontrados get_db_preferences()';
+				// 	$final['status'] = true;
+				// 	$final['message'] = 'Preferencias encontradas com sucesso.';
+				// 	$final['response'] = $db_preferences;
+				// 	$final['note'] = 'Dados encontrados get_db_preferences()';
 
-			// 		$this->response($final, REST_Controller::HTTP_OK);
+				// 	$this->response($final, REST_Controller::HTTP_OK);
 
-			// 	} else {
+				// } else {
 
-			// 		$final['status'] = false;
-			// 		$final['message'] = 'Nenhuma preferência encontrada.';
-			// 		$final['note'] = 'Erro em get_db_preferences()';
+				// 	$final['status'] = false;
+				// 	$final['message'] = 'Nenhuma preferência encontrada.';
+				// 	$final['note'] = 'Erro em get_db_preferences()';
 
-			// 		$this->response($final, REST_Controller::HTTP_OK);
+				// 	$this->response($final, REST_Controller::HTTP_OK);
 
-			// 	}
-			// 	// ------------- End -------------
-			// } else {
+				// }
+				// ------------- End -------------
+			} else {
 
-			// 	$final['status'] = false;
-			// 	$final['message'] = 'Sua sessão expirou.';
-			// 	$final['note'] = 'Erro em $decodedToken["status"]';
+				$final['status'] = false;
+				$final['message'] = 'Sua sessão expirou.';
+				$final['note'] = 'Erro em $decodedToken["status"]';
 
-			// 	$this->response($decodedToken);
-			// }
+				$this->response($decodedToken);
+			}
 
 			$this->response([$decodedToken['status']], REST_Controller::HTTP_OK);
 
