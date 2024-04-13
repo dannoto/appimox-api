@@ -268,7 +268,6 @@ class User extends REST_Controller
 			if (!$decodedToken['status']) {
 
 				$db_preferences =  $this->user_model->get_db_preferences();
-				// ------- Main Logic part -------
 				// if ($db_preferences) {
 
 				// 	$final['status'] = true;
@@ -287,7 +286,6 @@ class User extends REST_Controller
 				// 	$this->response($final, REST_Controller::HTTP_OK);
 
 				// }
-				// ------------- End -------------
 			} else {
 
 				$final['status'] = false;
