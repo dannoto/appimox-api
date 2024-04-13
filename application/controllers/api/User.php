@@ -303,7 +303,7 @@ class User extends REST_Controller
 				'user_id' => $user_id,
 				'user_auth_type' => $user_auth_type,
 				'preferences_data' => $preferences_data,
-				'count' => $preferences_count)
+				'count' => $preferences_count
 			);
 
 
