@@ -113,7 +113,7 @@ class Authorization_Token
                     // Check Token API Time [API_TIME]
                     if (empty($token_decode->API_TIME OR !is_numeric($token_decode->API_TIME))) {
                         
-                        return ['status' => FALSE, 'message' => 'Token Time Not Define!'];
+                        return ['status' => FALSE, 'message' => 'Sessão não definida.'];
                     }
                     else
                     {
@@ -123,7 +123,7 @@ class Authorization_Token
                         $time_difference = strtotime('now') - $token_decode->API_TIME;
                         if( $time_difference >= $this->token_expire_time )
                         {
-                            return ['status' => FALSE, 'message' => 'Token Time Expire.'];
+                            return ['status' => FALSE, 'message' => 'Sua sessão expirou'];
 
                         }else
                         {
