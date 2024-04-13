@@ -265,27 +265,29 @@ class User extends REST_Controller
 
 			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-			if (!$decodedToken['status']) {
+			if ($decodedToken['status']) {
 
 				$db_preferences =  $this->user_model->get_db_preferences();
-				// if ($db_preferences) {
 
-				// 	$final['status'] = true;
-				// 	$final['message'] = 'Preferencias encontradas com sucesso.';
-				// 	$final['response'] = $db_preferences;
-				// 	$final['note'] = 'Dados encontrados get_db_preferences()';
+				if ($db_preferences) {
 
-				// 	$this->response($final, REST_Controller::HTTP_OK);
+					$final['status'] = true;
+					$final['message'] = 'Preferencias encontradas com sucesso.';
+					$final['response'] = $db_preferences;
+					$final['note'] = 'Dados encontrados get_db_preferences()';
 
-				// } else {
+					$this->response($final, REST_Controller::HTTP_OK);
 
-				// 	$final['status'] = false;
-				// 	$final['message'] = 'Nenhuma preferência encontrada.';
-				// 	$final['note'] = 'Erro em get_db_preferences()';
+				} else {
 
-				// 	$this->response($final, REST_Controller::HTTP_OK);
+					$final['status'] = false;
+					$final['message'] = 'Nenhuma preferência encontrada.';
+					$final['note'] = 'Erro em get_db_preferences()';
 
-				// }
+					$this->response($final, REST_Controller::HTTP_OK);
+
+				}
+
 			} else {
 
 				$final['status'] = false;

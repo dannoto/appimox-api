@@ -124,4 +124,8 @@ class User_model extends CI_Model {
 		
 	}
 	
+
+	public function get_db_preferences() {
+		return $this->db->get('db_preferences')->result();
+	}
 }
