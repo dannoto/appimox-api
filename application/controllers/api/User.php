@@ -299,9 +299,9 @@ class User extends REST_Controller
 			// }
 
 			$data = array(
-				'user_id' => $user_id,
-				'user_auth_type' => $user_auth_type,
-				'preferences_data' => $preferences_data
+				'user_idx' => $user_id,
+				'user_auth_typey' => $user_auth_type,
+				'preferences_dataz' => $preferences_data
 			);
 
 
