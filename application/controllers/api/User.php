@@ -217,7 +217,7 @@ class User extends REST_Controller
 			$this->response($final, REST_Controller::HTTP_OK);
 
 		} else {
-			$user_email = $this->input->post('user_email');
+			$user_id = $this->input->post('user_email');
 			$check_init_preferences =  $this->user_model->check_init_preferences($user_id);
 
 			if ($check_init_preferences['user_verified_preferences'] == 0) {
