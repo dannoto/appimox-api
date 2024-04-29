@@ -332,7 +332,13 @@ class User extends REST_Controller
 			$preferences_array = explode(",", $preferences_data);
 
 
-			print_r($preferences_array);
+
+
+
+			foreach ($preferences_array as $p) {
+
+				echo "ç " . $p;
+			}
 			// $preferences_count = count(explode(",", $preferences_data));
 			// $preferences_data = explode(",", $preferences_data);
 
