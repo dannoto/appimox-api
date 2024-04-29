@@ -364,7 +364,7 @@ class User extends REST_Controller
 
 					$final['status'] = true;
 					$final['message'] = 'Preferencias adicionadas com sucesso.';
-					$final['note'] = 'Erro no get_user($user_id)';
+					$final['note'] = 'Sucessoadd_user_preferences()';
 
 				} else {
 
