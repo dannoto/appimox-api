@@ -333,21 +333,21 @@ class User extends REST_Controller
 
 			$this->response($preferences_data, REST_Controller::HTTP_OK);
 
-			// if ($preferences_count < 5) {
+			if ($preferences_count < 5) {
 
-			// 	$final['status'] = false;
-			// 	$final['message'] = 'Selecione pelo menos 5 características.';
-			// 	$final['note'] = '$preferences_count < 5';
+				$final['status'] = false;
+				$final['message'] = 'Selecione pelo menos 5 características.';
+				$final['note'] = '$preferences_count < 5';
 
-			// 	$this->response($final, REST_Controller::HTTP_OK);
-			// } else if ($preferences_count > 5) {
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else if ($preferences_count > 5) {
 
-			// 	$final['status'] = false;
-			// 	$final['message'] = 'Selecione no máximo 5 características.';
-			// 	$final['note'] = '$preferences_count > 5';
+				$final['status'] = false;
+				$final['message'] = 'Selecione no máximo 5 características.';
+				$final['note'] = '$preferences_count > 5';
 
-			// 	$this->response($final, REST_Controller::HTTP_OK);
-			// } else {
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else {
 
 				if ($this->user_model->get_user($user_id)) {
 
