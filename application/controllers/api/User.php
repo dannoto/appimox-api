@@ -364,11 +364,17 @@ class User extends REST_Controller
 						}
 					}
 
+					$dados =  array(
+						'user_verified_preferences' => 1
+					);
+
+					$this->user_model->update_user($user_id, $dados);
+
 					$final['status'] = true;
 					$final['message'] = 'Preferencias adicionadas com sucesso.';
 					$final['note'] = 'Sucessoadd_user_preferences()';
 					$this->response($final, REST_Controller::HTTP_OK);
-					
+
 				} else {
 
 					$final['status'] = false;
