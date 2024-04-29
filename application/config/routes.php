@@ -65,3 +65,6 @@ $route['login'] = 'api/User/login';
 $route['logout'] = 'api/User/logout';
 $route['recovery'] = 'api/User/recovery';
 $route['preferences'] = 'api/User/preferences';
+$route['check_init_preferences'] = 'api/User/check_init_preferences';
+
+
