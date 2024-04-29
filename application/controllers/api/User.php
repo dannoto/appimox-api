@@ -330,7 +330,7 @@ class User extends REST_Controller
 			$preferences_count = count(explode(",", $preferences_data));
 			$preferences_data = explode(",", $preferences_data);
 
-			echo $this->input->post('preferences_data');
+			print_r($this->input->post('preferences_data'));
 
 			// if ($preferences_count < 5) {
 
