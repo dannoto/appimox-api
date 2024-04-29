@@ -203,6 +203,43 @@ class User extends REST_Controller
 		}
 	}
 
+	public function checkinitpreferences_post()
+	{
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$check_init_preferences =  $this->user_model->check_init_preferences();
+
+			if ($check_init_preferences['user_verified_preferences'] == 0) {
+
+				$final['status'] = true;
+				$final['message'] = 'Preferencias encontradas com sucesso.';
+				$final['response'] = $check_init_preferences['user_verified_preferences'];
+				$final['note'] = 'Dados   encontrados get_check_init_preferences()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+
+			} else if ($check_init_preferences['user_verified_preferences'] == 1) { 
+
+				$final['status'] = false;
+				$final['message'] = 'Nenhuma preferência encontrada.';
+				$final['note'] = 'Erro em get_check_init_preferences()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+
+		}
+	}
+
 	public function preferences_get()
 	{
 
@@ -215,33 +252,33 @@ class User extends REST_Controller
 
 		// 	if ($decodedToken['status']) {
 
-				$db_preferences =  $this->user_model->get_db_preferences();
+		$db_preferences =  $this->user_model->get_db_preferences();
 
-				if ($db_preferences) {
+		if ($db_preferences) {
 
-					$final['status'] = true;
-					$final['message'] = 'Preferencias encontradas com sucesso.';
-					$final['response'] = $db_preferences;
-					$final['note'] = 'Dados   encontrados get_db_preferences()';
+			$final['status'] = true;
+			$final['message'] = 'Preferencias encontradas com sucesso.';
+			$final['response'] = $db_preferences;
+			$final['note'] = 'Dados   encontrados get_db_preferences()';
 
-					$this->response($final, REST_Controller::HTTP_OK);
-				} else {
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
 
-					$final['status'] = false;
-					$final['message'] = 'Nenhuma preferência encontrada.';
-					$final['note'] = 'Erro em get_db_preferences()';
+			$final['status'] = false;
+			$final['message'] = 'Nenhuma preferência encontrada.';
+			$final['note'] = 'Erro em get_db_preferences()';
 
-					$this->response($final, REST_Controller::HTTP_OK);
-				}
+			$this->response($final, REST_Controller::HTTP_OK);
+		}
 
-			// } else {
+		// } else {
 
-			// 	$final['status'] = false;
-			// 	$final['message'] = 'Sua sessão expirou.';
-			// 	$final['note'] = 'Erro em $decodedToken["status"]';
+		// 	$final['status'] = false;
+		// 	$final['message'] = 'Sua sessão expirou.';
+		// 	$final['note'] = 'Erro em $decodedToken["status"]';
 
-			// 	$this->response($decodedToken);
-			// }
+		// 	$this->response($decodedToken);
+		// }
 		// } else {
 
 		// 	$final['status'] = false;
@@ -279,7 +316,6 @@ class User extends REST_Controller
 				$final['note'] = '$preferences_count < 5';
 
 				$this->response($final, REST_Controller::HTTP_OK);
-
 			} else if ($preferences_count > 5) {
 
 				$final['status'] = false;
@@ -287,21 +323,16 @@ class User extends REST_Controller
 				$final['note'] = '$preferences_count > 5';
 
 				$this->response($final, REST_Controller::HTTP_OK);
-
 			} else {
 
 				if ($this->user_model->get_user($user_id)) {
 
-					
+
 					foreach ($preferences_data as $p) {
 
 						if ($this->user_model->add_user_preferences($p, $user_id, $user_auth_type)) {
-							
 						}
-
 					}
-					
-
 				} else {
 
 					$final['status'] = false;
