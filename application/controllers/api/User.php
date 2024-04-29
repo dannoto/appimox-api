@@ -363,6 +363,7 @@ class User extends REST_Controller
 						if ($this->user_model->check_user_preferences($user_id, $p)) {
 							echo $p." já existe. <br>";
 						} else {
+							echo $p." inserido. <br>";
 							$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
 						}
 						
