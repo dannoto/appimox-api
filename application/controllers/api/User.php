@@ -327,6 +327,8 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 			$user_auth_type = $this->input->post('user_type');
 			$preferences_data = json_decode($this->input->post('preferences_data'));
+
+			echo $preferences_data;
 			$preferences_count = count(explode(",", $preferences_data));
 			$preferences_data = explode(",", $preferences_data);
 
