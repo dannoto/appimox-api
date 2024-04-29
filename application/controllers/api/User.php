@@ -204,7 +204,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function check_init_preferences_post()
+	public function check_preferences_init_post()
 	{
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
