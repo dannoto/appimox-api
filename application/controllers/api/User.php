@@ -367,6 +367,8 @@ class User extends REST_Controller
 					$final['status'] = true;
 					$final['message'] = 'Preferencias adicionadas com sucesso.';
 					$final['note'] = 'Sucessoadd_user_preferences()';
+					$this->response($final, REST_Controller::HTTP_OK);
+					
 				} else {
 
 					$final['status'] = false;
