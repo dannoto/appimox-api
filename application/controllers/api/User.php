@@ -225,7 +225,7 @@ class User extends REST_Controller
 
 				$final['status'] = true;
 				$final['message'] = 'Preferencias encontradas com sucesso.';
-				$final['response'] = $check_init_preferences['user_verified_preferences'];
+				$final['response'] = $check_init_preferences->user_verified_preferences;
 				$final['note'] = 'Dados   encontrados get_check_init_preferences()';
 
 				$this->response($final, REST_Controller::HTTP_OK);
