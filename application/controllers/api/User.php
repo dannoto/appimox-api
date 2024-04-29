@@ -204,11 +204,10 @@ class User extends REST_Controller
 		}
 	}
 
-
 	public function check_init_preferences_post()
 	{
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-		
+
 		if ($this->form_validation->run() == false) {
 
 			$final['status'] = false;
@@ -216,79 +215,102 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
+			
 		} else {
-			$user_id = $this->input->post('user_id');
-			$check_init_preferences =  $this->user_model->check_init_preferences($user_id);
 
-			if ($check_init_preferences) {
+			$headers = $this->input->request_headers();
 
-				$final['status'] = true;
-				$final['message'] = 'Preferencias encontradas com sucesso.';
-				$final['response'] = $check_init_preferences->user_verified_preferences;
-				$final['note'] = 'Dados   encontrados get_check_init_preferences()';
+			if (isset($headers['Authorization'])) {
 
-				$this->response($final, REST_Controller::HTTP_OK);
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-			} else  { 
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$check_init_preferences =  $this->user_model->check_init_preferences($user_id);
+
+					if ($check_init_preferences) {
+
+						$final['status'] = true;
+						$final['message'] = 'Preferencias encontradas com sucesso.';
+						$final['response'] = $check_init_preferences->user_verified_preferences;
+						$final['note'] = 'Dados   encontrados get_check_init_preferences()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Nenhuma preferência encontrada.';
+						$final['note'] = 'Erro em get_check_init_preferences()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+
+			} else {
 
 				$final['status'] = false;
-				$final['message'] = 'Nenhuma preferência encontrada.';
-				$final['note'] = 'Erro em get_check_init_preferences()';
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
 
 				$this->response($final, REST_Controller::HTTP_OK);
 			}
-
 		}
 	}
 
 	public function preferences_get()
 	{
 
-		// $headers = $this->input->request_headers();
+		$headers = $this->input->request_headers();
 
-		// if (isset($headers['Authorization'])) {
+		if (isset($headers['Authorization'])) {
 
-		// 	$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
 
-		// 	if ($decodedToken['status']) {
+			if ($decodedToken['status']) {
 
-		$db_preferences =  $this->user_model->get_db_preferences();
+				$db_preferences =  $this->user_model->get_db_preferences();
 
-		if ($db_preferences) {
+				if ($db_preferences) {
 
-			$final['status'] = true;
-			$final['message'] = 'Preferencias encontradas com sucesso.';
-			$final['response'] = $db_preferences;
-			$final['note'] = 'Dados   encontrados get_db_preferences()';
+					$final['status'] = true;
+					$final['message'] = 'Preferencias encontradas com sucesso.';
+					$final['response'] = $db_preferences;
+					$final['note'] = 'Dados   encontrados get_db_preferences()';
 
-			$this->response($final, REST_Controller::HTTP_OK);
+					$this->response($final, REST_Controller::HTTP_OK);
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Nenhuma preferência encontrada.';
+					$final['note'] = 'Erro em get_db_preferences()';
+
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Sua sessão expirou.';
+				$final['note'] = 'Erro em $decodedToken["status"]';
+
+				$this->response($decodedToken);
+			}
 		} else {
 
 			$final['status'] = false;
-			$final['message'] = 'Nenhuma preferência encontrada.';
-			$final['note'] = 'Erro em get_db_preferences()';
+			$final['message'] = 'Falha na autenticação.';
+			$final['note'] = 'Erro em validateToken()';
 
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
-
-		// } else {
-
-		// 	$final['status'] = false;
-		// 	$final['message'] = 'Sua sessão expirou.';
-		// 	$final['note'] = 'Erro em $decodedToken["status"]';
-
-		// 	$this->response($decodedToken);
-		// }
-		// } else {
-
-		// 	$final['status'] = false;
-		// 	$final['message'] = 'Falha na autenticação.';
-		// 	$final['note'] = 'Erro em validateToken()';
-
-		// 	$this->response($final, REST_Controller::HTTP_OK);
-		// }
 	}
 
 	public function preferences_post()
