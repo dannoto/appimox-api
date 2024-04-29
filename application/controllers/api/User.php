@@ -326,16 +326,18 @@ class User extends REST_Controller
 
 			$user_id = $this->input->post('user_id');
 			$user_auth_type = $this->input->post('user_type');
-			$preferences_data = $this->input->post('preferences_data');
+			$preferences_data = json_decode($this->input->post('preferences_data'));
 			// $preferences_count = count(explode(",", $preferences_data));
 			$preferences_data = explode(",", $preferences_data);
 
 			// print_r($this->input->post('preferences_data'));
 
-			foreach ($preferences_data as $p) {
+			// foreach ($preferences_data as $p) {
 
-				echo "- ".$p;
-			}
+			// 	echo "- ".$p;
+			// }
+
+			$this->response($preferences_data, REST_Controller::HTTP_OK);
 
 			// if ($preferences_count < 5) {
 
