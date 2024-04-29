@@ -221,7 +221,7 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 			$check_init_preferences =  $this->user_model->check_init_preferences($user_id);
 
-			if ($check_init_preferences->user_verified_preferences) {
+			if ($check_init_preferences) {
 
 				$final['status'] = true;
 				$final['message'] = 'Preferencias encontradas com sucesso.';
