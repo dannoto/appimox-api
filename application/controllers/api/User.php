@@ -325,7 +325,7 @@ class User extends REST_Controller
 		} else {
 
 			$user_id = $this->input->post('user_id');
-			$user_auth_type = $this->input->post('user_type');
+			$user_type = $this->input->post('user_type');
 			$preferences_data = $this->input->post('preferences_data');
 			$preferences_data = trim($preferences_data, "[]");
 			$preferences_data = stripslashes($preferences_data);
@@ -355,9 +355,10 @@ class User extends REST_Controller
 					foreach ($preferences_array as $p) {
 
 						if ($this->user_model->check_user_preferences($user_id, $p)) {
+
 						} else {
 
-							$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
+							$this->user_model->add_user_preferences($p, $user_id, $user_type);
 						}
 					}
 
