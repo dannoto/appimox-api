@@ -92,18 +92,20 @@ class User_model extends CI_Model {
 
 	}
 
-	public function check_user_preferences($user_id) {
+	public function check_user_preferences($user_id, $preference_id) {
 		$this->db->where('user_id', $user_id);
+		$this->db->where('preference_id', $preference_id);
+
 		return $this->db->get('user_preferences')->row();
 
 	}
 
-	public function add_user_preferences($user_id, $user_type) {
+	public function add_user_preferences($preference_id, $user_id, $user_type) {
 
 		$data  = array(
 			'user_id' => $user_id,
 			'user_type' => $user_type,
-
+			'preference_id' => $preference_id
 		);
 
 		return $this->db->insert('user_preferences', $data);

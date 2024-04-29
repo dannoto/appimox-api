@@ -215,7 +215,7 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-			
+
 		} else {
 
 			$headers = $this->input->request_headers();
@@ -325,13 +325,13 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+
 		} else {
 
 			$user_id = $this->input->post('user_id');
 			$user_auth_type = $this->input->post('user_auth_type');
-			$preferences_data = $this->input->post('preferences_data');
+			$preferences_data = explode(",",$this->input->post('preferences_data'));
 			$preferences_count = count(explode(",", $preferences_data));
-
 
 			if ($preferences_count < 5) {
 
@@ -340,6 +340,7 @@ class User extends REST_Controller
 				$final['note'] = '$preferences_count < 5';
 
 				$this->response($final, REST_Controller::HTTP_OK);
+
 			} else if ($preferences_count > 5) {
 
 				$final['status'] = false;
@@ -347,16 +348,25 @@ class User extends REST_Controller
 				$final['note'] = '$preferences_count > 5';
 
 				$this->response($final, REST_Controller::HTTP_OK);
+
 			} else {
 
 				if ($this->user_model->get_user($user_id)) {
 
+					$final['status'] = false;
+					$final['message'] = 'Preferencias adicionadas com sucesso.';
+					$final['note'] = 'Erro no get_user($user_id)';
 
 					foreach ($preferences_data as $p) {
 
-						if ($this->user_model->add_user_preferences($p, $user_id, $user_auth_type)) {
-						}
+						// if ($this->user_model->check_user_preferences($user_id, $p)) {
+						// 	// pass
+						// } else {
+						// 	$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
+						// }
+						echo $p."<br>";
 					}
+
 				} else {
 
 					$final['status'] = false;
@@ -367,8 +377,6 @@ class User extends REST_Controller
 				}
 			}
 
-
-			// $this->response($data, REST_Controller::HTTP_OK);
 		}
 	}
 }
