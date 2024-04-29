@@ -352,7 +352,7 @@ class User extends REST_Controller
 
 
 
-					foreach ($preferences_data as $p) {
+					foreach ($preferences_array as $p) {
 
 						if ($this->user_model->check_user_preferences($user_id, $p)) {
 						} else {
