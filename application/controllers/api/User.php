@@ -360,12 +360,12 @@ class User extends REST_Controller
 
 					foreach ($preferences_data as $p) {
 
-						// if ($this->user_model->check_user_preferences($user_id, $p)) {
-						// 	// pass
-						// } else {
-						// 	$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
-						// }
-						echo $p."<br>";
+						if ($this->user_model->check_user_preferences($user_id, $p)) {
+							echo $p." já existe. <br>";
+						} else {
+							$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
+						}
+						
 					}
 
 				} else {
