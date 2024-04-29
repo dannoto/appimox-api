@@ -206,13 +206,14 @@ class User extends REST_Controller
 	public function preferences_get()
 	{
 
-		$headers = $this->input->request_headers();
+		// $headers = $this->input->request_headers();
 
-		if (isset($headers['Authorization'])) {
+		// if (isset($headers['Authorization'])) {
 
-			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+		// 	$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-			if ($decodedToken['status']) {
+
+		// 	if ($decodedToken['status']) {
 
 				$db_preferences =  $this->user_model->get_db_preferences();
 
@@ -221,7 +222,7 @@ class User extends REST_Controller
 					$final['status'] = true;
 					$final['message'] = 'Preferencias encontradas com sucesso.';
 					$final['response'] = $db_preferences;
-					$final['note'] = 'Dados encontrados get_db_preferences()';
+					$final['note'] = 'Dados   encontrados get_db_preferences()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
 				} else {
@@ -233,22 +234,22 @@ class User extends REST_Controller
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
 
-			} else {
+			// } else {
 
-				$final['status'] = false;
-				$final['message'] = 'Sua sessão expirou.';
-				$final['note'] = 'Erro em $decodedToken["status"]';
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Sua sessão expirou.';
+			// 	$final['note'] = 'Erro em $decodedToken["status"]';
 
-				$this->response($decodedToken);
-			}
-		} else {
+			// 	$this->response($decodedToken);
+			// }
+		// } else {
 
-			$final['status'] = false;
-			$final['message'] = 'Falha na autenticação.';
-			$final['note'] = 'Erro em validateToken()';
+		// 	$final['status'] = false;
+		// 	$final['message'] = 'Falha na autenticação.';
+		// 	$final['note'] = 'Erro em validateToken()';
 
-			$this->response($final, REST_Controller::HTTP_OK);
-		}
+		// 	$this->response($final, REST_Controller::HTTP_OK);
+		// }
 	}
 
 	public function preferences_post()
