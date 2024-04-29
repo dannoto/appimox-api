@@ -327,10 +327,12 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 			$user_auth_type = $this->input->post('user_type');
 			$preferences_data = $this->input->post('preferences_data');
-			$preferences_string = implode(",", $preferences_data);
-			$preferences_array = explode(",", $preferences_string);
+			$preferences_data = trim($preferences_data, "[]");
+			$preferences_data = stripslashes($preferences_data);
+			$preferences_array = explode(",", $preferences_data);
 
-		print_r($preferences_array);
+
+			print_r($preferences_array);
 			// $preferences_count = count(explode(",", $preferences_data));
 			// $preferences_data = explode(",", $preferences_data);
 
