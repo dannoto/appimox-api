@@ -330,48 +330,50 @@ class User extends REST_Controller
 			$preferences_count = count(explode(",", $preferences_data));
 			$preferences_data = explode(",", $preferences_data);
 
-			if ($preferences_count < 5) {
+			echo $this->input->post('preferences_data');
 
-				$final['status'] = false;
-				$final['message'] = 'Selecione pelo menos 5 características.';
-				$final['note'] = '$preferences_count < 5';
+			// if ($preferences_count < 5) {
 
-				$this->response($final, REST_Controller::HTTP_OK);
-			} else if ($preferences_count > 5) {
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Selecione pelo menos 5 características.';
+			// 	$final['note'] = '$preferences_count < 5';
 
-				$final['status'] = false;
-				$final['message'] = 'Selecione no máximo 5 características.';
-				$final['note'] = '$preferences_count > 5';
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// } else if ($preferences_count > 5) {
 
-				$this->response($final, REST_Controller::HTTP_OK);
-			} else {
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Selecione no máximo 5 características.';
+			// 	$final['note'] = '$preferences_count > 5';
 
-				if ($this->user_model->get_user($user_id)) {
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// } else {
+
+			// 	if ($this->user_model->get_user($user_id)) {
 
 
 
-					foreach ($preferences_data as $p) {
+			// 		foreach ($preferences_data as $p) {
 
-						if ($this->user_model->check_user_preferences($user_id, $p)) {
-						} else {
+			// 			if ($this->user_model->check_user_preferences($user_id, $p)) {
+			// 			} else {
 
-							$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
-						}
-					}
+			// 				$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
+			// 			}
+			// 		}
 
-					$final['status'] = false;
-					$final['message'] = 'Preferencias adicionadas com sucesso.';
-					$final['note'] = 'Erro no get_user($user_id)';
+			// 		$final['status'] = false;
+			// 		$final['message'] = 'Preferencias adicionadas com sucesso.';
+			// 		$final['note'] = 'Erro no get_user($user_id)';
 
-				} else {
+			// 	} else {
 
-					$final['status'] = false;
-					$final['message'] = 'ID do usuário inválido.';
-					$final['note'] = 'Erro no get_user($user_id)';
+			// 		$final['status'] = false;
+			// 		$final['message'] = 'ID do usuário inválido.';
+			// 		$final['note'] = 'Erro no get_user($user_id)';
 
-					$this->response($final, REST_Controller::HTTP_OK);
-				}
-			}
+			// 		$this->response($final, REST_Controller::HTTP_OK);
+			// 	}
+			// }
 		}
 	}
 }
