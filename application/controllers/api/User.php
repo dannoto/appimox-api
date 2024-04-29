@@ -327,15 +327,9 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 			$user_auth_type = $this->input->post('user_type');
 			$preferences_data = json_decode($this->input->post('preferences_data'));
-			// $preferences_count = count(explode(",", $preferences_data));
+			$preferences_count = count(explode(",", $preferences_data));
 			$preferences_data = explode(",", $preferences_data);
 
-			// print_r($this->input->post('preferences_data'));
-
-			// foreach ($preferences_data as $p) {
-
-			// 	echo "- ".$p;
-			// }
 
 			$this->response($preferences_data, REST_Controller::HTTP_OK);
 
@@ -355,32 +349,32 @@ class User extends REST_Controller
 			// 	$this->response($final, REST_Controller::HTTP_OK);
 			// } else {
 
-			// 	if ($this->user_model->get_user($user_id)) {
+				if ($this->user_model->get_user($user_id)) {
 
 
 
-			// 		foreach ($preferences_data as $p) {
+					foreach ($preferences_data as $p) {
 
-			// 			if ($this->user_model->check_user_preferences($user_id, $p)) {
-			// 			} else {
+						if ($this->user_model->check_user_preferences($user_id, $p)) {
+						} else {
 
-			// 				$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
-			// 			}
-			// 		}
+							$this->user_model->add_user_preferences($p, $user_id, $user_auth_type);
+						}
+					}
 
-			// 		$final['status'] = false;
-			// 		$final['message'] = 'Preferencias adicionadas com sucesso.';
-			// 		$final['note'] = 'Erro no get_user($user_id)';
+					$final['status'] = true;
+					$final['message'] = 'Preferencias adicionadas com sucesso.';
+					$final['note'] = 'Erro no get_user($user_id)';
 
-			// 	} else {
+				} else {
 
-			// 		$final['status'] = false;
-			// 		$final['message'] = 'ID do usuário inválido.';
-			// 		$final['note'] = 'Erro no get_user($user_id)';
+					$final['status'] = false;
+					$final['message'] = 'ID do usuário inválido.';
+					$final['note'] = 'Erro no get_user($user_id)';
 
-			// 		$this->response($final, REST_Controller::HTTP_OK);
-			// 	}
-			// }
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
+			}
 		}
 	}
 }
