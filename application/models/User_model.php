@@ -55,11 +55,21 @@ class User_model extends CI_Model {
 		
 	}
 
+	// Init
+
 	public function check_init_preferences($user_id) {
 		$this->db->from('users');
 		$this->db->where('id', $user_id);
 		return $this->db->get()->row();
 	}
+
+	public function check_init_creci($user_id) {
+		$this->db->from('users');
+		$this->db->where('id', $user_id);
+		return $this->db->get()->row();
+	}
+
+	// Init
 	
 	public function get_user($user_id) {
 		

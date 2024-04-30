@@ -262,6 +262,64 @@ class User extends REST_Controller
 		}
 	}
 
+	public function check_creci_init_post()
+	{
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$check_init_creci =  $this->user_model->check_init_creci($user_id);
+
+					if ($check_init_creci) {
+
+						$final['status'] = true;
+						$final['message'] = 'Creci encontradas com sucesso.';
+						$final['response'] = $check_init_creci->user_verified_creci;
+						$final['note'] = 'Dados   encontrados get_check_init_creci()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Nenhuma preferência encontrada.';
+						$final['note'] = 'Erro em get_check_init_creci()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
 	public function preferences_get()
 	{
 

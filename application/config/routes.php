@@ -69,6 +69,7 @@ $route['recovery'] = 'api/User/recovery';
 $route['preferences'] = 'api/User/preferences';
 
 $route['check_preferences_init'] = 'api/User/check_preferences_init';
+$route['check_creci_init'] = 'api/User/check_creci_init';
 
 
 
