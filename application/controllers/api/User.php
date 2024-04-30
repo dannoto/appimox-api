@@ -352,14 +352,10 @@ class User extends REST_Controller
 
 				if ($this->user_model->get_user($user_id)) {
 
+					$this->user_model->reset_user_preferences($user_id);
+
 					foreach ($preferences_array as $p) {
-
-						if ($this->user_model->check_user_preferences($user_id, $p)) {
-
-						} else {
-
-							$this->user_model->add_user_preferences($p, $user_id, $user_type);
-						}
+						$this->user_model->add_user_preferences($p, $user_id, $user_type);
 					}
 
 					$dados =  array(

@@ -92,11 +92,11 @@ class User_model extends CI_Model {
 
 	}
 
-	public function check_user_preferences($user_id, $preference_id) {
+	public function reset_user_preferences($user_id) {
 		$this->db->where('user_id', $user_id);
-		$this->db->where('preference_id', $preference_id);
+	
 
-		return $this->db->get('user_preferences')->row();
+		return $this->db->delete('user_preferences');
 
 	}
 
