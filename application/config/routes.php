@@ -72,7 +72,10 @@ $route['check_creci_init'] = 'api/User/check_creci_init';
 $route['check_init_preferences'] = 'api/User/check_init_preferences';
 
 // Propertys
+
+
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
+$route['search_broker_propertys'] = 'api/Propertys/search_broker_propertys';
 
 // Property
 
