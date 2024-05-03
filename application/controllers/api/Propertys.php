@@ -78,7 +78,7 @@ class Propertys extends REST_Controller
 		}
 	}
 
-    public function search_broker_propriety_post()
+    public function search_broker_propertys_post()
 	{
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 		$this->form_validation->set_rules('query', 'User ID', 'trim|required');
