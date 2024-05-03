@@ -53,7 +53,7 @@ class Propertys extends REST_Controller
 						$this->response($final, REST_Controller::HTTP_OK);
 					} else {
 
-						$final['status'] = false;
+						$final['status'] = true;
 						$final['message'] = 'Nenhum imoveil encontrado.';
 						$final['note'] = 'Erro em get_broker_propertys()';
 
