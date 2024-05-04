@@ -143,7 +143,7 @@ class Propertys extends REST_Controller
 
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_title', 'Título do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('proprerty_type', 'Tipo do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_type', 'Tipo do Imóvel', 'trim|required');
         $this->form_validation->set_rules('property_type_offer', 'Tipo de Oferta do Imóvel', 'trim|required');
         $this->form_validation->set_rules('property_price', 'Preço do Imóvel', 'trim|required');
         $this->form_validation->set_rules('property_area', 'Área do Imóvel', 'trim|required');
@@ -177,7 +177,7 @@ class Propertys extends REST_Controller
 
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['property_title'] = $this->input->post('property_title');
-                    $data['proprerty_type'] = $this->input->post('proprerty_type');
+                    $data['property_type'] = $this->input->post('property_type');
                     $data['property_type_offer'] = $this->input->post('property_type_offer');
                     $data['property_price'] = $this->input->post('property_price');
                     $data['property_area'] = $this->input->post('property_area');
