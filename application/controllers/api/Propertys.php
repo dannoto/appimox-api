@@ -232,7 +232,7 @@ class Propertys extends REST_Controller
 
                         // Adding Location
 
-                        $location_id =$this->broker_model->add_broker_property_location($data_location);
+                        $location_id = $this->broker_model->add_broker_property_location($data_location);
 
                         if ($location_id) {
 
@@ -263,6 +263,87 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function add_broker_property_others_images_post()
+    {
+
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
+        $this->form_validation->set_rules('property_location_id', 'Localização ID', 'trim|required');
+
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+            
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['property_id'] = $this->input->post('property_id');
+                    $data['property_location_id'] = $this->input->post('property_location_id');
+
+                    $data['is_deleted'] = 0;
+
+                    // Main
+                    $path = 'public/images/property/';
+                    $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_image')));
+
+                    $file_name = uniqid() . '.jpg';
+
+                    $data['property_image'] = $path . $file_name;
+
+                    if (file_put_contents($data['property_image'], $property_main_image)) {
+                      
+                    } else {
+                       
+                    }
+                  
+                    if ( $this->broker_model->add_broker_property_images($data)) {
+
+                        $final['status'] = true;
+                        $final['message'] = 'Imagem adicionada com sucesso.';
+                        $final['response'] = $data;
+                        $final['note'] = 'add_broker_property_images';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao adicionar imagem.';
+                        $final['note'] = 'Erro em add_broker_property_images()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+
                 } else {
 
                     $final['status'] = false;

@@ -12,13 +12,9 @@ class Broker_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-    /**
-     * send email with recovery link
-     * CONSTRUCTOR | LOAD DB
-     */
+   
     public function get_broker_propertys($user_id)
     {
-
         $this->db->where('property_user_id', $user_id);
         $this->db->where('is_deleted', 0);
         $this->db->order_by('id', 'desc');
@@ -27,7 +23,6 @@ class Broker_model extends CI_Model
 
     public function search_broker_propertys($user_id, $query)
     {
-
         $this->db->where('property_user_id', $user_id);
         $this->db->like('property_title', $query);
         $this->db->order_by('id', 'desc');
@@ -37,16 +32,23 @@ class Broker_model extends CI_Model
 
     public function add_broker_property($property_data)
     {
-
         $data = $this->db->insert('propertys', $property_data);
         return $this->db->insert_id();
+    }
+    
+    public function add_broker_property_location($data) {
+        return $this->db->insert('propertys_location', $data);
+
     }
 
     public function update_broker_property($property_id, $update_data)
     {
         $this->db->where('id', $property_id);
-
         return $this->db->update('propertys', $update_data);
       
+    }
+
+    public function add_broker_property_images($data) {
+        return $this->db->insert('propertys_images', $data);
     }
 }
