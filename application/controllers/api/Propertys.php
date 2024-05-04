@@ -191,23 +191,26 @@ class Propertys extends REST_Controller
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
 
+                    $data['location_latitude'] = $this->input->post('location_latitude');
+                    $data['location_longitude'] = $this->input->post('location_longitude');
+
+
+                    // Images
+
+                    // Main
+                    $path = 'public/images/property/';
                     $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
 
-                    // Define o caminho onde a imagem será salva
-                    $path = 'public/images/property/';
-
-                    // Gera um nome único para a imagem
                     $file_name = uniqid() . '.jpg';
 
-                    // Caminho completo da imagem
                     $data['property_main_image'] = $path . $file_name;
 
-                    // Salva a imagem no servidor
                     if (file_put_contents($data['property_main_image'], $property_main_image)) {
-                        echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
+                        // echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
                     } else {
-                        echo 'Erro ao salvar a imagem.';
+                        // echo 'Erro ao salvar a imagem.';
                     }
+                    // Main
 
 
                     print_r($data);
