@@ -213,27 +213,28 @@ class Propertys extends REST_Controller
                     // Main
 
 
-                    print_r($data);
+                    // print_r($data);
 
                     // $_broker_propertys =  $this->broker_model->search_broker_propertys($user_id, $query);
+                    $porperty_id = $this->broker_model->add_broker_property($data);
+                    if ($porperty_id) {
 
-                    // if ($_broker_propertys) {
+                        $final['status'] = true;
+                        $final['property_id'] =  $porperty_id;
+                        $final['message'] = 'Imóveil adicionado com sucesso.';
+                        $final['response'] = $data;
+                        $final['note'] = 'Dados   encontrados add_broker_property()';
 
-                    $final['status'] = true;
-                    $final['message'] = 'Imóveil adicionado com sucesso.';
-                    $final['response'] = $data;
-                    $final['note'] = 'Dados   encontrados add_broker_property()';
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    } else {
 
-                    // 	$this->response($final, REST_Controller::HTTP_OK);
-                    // } else {
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao adicionar imovel.';
+                        $final['note'] = 'Erro em get_broker_propertys()';
 
-                    // 	$final['status'] = false;
-                    // 	$final['message'] = 'Nenhum imoveil encontrado.';
-                    // 	$final['note'] = 'Erro em get_broker_propertys()';
-
-                    // 	$this->response($final, REST_Controller::HTTP_OK);
-                    // }
-
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+                    
                 } else {
 
                     $final['status'] = false;
