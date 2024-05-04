@@ -21,6 +21,7 @@ class Broker_model extends CI_Model
 
         $this->db->where('property_user_id', $user_id);
         $this->db->where('is_deleted', 0);
+        $this->db->order_by('id', 'desc');
         return $this->db->get('propertys')->result();
     }
 
@@ -29,7 +30,7 @@ class Broker_model extends CI_Model
 
         $this->db->where('property_user_id', $user_id);
         $this->db->like('property_title', $query);
-
+        $this->db->order_by('id', 'desc');
         $this->db->where('is_deleted', 0);
         return $this->db->get('propertys')->result();
     }
@@ -37,13 +38,15 @@ class Broker_model extends CI_Model
     public function add_broker_property($property_data)
     {
 
-        $data =  $this->db->insert('propertys', $property_data);
+        $data = $this->db->insert('propertys', $property_data);
         return $this->db->insert_id();
     }
 
-    public function add_broker_property_location($property_data)
+    public function update_broker_property($property_id, $update_data)
     {
+        $this->db->where('id', $property_id);
 
-        return  $this->db->insert('propertys_location', $property_data);
+        return $this->db->update('propertys', $update_data);
+      
     }
 }

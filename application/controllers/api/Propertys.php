@@ -232,11 +232,17 @@ class Propertys extends REST_Controller
 
                         // Adding Location
 
+                        $location_id =$this->broker_model->add_broker_property_location($data_location);
 
-                        if ($this->broker_model->add_broker_property_location($data_location)) {
+                        if ($location_id) {
+
+                            $update_data['property_location_id'] = $location_id;
+
+                            $this->broker_model->update_broker_property($porperty_id, $update_data);
 
                             $final['status'] = true;
                             $final['property_id'] =  $porperty_id;
+                            $final['location_id'] =  $location_id;
                             $final['message'] = 'Imóveil e dados adicionado com sucesso.';
                             $final['response'] = $data;
                             $final['note'] = 'add_broker_property_location() e add_broker_property()';
