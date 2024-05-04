@@ -77,6 +77,9 @@ $route['check_init_preferences'] = 'api/User/check_init_preferences';
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
 $route['search_broker_propertys'] = 'api/Propertys/search_broker_propertys';
 
+
+$route['add_broker_property'] = 'api/Propertys/add_broker_property';
+
 // Property
 
 

@@ -140,5 +140,100 @@ class Propertys extends REST_Controller
 		}
 	}
 
+    public function add_broker_property_post() {
+
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('property_title', 'Título do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('proprerty_type', 'Tipo do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('property_type_offer', 'Tipo de Oferta do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('property_price', 'Preço do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('property_area', 'Área do Imóvel', 'trim|required');
+
+		$this->form_validation->set_rules('property_function', 'Função do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('property_disponibility', 'Disponibilidade do Imóvel', 'trim|required');
+		$this->form_validation->set_rules('property_exclusive', 'Exclusividade do Imóvel', 'trim|required');
+        
+		$this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'trim | numeric');
+		$this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'trim | numeric');
+		$this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'trim | integer');
+		$this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'trim | integer');
+		$this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'trim | integer');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['property_title'] = $this->input->post('property_title');
+                    $data['proprerty_type'] = $this->input->post('proprerty_type');
+                    $data['property_type_offer'] = $this->input->post('property_type_offer');
+                    $data['property_price'] = $this->input->post('property_price');
+                    $data['property_area'] = $this->input->post('property_area');
+                    $data['property_function'] = $this->input->post('property_function');
+                    $data['property_disponibility'] = $this->input->post('property_disponibility');
+                    $data['property_exclusive'] = $this->input->post('property_exclusive');
+
+                    $data['property_condominio'] = $this->input->post('property_condominio');
+                    $data['property_iptu'] = $this->input->post('property_iptu');
+                    $data['property_room'] = $this->input->post('property_room');
+                    $data['property_bathroom'] = $this->input->post('property_bathroom');
+                    $data['property_places'] = $this->input->post('property_places');
+
+                    $data['property_main_image'] = $this->input->post('property_main_image');
+
+
+                    print_r($data);
+
+					// $_broker_propertys =  $this->broker_model->search_broker_propertys($user_id, $query);
+
+					// if ($_broker_propertys) {
+
+						$final['status'] = true;
+						$final['message'] = 'Imóveil adicionado com sucesso.';
+						$final['response'] = $data;
+						$final['note'] = 'Dados   encontrados add_broker_property()';
+
+					// 	$this->response($final, REST_Controller::HTTP_OK);
+					// } else {
+
+					// 	$final['status'] = false;
+					// 	$final['message'] = 'Nenhum imoveil encontrado.';
+					// 	$final['note'] = 'Erro em get_broker_propertys()';
+
+					// 	$this->response($final, REST_Controller::HTTP_OK);
+					// }
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+    }
+
 	
 }
