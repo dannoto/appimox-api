@@ -222,6 +222,7 @@ class Propertys extends REST_Controller
                         // Adding Location
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
                         $data_location['property_longitude'] = $this->input->post('location_longitude');
+                        $data_location['property_address'] = $this->input->post('location_address');
                         $data_location['property_id'] = $porperty_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
