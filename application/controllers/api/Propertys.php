@@ -191,8 +191,7 @@ class Propertys extends REST_Controller
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
 
-                    $data['location_latitude'] = $this->input->post('location_latitude');
-                    $data['location_longitude'] = $this->input->post('location_longitude');
+
 
 
                     // Images
@@ -219,22 +218,40 @@ class Propertys extends REST_Controller
                     $porperty_id = $this->broker_model->add_broker_property($data);
                     if ($porperty_id) {
 
-                        $final['status'] = true;
-                        $final['property_id'] =  $porperty_id;
-                        $final['message'] = 'Imóveil adicionado com sucesso.';
-                        $final['response'] = $data;
-                        $final['note'] = 'Dados   encontrados add_broker_property()';
+                        // Adding Location
+                        $data_location['property_latitude'] = $this->input->post('location_latitude');
+                        $data_location['property_longitude'] = $this->input->post('location_longitude');
+                        $data_location['property_id'] = $porperty_id;
+                        $data_location['property_broker'] = $this->input->post('property_user_id');
+                        $data_location['property_name'] = $this->input->post('property_title');
 
-                        $this->response($final, REST_Controller::HTTP_OK);
+                        // Adding Location
+
+
+                        if ($this->broker_model->add_broker_property_location($data_location)) {
+
+                            $final['status'] = true;
+                            $final['property_id'] =  $porperty_id;
+                            $final['message'] = 'Imóveil e dados adicionado com sucesso.';
+                            $final['response'] = $data;
+                            $final['note'] = 'add_broker_property_location() e add_broker_property()';
+
+                            $this->response($final, REST_Controller::HTTP_OK);
+                        } else {
+                            $final['status'] = false;
+                            $final['message'] = 'Erro ao adicionar locatoin do imovel.';
+                            $final['note'] = 'Erro em add_broker_property_location()';
+
+                            $this->response($final, REST_Controller::HTTP_OK);
+                        }
                     } else {
 
                         $final['status'] = false;
                         $final['message'] = 'Erro ao adicionar imovel.';
-                        $final['note'] = 'Erro em get_broker_propertys()';
+                        $final['note'] = 'Erro em add_broker_property()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-                    
                 } else {
 
                     $final['status'] = false;

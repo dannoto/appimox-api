@@ -16,30 +16,34 @@ class Broker_model extends CI_Model
      * send email with recovery link
      * CONSTRUCTOR | LOAD DB
      */
-    public function get_broker_propertys($user_id) {
-	
-		$this->db->where('property_user_id', $user_id);
-        $this->db->where('is_deleted', 0);
-		return $this->db->get('propertys')->result();
-		
-	}
+    public function get_broker_propertys($user_id)
+    {
 
-      public function search_broker_propertys($user_id, $query) {
-	
-		$this->db->where('property_user_id', $user_id);
+        $this->db->where('property_user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('propertys')->result();
+    }
+
+    public function search_broker_propertys($user_id, $query)
+    {
+
+        $this->db->where('property_user_id', $user_id);
         $this->db->like('property_title', $query);
 
         $this->db->where('is_deleted', 0);
-		return $this->db->get('propertys')->result();
-		
-	}
+        return $this->db->get('propertys')->result();
+    }
 
-    public function add_broker_property($property_data) {
+    public function add_broker_property($property_data)
+    {
 
         $data =  $this->db->insert('propertys', $property_data);
         return $this->db->insert_id();
-
     }
 
+    public function add_broker_property_location($property_data)
+    {
 
+        return  $this->db->insert('propertys_location', $property_data);
+    }
 }
