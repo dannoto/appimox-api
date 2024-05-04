@@ -191,9 +191,7 @@ class Propertys extends REST_Controller
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
 
-                    $data['property_main_image'] = $this->input->post('property_main_image');
-
-                    $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data['property_main_image']));
+                    $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
 
                     // Define o caminho onde a imagem será salva
                     $path = 'assets/images/property/';
@@ -202,11 +200,11 @@ class Propertys extends REST_Controller
                     $file_name = uniqid() . '.jpg';
 
                     // Caminho completo da imagem
-                    $file_path = $path . $file_name;
+                    $data['property_main_image'] = $path . $file_name;
 
                     // Salva a imagem no servidor
-                    if (file_put_contents($file_path, $property_main_image)) {
-                        echo 'Imagem salva com sucesso em: ' . $file_path;
+                    if (file_put_contents($data['property_main_image'], $property_main_image)) {
+                        echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
                     } else {
                         echo 'Erro ao salvar a imagem.';
                     }
