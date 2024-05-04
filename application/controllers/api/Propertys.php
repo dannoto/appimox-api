@@ -194,7 +194,7 @@ class Propertys extends REST_Controller
                     $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
 
                     // Define o caminho onde a imagem será salva
-                    $path = 'assets/images/property/';
+                    $path = 'public/images/property/';
 
                     // Gera um nome único para a imagem
                     $file_name = uniqid() . '.jpg';
