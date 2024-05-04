@@ -184,6 +184,8 @@ class Propertys extends REST_Controller
                     $data['property_function'] = $this->input->post('property_function');
                     $data['property_disponibility'] = $this->input->post('property_disponibility');
                     $data['property_exclusive'] = $this->input->post('property_exclusive');
+                    $data['property_address'] = $this->input->post('location_address');
+
 
                     $data['property_condominio'] = $this->input->post('property_condominio');
                     $data['property_iptu'] = $this->input->post('property_iptu');
