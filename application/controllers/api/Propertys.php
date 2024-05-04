@@ -153,11 +153,11 @@ class Propertys extends REST_Controller
 		$this->form_validation->set_rules('property_disponibility', 'Disponibilidade do Imóvel', 'trim|required');
 		$this->form_validation->set_rules('property_exclusive', 'Exclusividade do Imóvel', 'trim|required');
         
-		$this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'trim | numeric');
-		$this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'trim | numeric');
-		$this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'trim | integer');
-		$this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'trim | integer');
-		$this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'trim | integer');
+		$this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'numeric');
+		$this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'numeric');
+		$this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'integer');
+		$this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
+		$this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
 		if ($this->form_validation->run() == false) {
 
