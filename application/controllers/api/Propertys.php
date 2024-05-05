@@ -362,7 +362,7 @@ class Propertys extends REST_Controller
         }
     }
 
-    public function get_broker_property_data() {
+    public function get_broker_property_data_post() {
 
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
