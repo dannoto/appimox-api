@@ -21,6 +21,15 @@ class Broker_model extends CI_Model
         return $this->db->get('propertys')->result();
     }
 
+    public function get_broker_property($property_id)
+    {
+        $this->db->where('id', $property_id);
+        $this->db->where('is_deleted', 0);
+   
+        return $this->db->get('propertys')->row();
+    }
+
+
     public function search_broker_propertys($user_id, $query)
     {
         $this->db->where('property_user_id', $user_id);
@@ -42,6 +51,13 @@ class Broker_model extends CI_Model
 
     }
 
+    public function get_broker_property_location($property_id) {
+        $this->db->where('property_id', $property_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('propertys_location')->result();
+
+    }
+
     public function update_broker_property($property_id, $update_data)
     {
         $this->db->where('id', $property_id);
@@ -51,5 +67,21 @@ class Broker_model extends CI_Model
 
     public function add_broker_property_images($data) {
         return $this->db->insert('propertys_images', $data);
+    }
+
+    public function get_broker_property_images($property_id) {
+      
+        $this->db->where('property_id', $property_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('propertys_images')->result();
+    }
+
+    public function check_edit_property_data($property_user_id, $property_id) {
+
+        $this->db->where('property_user_id', $property_user_id);
+        $this->db->where('property_id', $property_id);
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get('propertys')->row();
     }
 }

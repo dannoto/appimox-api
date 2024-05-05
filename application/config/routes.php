@@ -80,6 +80,7 @@ $route['search_broker_propertys'] = 'api/Propertys/search_broker_propertys';
 
 $route['add_broker_property'] = 'api/Propertys/add_broker_property';
 $route['add_broker_property_others_images'] = 'api/Propertys/add_broker_property_others_images';
+$route['get_broker_property_data'] = 'api/Propertys/get_broker_property_data';
 
 // Property
 

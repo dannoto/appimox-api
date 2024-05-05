@@ -361,4 +361,71 @@ class Propertys extends REST_Controller
             }
         }
     }
+
+    public function get_broker_property_data() {
+
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
+
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+            
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['property_id'] = $this->input->post('property_id');
+
+                                 
+                    if ( $this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
+
+                        $final['status'] = true;
+                        $final['message'] = 'Imovel recuperados com sucesso.';
+                        $final['property_data'] = $this->broker_model->get_broker_property( $data['property_id']);
+                        $final['property_location_data'] = $this->broker_model->get_broker_property_location($data['property_id']);
+                        $final['property_imagens_data'] = $this->broker_model->get_broker_property_images($data['property_id']);
+                        $final['note'] = 'get_broker_property_data';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Você não é proprietário deste imóvel.';
+                        $final['note'] = 'Erro em get_broker_property_data()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+
+    }
 }
