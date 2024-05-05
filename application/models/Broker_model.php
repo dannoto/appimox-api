@@ -79,7 +79,7 @@ class Broker_model extends CI_Model
     public function check_edit_property_data($property_user_id, $property_id) {
 
         $this->db->where('property_user_id', $property_user_id);
-        $this->db->where('property_id', $property_id);
+        $this->db->where('id', $property_id);
         $this->db->where('is_deleted', 0);
 
         return $this->db->get('propertys')->row();
