@@ -242,7 +242,7 @@ class Propertys extends REST_Controller
 
                             $final['status'] = true;
                             $final['property_id'] =  $porperty_id;
-                            $final['location_id'] =  $location_id;
+                            $final['property_location_id'] =  $location_id;
                             $final['message'] = 'Imóveil e dados adicionado com sucesso.';
                             $final['response'] = $data;
                             $final['note'] = 'add_broker_property_location() e add_broker_property()';
