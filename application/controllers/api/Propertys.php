@@ -469,7 +469,7 @@ class Propertys extends REST_Controller
                         $final['status'] = true;
                         $final['property_id'] = $data['property_id'];
 
-                        $final['response'] = $property_data;
+                        $final['response'] = $property_data->property_location_id;
                         $final['message'] = 'Imovel excluido com sucesso.';
                         $final['note'] = 'delete_broker_property';
 
