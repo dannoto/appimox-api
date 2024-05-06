@@ -49,6 +49,10 @@ class Broker_model extends CI_Model
         return $this->db->insert_id();
 
     }
+    public function update_broker_property_location($property_location_id, $data) {
+        $this->db->where('id', $property_location_id);
+        return $this->db->update('propertys_location', $data);
+    }
 
     public function get_broker_property_location($property_id) {
         $this->db->where('property_id', $property_id);

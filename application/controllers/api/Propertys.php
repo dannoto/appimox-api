@@ -283,6 +283,143 @@ class Propertys extends REST_Controller
         }
     }
 
+    public function update_broker_property_post()
+    {
+        $this->form_validation->set_rules('property_id', 'Propriedade ID', 'trim|required');
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('property_title', 'Título do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_type', 'Tipo do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_type_offer', 'Tipo de Oferta do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_price', 'Preço do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_area', 'Área do Imóvel', 'trim|required');
+
+        $this->form_validation->set_rules('property_function', 'Função do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_disponibility', 'Disponibilidade do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_exclusive', 'Exclusividade do Imóvel', 'trim|required');
+
+        $this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'numeric');
+        $this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'numeric');
+        $this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $property_id = $this->input->post('property_id');
+                    $data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['property_title'] = $this->input->post('property_title');
+                    $data['property_type'] = $this->input->post('property_type');
+                    $data['property_type_offer'] = $this->input->post('property_type_offer');
+                    $data['property_price'] = $this->input->post('property_price');
+                    $data['property_area'] = $this->input->post('property_area');
+                    $data['property_function'] = $this->input->post('property_function');
+                    $data['property_disponibility'] = $this->input->post('property_disponibility');
+                    $data['property_exclusive'] = $this->input->post('property_exclusive');
+                    $data['property_address'] = $this->input->post('location_address');
+
+                    $data['property_condominio'] = $this->input->post('property_condominio');
+                    $data['property_iptu'] = $this->input->post('property_iptu');
+                    $data['property_room'] = $this->input->post('property_room');
+                    
+                    $data['property_bathroom'] = $this->input->post('property_bathroom');
+                    $data['property_places'] = $this->input->post('property_places');
+
+                    $data['property_location_id'] = $this->input->post('property_location_id'); //*
+
+                    $data['is_deleted'] = 0;
+                    // Images
+
+                    // Main
+                    $path = 'public/images/property/';
+                    $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
+
+                    $file_name = uniqid() . '.jpg';
+
+                    $data['property_main_image'] = $path . $file_name;
+
+                    if (file_put_contents($data['property_main_image'], $property_main_image)) {
+                        // echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
+                    } else {
+                        // echo 'Erro ao salvar a imagem.';
+                    }
+                    // Main
+
+                    if ($this->broker_model->update_broker_property($property_id, $data)) {
+
+                        // Adding Location
+                        $data_location['property_latitude'] = $this->input->post('location_latitude');
+                        $data_location['property_longitude'] = $this->input->post('location_longitude');
+                        $data_location['property_address'] = $this->input->post('location_address');
+                        $data_location['property_id'] = $property_id;
+                        $data_location['property_broker'] = $this->input->post('property_user_id');
+                        $data_location['property_name'] = $this->input->post('property_title');
+                        $data_location['property_place_id'] = $this->input->post('property_place_id');                        
+                        $data_location['is_deleted'] = 0;
+
+                        // Adding Location
+                        if ($this->broker_model->update_broker_property_location($data['property_location_id'], $data_location)) {
+
+                            $final['status'] = true;
+                            $final['property_id'] =  $property_id;
+                            $final['property_location_id'] =  $data['property_location_id'];
+                            $final['message'] = 'Imóveil e dados atualizados com sucesso.';
+                            $final['response'] = $data;
+                            $final['note'] = 'add_broker_property_location() e add_broker_property()';
+
+                            $this->response($final, REST_Controller::HTTP_OK);
+
+                        } else {
+                            $final['status'] = false;
+                            $final['message'] = 'Erro ao atualizar location do imovel.';
+                            $final['note'] = 'Erro em add_broker_property_location()';
+
+                            $this->response($final, REST_Controller::HTTP_OK);
+                        }
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao atualizar imovel.';
+                        $final['note'] = 'Erro em add_broker_property()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
     public function add_broker_property_others_images_post()
     {
 
