@@ -84,4 +84,17 @@ class Broker_model extends CI_Model
 
         return $this->db->get('propertys')->row();
     }
+
+    public function delete_broker_property($property_user_id, $property_id) {
+        
+        $this->db->where('id', $property_id);
+        $this->db->where('property_user_id', $property_user_id);
+
+        $data = array(
+            'is_deleted' => 1
+        );
+
+        return $this->db->update('propertys', $data);
+
+    }
 }

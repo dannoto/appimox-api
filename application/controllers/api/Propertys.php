@@ -432,4 +432,66 @@ class Propertys extends REST_Controller
         }
 
     }
+
+    public function delete_broker_property() {
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
+
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+            
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['property_id'] = $this->input->post('property_id');
+
+                                 
+                    if ( $this->broker_model->delete_broker_property($data['property_user_id'], $data['property_id'])) {
+
+                        $final['status'] = true;
+                        $final['message'] = 'Imovel excluido com sucesso.';
+                        $final['note'] = 'delete_broker_property';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao excluir imovel.';
+                        $final['note'] = 'Erro em delete_broker_property()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
 }
