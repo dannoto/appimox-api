@@ -24,7 +24,7 @@ class Broker_model extends CI_Model
     public function get_broker_property($property_id)
     {
         $this->db->where('id', $property_id);
-        $this->db->where('is_deleted', 0);
+        // $this->db->where('is_deleted', 0);
    
         return $this->db->get('propertys')->row();
     }
