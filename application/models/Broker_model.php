@@ -29,7 +29,6 @@ class Broker_model extends CI_Model
         return $this->db->get('propertys')->row();
     }
 
-
     public function search_broker_propertys($user_id, $query)
     {
         $this->db->where('property_user_id', $user_id);
