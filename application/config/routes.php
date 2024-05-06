@@ -72,8 +72,6 @@ $route['check_creci_init'] = 'api/User/check_creci_init';
 $route['check_init_preferences'] = 'api/User/check_init_preferences';
 
 // Propertys
-
-
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
 $route['search_broker_propertys'] = 'api/Propertys/search_broker_propertys';
 $route['add_broker_property'] = 'api/Propertys/add_broker_property';
@@ -81,8 +79,11 @@ $route['update_broker_property'] = 'api/Propertys/update_broker_property';
 $route['add_broker_property_others_images'] = 'api/Propertys/add_broker_property_others_images';
 $route['get_broker_property_data'] = 'api/Propertys/get_broker_property_data';
 $route['delete_broker_property'] = 'api/Propertys/delete_broker_property';
-
-
 // Property
+
+// Locations
+$route['get_locations'] = 'api/Locations/get_locations';
+
+// Locations
 
 
