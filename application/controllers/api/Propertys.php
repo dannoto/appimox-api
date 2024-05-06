@@ -158,6 +158,8 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
         $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
+
+        
         if ($this->form_validation->run() == false) {
 
             $final['status'] = false;
@@ -190,6 +192,7 @@ class Propertys extends REST_Controller
                     $data['property_condominio'] = $this->input->post('property_condominio');
                     $data['property_iptu'] = $this->input->post('property_iptu');
                     $data['property_room'] = $this->input->post('property_room');
+                    
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
                     $data['is_deleted'] = 0;
@@ -228,6 +231,7 @@ class Propertys extends REST_Controller
                         $data_location['property_id'] = $porperty_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
+                        $data_location['add_broker_property'] = $this->input->post('add_broker_property');                        
                         $data_location['is_deleted'] = 0;
 
                         // Adding Location
