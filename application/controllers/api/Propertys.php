@@ -157,7 +157,7 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
 
-        
+
         if ($this->form_validation->run() == false) {
 
             $final['status'] = false;
@@ -190,7 +190,7 @@ class Propertys extends REST_Controller
                     $data['property_condominio'] = $this->input->post('property_condominio');
                     $data['property_iptu'] = $this->input->post('property_iptu');
                     $data['property_room'] = $this->input->post('property_room');
-                    
+
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
                     $data['is_deleted'] = 0;
@@ -229,7 +229,7 @@ class Propertys extends REST_Controller
                         $data_location['property_id'] = $porperty_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
-                        $data_location['property_place_id'] = $this->input->post('property_place_id');                        
+                        $data_location['property_place_id'] = $this->input->post('property_place_id');
                         $data_location['is_deleted'] = 0;
 
                         // Adding Location
@@ -310,7 +310,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $headers = $this->input->request_headers();
@@ -337,7 +336,7 @@ class Propertys extends REST_Controller
                     $data['property_condominio'] = $this->input->post('property_condominio');
                     $data['property_iptu'] = $this->input->post('property_iptu');
                     $data['property_room'] = $this->input->post('property_room');
-                    
+
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
 
@@ -347,19 +346,24 @@ class Propertys extends REST_Controller
                     // Images
 
                     // Main
-                    $path = 'public/images/property/';
-                    $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
 
-                    $file_name = uniqid() . '.jpg';
+                    if (strlen($this->input->post('property_main_image')) > 0) {
 
-                    $data['property_main_image'] = $path . $file_name;
 
-                    if (file_put_contents($data['property_main_image'], $property_main_image)) {
-                        // echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
-                    } else {
-                        // echo 'Erro ao salvar a imagem.';
+                        $path = 'public/images/property/';
+                        $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('property_main_image')));
+
+                        $file_name = uniqid() . '.jpg';
+
+                        $data['property_main_image'] = $path . $file_name;
+
+                        if (file_put_contents($data['property_main_image'], $property_main_image)) {
+                            // echo 'Imagem salva com sucesso em: ' . $data['property_main_image'];
+                        } else {
+                            // echo 'Erro ao salvar a imagem.';
+                        }
+                        // Main
                     }
-                    // Main
 
                     if ($this->broker_model->update_broker_property($property_id, $data)) {
 
@@ -370,7 +374,7 @@ class Propertys extends REST_Controller
                         $data_location['property_id'] = $property_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
-                        $data_location['property_place_id'] = $this->input->post('property_place_id');                        
+                        $data_location['property_place_id'] = $this->input->post('property_place_id');
                         $data_location['is_deleted'] = 0;
 
                         // Adding Location
@@ -384,7 +388,6 @@ class Propertys extends REST_Controller
                             $final['note'] = 'add_broker_property_location() e add_broker_property()';
 
                             $this->response($final, REST_Controller::HTTP_OK);
-
                         } else {
                             $final['status'] = false;
                             $final['message'] = 'Erro ao atualizar location do imovel.';
@@ -392,7 +395,6 @@ class Propertys extends REST_Controller
 
                             $this->response($final, REST_Controller::HTTP_OK);
                         }
-
                     } else {
 
                         $final['status'] = false;
@@ -401,7 +403,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -409,7 +410,6 @@ class Propertys extends REST_Controller
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
-
             } else {
 
                 $final['status'] = false;
@@ -436,7 +436,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
         } else {
 
             $headers = $this->input->request_headers();
@@ -462,12 +461,10 @@ class Propertys extends REST_Controller
                     $data['property_image'] = $path . $file_name;
 
                     if (file_put_contents($data['property_image'], $property_main_image)) {
-                      
                     } else {
-                       
                     }
-                  
-                    if ( $this->broker_model->add_broker_property_images($data)) {
+
+                    if ($this->broker_model->add_broker_property_images($data)) {
 
                         $final['status'] = true;
                         $final['message'] = 'Imagem adicionada com sucesso.';
@@ -483,7 +480,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -502,7 +498,8 @@ class Propertys extends REST_Controller
         }
     }
 
-    public function get_broker_property_data_post() {
+    public function get_broker_property_data_post()
+    {
 
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
@@ -515,7 +512,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
         } else {
 
             $headers = $this->input->request_headers();
@@ -529,18 +525,17 @@ class Propertys extends REST_Controller
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['property_id'] = $this->input->post('property_id');
 
-                                 
-                    if ( $this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
+
+                    if ($this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
 
                         $final['status'] = true;
                         $final['message'] = 'Imovel recuperados com sucesso.';
-                        $final['property_data'] = $this->broker_model->get_broker_property( $data['property_id']);
+                        $final['property_data'] = $this->broker_model->get_broker_property($data['property_id']);
                         $final['property_location_data'] = $this->broker_model->get_broker_property_location($data['property_id']);
                         $final['property_imagens_data'] = $this->broker_model->get_broker_property_images($data['property_id']);
                         $final['note'] = 'get_broker_property_data';
 
                         $this->response($final, REST_Controller::HTTP_OK);
-
                     } else {
 
                         $final['status'] = false;
@@ -549,7 +544,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -566,10 +560,10 @@ class Propertys extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
-
     }
 
-    public function delete_broker_property_post() {
+    public function delete_broker_property_post()
+    {
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
 
@@ -581,7 +575,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
         } else {
 
             $headers = $this->input->request_headers();
@@ -595,11 +588,11 @@ class Propertys extends REST_Controller
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['property_id'] = $this->input->post('property_id');
 
-                    if ( $this->broker_model->delete_broker_property($data['property_user_id'], $data['property_id'])) {
+                    if ($this->broker_model->delete_broker_property($data['property_user_id'], $data['property_id'])) {
 
                         $property_data = $this->broker_model->get_broker_property($data['property_id']);
 
-                        $this->broker_model->delete_broker_property_location( $property_data->property_location_id);
+                        $this->broker_model->delete_broker_property_location($property_data->property_location_id);
 
                         $final['status'] = true;
                         $final['property_id'] = $data['property_id'];
@@ -608,7 +601,6 @@ class Propertys extends REST_Controller
                         $final['note'] = 'delete_broker_property';
 
                         $this->response($final, REST_Controller::HTTP_OK);
-
                     } else {
 
                         $final['status'] = false;
@@ -617,7 +609,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-
                 } else {
 
                     $final['status'] = false;
