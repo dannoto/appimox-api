@@ -58,6 +58,17 @@ class Broker_model extends CI_Model
 
     }
 
+    public function delete_broker_property_location($property_location_id) {
+
+        $this->db->where('id', $property_location_id);
+
+        $data = array(
+            'is_deleted' => 1
+        );
+
+        return $this->db->update('propertys_location', $data);
+    }
+ 
     public function update_broker_property($property_id, $update_data)
     {
         $this->db->where('id', $property_id);
@@ -86,7 +97,7 @@ class Broker_model extends CI_Model
     }
 
     public function delete_broker_property($property_user_id, $property_id) {
-        
+
         $this->db->where('id', $property_id);
         $this->db->where('property_user_id', $property_user_id);
 
