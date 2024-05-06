@@ -322,6 +322,7 @@ class Propertys extends REST_Controller
                 if ($decodedToken['status']) {
 
                     $property_id = $this->input->post('property_id');
+                    $property_location_id = $this->input->post('property_location_id');
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['property_title'] = $this->input->post('property_title');
                     $data['property_type'] = $this->input->post('property_type');
@@ -340,7 +341,7 @@ class Propertys extends REST_Controller
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
 
-                    $data['property_location_id'] = $this->input->post('property_location_id'); //*
+                    // $data['property_location_id'] = $this->input->post('property_location_id'); //*
 
                     $data['is_deleted'] = 0;
                     // Images
@@ -373,11 +374,11 @@ class Propertys extends REST_Controller
                         $data_location['is_deleted'] = 0;
 
                         // Adding Location
-                        if ($this->broker_model->update_broker_property_location($data['property_location_id'], $data_location)) {
+                        if ($this->broker_model->update_broker_property_location($property_location_id, $data_location)) {
 
                             $final['status'] = true;
                             $final['property_id'] =  $property_id;
-                            $final['property_location_id'] =  $data['property_location_id'];
+                            $final['property_location_id'] =  $property_location_id;
                             $final['message'] = 'Imóveil e dados atualizados com sucesso.';
                             $final['response'] = $data;
                             $final['note'] = 'add_broker_property_location() e add_broker_property()';
