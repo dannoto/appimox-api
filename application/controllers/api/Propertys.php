@@ -462,11 +462,13 @@ class Propertys extends REST_Controller
 
                         // deletando location
                         $property_data = $this->broker_model->get_broker_property($data['property_id']);
-                        print_r($property_data);
+                        // print_r($property_data);
 
                         // $this->broker_model->delete_broker_property_location( $property_data->property_location_id);
 
                         $final['status'] = true;
+                        $final['property_id'] = $property_id;
+
                         $final['response'] = $property_data;
                         $final['message'] = 'Imovel excluido com sucesso.';
                         $final['note'] = 'delete_broker_property';
