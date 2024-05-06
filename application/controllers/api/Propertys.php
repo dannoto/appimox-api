@@ -457,19 +457,15 @@ class Propertys extends REST_Controller
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['property_id'] = $this->input->post('property_id');
 
-                                 
                     if ( $this->broker_model->delete_broker_property($data['property_user_id'], $data['property_id'])) {
 
-                        // deletando location
                         $property_data = $this->broker_model->get_broker_property($data['property_id']);
-                        // print_r($property_data);
 
-                        // $this->broker_model->delete_broker_property_location( $property_data->property_location_id);
+                        $this->broker_model->delete_broker_property_location( $property_data->property_location_id);
 
                         $final['status'] = true;
                         $final['property_id'] = $data['property_id'];
-
-                        $final['response'] = $property_data->property_location_id;
+                        $final['property_location_id'] = $property_data->property_location_id;
                         $final['message'] = 'Imovel excluido com sucesso.';
                         $final['note'] = 'delete_broker_property';
 
