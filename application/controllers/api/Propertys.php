@@ -231,7 +231,7 @@ class Propertys extends REST_Controller
                         $data_location['property_id'] = $porperty_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
-                        $data_location['add_broker_property'] = $this->input->post('add_broker_property');                        
+                        $data_location['property_place_id'] = $this->input->post('property_place_id');                        
                         $data_location['is_deleted'] = 0;
 
                         // Adding Location
