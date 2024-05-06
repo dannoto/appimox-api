@@ -16,67 +16,52 @@ class Locations extends REST_Controller
         $this->load->model('email_model');
         $this->load->model('broker_model');
         $this->load->model('location_model');
-
     }
 
     public function get_locations_post()
     {
-        // $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
-        if ($this->form_validation->run() == false) {
 
-            $final['status'] = false;
-            $final['message'] = validation_errors();
-            $final['note'] = 'Erro no formulário.';
+        $headers = $this->input->request_headers();
 
-            $this->response($final, REST_Controller::HTTP_OK);
+        if (isset($headers['Authorization'])) {
 
-        } else {
+            $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-            $headers = $this->input->request_headers();
+            if ($decodedToken['status']) {
 
-            if (isset($headers['Authorization'])) {
+                $locations =  $this->location_model->get_locations();
 
-                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+                if ($locations) {
 
-                if ($decodedToken['status']) {
+                    $final['status'] = true;
+                    $final['message'] = 'Locations encontradas com sucesso.';
+                    $final['response'] = $locations;
+                    $final['note'] = 'Dados   encontrados get_broker_propertys()';
 
-                    $locations =  $this->location_model->get_locations();
-
-                    if ($locations) {
-
-                        $final['status'] = true;
-                        $final['message'] = 'Locations encontradas com sucesso.';
-                        $final['response'] = $locations;
-                        $final['note'] = 'Dados   encontrados get_broker_propertys()';
-
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    } else {
-
-                        $final['status'] = false;
-                        $final['message'] = 'Nenhum Locations encontrada.';
-                        $final['note'] = 'Erro em get_broker_propertys()';
-
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    }
-
+                    $this->response($final, REST_Controller::HTTP_OK);
                 } else {
 
                     $final['status'] = false;
-                    $final['message'] = 'Sua sessão expirou.';
-                    $final['note'] = 'Erro em $decodedToken["status"]';
-                    $this->response($decodedToken);
+                    $final['message'] = 'Nenhum Locations encontrada.';
+                    $final['note'] = 'Erro em get_broker_propertys()';
+
+                    $this->response($final, REST_Controller::HTTP_OK);
                 }
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Falha na autenticação.';
-                $final['note'] = 'Erro em validateToken()';
-
-                $this->response($final, REST_Controller::HTTP_OK);
+                $final['message'] = 'Sua sessão expirou.';
+                $final['note'] = 'Erro em $decodedToken["status"]';
+                $this->response($decodedToken);
             }
+        } else {
+
+            $final['status'] = false;
+            $final['message'] = 'Falha na autenticação.';
+            $final['note'] = 'Erro em validateToken()';
+
+            $this->response($final, REST_Controller::HTTP_OK);
         }
     }
-
-
 }
