@@ -433,7 +433,7 @@ class Propertys extends REST_Controller
 
     }
 
-    public function delete_broker_property() {
+    public function delete_broker_property_post() {
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
 
