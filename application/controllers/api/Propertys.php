@@ -652,10 +652,10 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $user_id = $this->input->post('user_id');
+                    $property_user_id = $this->input->post('property_user_id');
                     $filter = $this->input->post('filter');
 
-                    $_broker_propertys =  $this->broker_model->search_broker_propertys_home($user_id, $filter);
+                    $_broker_propertys =  $this->broker_model->search_broker_propertys_home($property_user_id, $filter);
 
                     if ($_broker_propertys) {
 
@@ -669,6 +669,8 @@ class Propertys extends REST_Controller
 
                         $final['status'] = false;
                         $final['message'] = 'Nenhum imovel encontrado.';
+                        $final['response'] = $_broker_propertys;
+
                         $final['note'] = 'Erro em search_broker_propertys_home()';
 
                         $this->response($final, REST_Controller::HTTP_OK);

@@ -119,13 +119,10 @@ class Broker_model extends CI_Model
     public function search_broker_propertys_home($user_id, $filter)
     {
 
-        if (strlen($filter) > 0) {
-            $this->db->where('property_type_offer', $filter);
-        }
 
-        $this->db->where('is_deleted', 0);
         $this->db->where('property_user_id', $user_id);
-
+        $this->db->where('property_type_offer', $filter);
+        $this->db->where('is_deleted', 0);
 
         return $this->db->get('propertys')->result();
     }
