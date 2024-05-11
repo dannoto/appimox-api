@@ -176,4 +176,40 @@ class User_model extends CI_Model {
 
 	}
 	// Property
+
+
+	// favorits
+
+	public function get_favorits($user_id) {
+
+		$this->db->where('favorit_user_id', $user_id);
+		$this->db->where('is_deleted', 0);
+
+		return $this->db->get('user_favorits')->result();
+	}
+
+	public function add_favorit($user_id, $property_id) {
+
+		$data = array(
+			'favorit_user_id' => $user_id,
+			'favorit_property_id' => $property_id,
+			'favorit_data' => date('Y-m-d H:i:s'),
+			'is_deleted' => 0
+		);
+		return $this->db->insert('user_favorits', $data);
+
+	}
+
+	public function delete_favorit($user_id, $property_id) {
+
+		$this->db->where('favorit_user_id', $user_id);
+		$this->db->where('favorit_property_id', $property_id);
+		
+		$data = array(
+			'is_deleted' => 1
+		);
+
+		return $this->db->update('user_favorits', $data);		
+	}
+	// favorits
 }

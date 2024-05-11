@@ -441,7 +441,7 @@ class User extends REST_Controller
 
 	public function check_session_post()
 	{
-		
+
 		$headers = $this->input->request_headers();
 
 		if (isset($headers['Authorization'])) {
@@ -463,7 +463,6 @@ class User extends REST_Controller
 				$final['note'] = 'Erro em $decodedToken["status"]';
 				$this->response($decodedToken);
 			}
-
 		} else {
 
 			$final['status'] = false;
@@ -473,4 +472,195 @@ class User extends REST_Controller
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
+
+
+	// add favorits
+
+	public function add_favorit_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('property_id', 'Property ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$property_id = $this->input->post('property_id');
+
+					$add_favorit =  $this->user_model->add_favorit($user_id, $property_id);
+
+					if ($add_favorit) {
+
+						$final['status'] = true;
+						$final['message'] = 'Favorito adicionado com sucesso.';
+						$final['note'] = 'Dados   encontrados add_favorit()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Erro ao adicionar favorito.';
+
+						$final['note'] = 'Erro em add_favorit()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function get_favorits_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$favorits_data =  $this->user_model->get_favorits($user_id);
+
+					if ($favorits_data) {
+
+						$final['status'] = true;
+						$final['response'] = $favorits_data;
+						$final['message'] = 'Favorito encontrado com sucesso.';
+						$final['note'] = 'Dados   encontrados get_favorits()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Erro ao encontrar favorito.';
+						$final['note'] = 'Erro em get_favorits()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function delete_favorit_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('property_id', 'Property ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$property_id = $this->input->post('property_id');
+
+					$delete_favorit =  $this->user_model->delete_favorit($user_id, $property_id);
+
+					if ($delete_favorit) {
+
+						$final['status'] = true;
+						$final['message'] = 'Favorito deleteado com sucesso.';
+						$final['note'] = 'Dados   encontrados delete_favorit()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Erro ao deletar favorito.';
+
+						$final['note'] = 'Erro em delete_favorit()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	// add favorits
+
 }
