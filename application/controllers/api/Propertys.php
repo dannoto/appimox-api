@@ -410,6 +410,7 @@ class Propertys extends REST_Controller
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
+                
             } else {
 
                 $final['status'] = false;

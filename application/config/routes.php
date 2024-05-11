@@ -59,6 +59,8 @@ $route['translate_uri_dashes'] = FALSE;
 // $route['product/(:num)']['PUT'] = 'api/Product/$1';
 // $route['product/(:num)']['DELETE'] = 'api/Product/$1';
 $route['reGenToken'] = 'api/Token/reGenToken';
+$route['check_session'] = 'api/User/check_session';
+
 
 $route['register'] = 'api/User/register';
 $route['login'] = 'api/User/login';

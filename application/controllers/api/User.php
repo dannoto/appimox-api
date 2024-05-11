@@ -427,7 +427,6 @@ class User extends REST_Controller
 					$final['note'] = 'Sucessoadd_user_preferences()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
-
 				} else {
 
 					$final['status'] = false;
@@ -437,6 +436,41 @@ class User extends REST_Controller
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
 			}
+		}
+	}
+
+	public function check_session()
+	{
+		
+		$headers = $this->input->request_headers();
+
+		if (isset($headers['Authorization'])) {
+
+			$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+			if ($decodedToken['status']) {
+
+				$final['status'] = true;
+				$final['message'] = 'Sessão ativa.';
+				$final['response'] = $decodedToken['status'];
+				$final['note'] = 'Sessão ativa.';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Sua sessão expirou.';
+				$final['note'] = 'Erro em $decodedToken["status"]';
+				$this->response($decodedToken);
+			}
+
+		} else {
+
+			$final['status'] = false;
+			$final['message'] = 'Falha na autenticação.';
+			$final['note'] = 'Erro em validateToken()';
+
+			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
 }
