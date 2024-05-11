@@ -439,7 +439,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function check_session()
+	public function check_session_post()
 	{
 		
 		$headers = $this->input->request_headers();
