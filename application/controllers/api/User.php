@@ -819,7 +819,7 @@ class User extends REST_Controller
 					$data['user_name'] = $this->input->post('user_name');
 					$data['user_email'] = $this->input->post('user_email');
 					$data['user_state'] = $this->input->post('user_state');
-					$data['user_cidade'] = $this->input->post('user_cidade');
+					$data['user_city'] = $this->input->post('user_cidade');
 					$data['user_creci'] = $this->input->post('user_creci');
 					$data['user_cpf'] = $this->input->post('user_cpf');
 
@@ -913,7 +913,7 @@ class User extends REST_Controller
 					$data['user_name'] = $this->input->post('user_name');
 					$data['user_email'] = $this->input->post('user_email');
 					$data['user_state'] = $this->input->post('user_state');
-					$data['user_cidade'] = $this->input->post('user_cidade');
+					$data['user_city'] = $this->input->post('user_cidade');
 					// $data['user_creci'] = $this->input->post('user_creci');
 					// $data['user_cpf'] = $this->input->post('user_cpf');
 
