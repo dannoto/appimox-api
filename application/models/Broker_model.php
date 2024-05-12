@@ -119,6 +119,7 @@ class Broker_model extends CI_Model
     public function search_broker_propertys_home($user_id, $filter)
     {
 
+        $this->db->order_by('id','desc');
 
         $this->db->where('property_user_id', $user_id);
         $this->db->where('property_type_offer', $filter);

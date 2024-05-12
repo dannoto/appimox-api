@@ -93,9 +93,10 @@ $route['get_locations'] = 'api/Locations/get_locations';
 
 
 // Favorits
-$route['add_favorit'] = 'api/Locations/add_favorit';
-$route['get_favorits'] = 'api/Locations/get_favorits';
-$route['delete_favorit'] = 'api/Locations/delete_favorit';
+$route['add_favorit'] = 'api/User/add_favorit';
+$route['get_favorits'] = 'api/User/get_favorits';
+$route['delete_favorit'] = 'api/User/delete_favorit';
+$route['check_favorit'] = 'api/User/check_favorit';
 
 // Favorits
 
