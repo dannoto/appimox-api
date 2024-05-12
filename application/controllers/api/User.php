@@ -728,7 +728,7 @@ class User extends REST_Controller
 
 	// profile
 
-	public function get_user_profile_data()
+	public function get_user_profile_data_post()
 	{
 
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
