@@ -792,7 +792,7 @@ class User extends REST_Controller
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
-		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
+		$this->form_validation->set_rules('user_state', 'Estado', 'trim|required');
 		$this->form_validation->set_rules('user_cidade', 'Cidade', 'trim|required');
 		$this->form_validation->set_rules('user_creci', 'CRECI', 'trim|required');
 		$this->form_validation->set_rules('user_cpf', 'CPF', 'trim|required');
@@ -818,7 +818,7 @@ class User extends REST_Controller
 
 					$data['user_name'] = $this->input->post('user_name');
 					$data['user_email'] = $this->input->post('user_email');
-					$data['user_estado'] = $this->input->post('user_estado');
+					$data['user_state'] = $this->input->post('user_state');
 					$data['user_cidade'] = $this->input->post('user_cidade');
 					$data['user_creci'] = $this->input->post('user_creci');
 					$data['user_cpf'] = $this->input->post('user_cpf');
@@ -886,7 +886,7 @@ class User extends REST_Controller
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
-		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
+		$this->form_validation->set_rules('user_state', 'Estado', 'trim|required');
 		$this->form_validation->set_rules('user_cidade', 'Cidade', 'trim|required');
 		$this->form_validation->set_rules('user_creci', 'CRECI', 'trim|required');
 		$this->form_validation->set_rules('user_cpf', 'CPF', 'trim|required');
@@ -912,7 +912,7 @@ class User extends REST_Controller
 
 					$data['user_name'] = $this->input->post('user_name');
 					$data['user_email'] = $this->input->post('user_email');
-					$data['user_estado'] = $this->input->post('user_estado');
+					$data['user_state'] = $this->input->post('user_state');
 					$data['user_cidade'] = $this->input->post('user_cidade');
 					// $data['user_creci'] = $this->input->post('user_creci');
 					// $data['user_cpf'] = $this->input->post('user_cpf');
