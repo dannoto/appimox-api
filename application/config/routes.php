@@ -102,6 +102,7 @@ $route['check_favorit'] = 'api/User/check_favorit';
 
 
 // Profile
+$route['get_user_profile_data'] = 'api/User/get_user_profile_data';
 $route['update_broker_profile'] = 'api/User/update_broker_profile';
 $route['update_client_profile'] = 'api/User/update_client_profile';
 
