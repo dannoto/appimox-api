@@ -223,7 +223,7 @@ class User_model extends CI_Model
 		// 	'is_deleted' => 1
 		// );
 
-		return $this->db->delete('user_favorits', $data);
+		return $this->db->delete('user_favorits');
 	}
 	// favorits
 
