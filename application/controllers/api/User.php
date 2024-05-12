@@ -509,7 +509,7 @@ class User extends REST_Controller
 
 						$final['status'] = true;
 						$final['response'] = $check_data;
-						$final['message'] = 'Favorito encontrado com sucesso.';
+						$final['message'] = 'check Favorito encontrado com sucesso.';
 						$final['note'] = 'Dados   encontrados get_favorits()';
 
 						$this->response($final, REST_Controller::HTTP_OK);
@@ -517,7 +517,7 @@ class User extends REST_Controller
 					} else {
 
 						$final['status'] = false;
-						$final['message'] = 'Erro ao encontrar favorito.';
+						$final['message'] = 'Erro ao encontrar check favorito.';
 						$final['note'] = 'Erro em get_favorits()';
 
 						$this->response($final, REST_Controller::HTTP_OK);
