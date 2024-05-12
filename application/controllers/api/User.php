@@ -476,7 +476,7 @@ class User extends REST_Controller
 
 	// add favorits
 
-	
+
 	public function check_favorit_post()
 	{
 
@@ -513,7 +513,6 @@ class User extends REST_Controller
 						$final['note'] = 'Dados   encontrados get_favorits()';
 
 						$this->response($final, REST_Controller::HTTP_OK);
-
 					} else {
 
 						$final['status'] = false;
@@ -636,7 +635,6 @@ class User extends REST_Controller
 						$final['note'] = 'Dados   encontrados get_favorits()';
 
 						$this->response($final, REST_Controller::HTTP_OK);
-
 					} else {
 
 						$final['status'] = false;
@@ -726,5 +724,199 @@ class User extends REST_Controller
 	}
 
 	// add favorits
+
+
+	// profile
+	public function update_broker_profile_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('user_image', 'Imagem', 'trim|required');
+		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
+		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
+		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
+		$this->form_validation->set_rules('user_cidade', 'Cidade', 'trim|required');
+		$this->form_validation->set_rules('user_creci', 'CRECI', 'trim|required');
+		$this->form_validation->set_rules('user_cpf', 'CPF', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$data['user_name'] = $this->input->post('user_name');
+					$data['user_email'] = $this->input->post('user_email');
+					$data['user_estado'] = $this->input->post('user_estado');
+					$data['user_cidade'] = $this->input->post('user_cidade');
+					$data['user_creci'] = $this->input->post('user_creci');
+					$data['user_cpf'] = $this->input->post('user_cpf');
+
+
+					if (strlen($data['user_image']) > 0) {
+
+						$path = 'public/images/users/';
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
+
+						$file_name = uniqid() . '.jpg';
+
+						$data['user_image'] = $path . $file_name;
+
+						if (file_put_contents($data['user_image'], $property_main_image)) {
+						} else {
+						}
+					}
+
+					$update_user =  $this->user_model->update_user_profile($user_id, $data);
+
+					if (!$this->user_model->check_email($data['user_email'], $user_id)) {
+
+						if ($update_user) {
+
+							$final['status'] = true;
+							$final['message'] = 'Perfil atualizado com sucesso.';
+							$final['note'] = 'Dados encontrados update_user_profile()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Erro ao atualizar Perfil.';
+							$final['note'] = 'Erro em update_user_profile()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Este e-mail já esta em uso.';
+						$final['note'] = 'Erro em update_user_profile()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function update_client_profile_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('user_image', 'Imagem', 'trim|required');
+		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
+		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
+		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
+		$this->form_validation->set_rules('user_cidade', 'Cidade', 'trim|required');
+		$this->form_validation->set_rules('user_creci', 'CRECI', 'trim|required');
+		$this->form_validation->set_rules('user_cpf', 'CPF', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$data['user_name'] = $this->input->post('user_name');
+					$data['user_email'] = $this->input->post('user_email');
+					$data['user_estado'] = $this->input->post('user_estado');
+					$data['user_cidade'] = $this->input->post('user_cidade');
+					// $data['user_creci'] = $this->input->post('user_creci');
+					// $data['user_cpf'] = $this->input->post('user_cpf');
+
+
+					// ==
+					if (strlen($data['user_image']) > 0) {
+						$path = 'public/images/users/';
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
+
+						$file_name = uniqid() . '.jpg';
+
+						$data['user_image'] = $path . $file_name;
+
+						if (file_put_contents($data['user_image'], $property_main_image)) {
+						} else {
+						}
+					}
+
+					$update_user =  $this->user_model->update_user_profile($user_id, $data);
+
+					if (!$this->user_model->check_email($data['user_email'], $user_id)) {
+
+						if ($update_user) {
+
+							$final['status'] = true;
+							$final['message'] = 'Perfil atualizado com sucesso.';
+							$final['note'] = 'Dados encontrados update_user_profile()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Erro ao atualizar Perfil.';
+							$final['note'] = 'Erro em update_user_profile()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Este e-mail já esta em uso.';
+						$final['note'] = 'Erro em update_user_profile()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	// profile
 
 }
