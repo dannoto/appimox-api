@@ -758,14 +758,14 @@ class User extends REST_Controller
 					if ($user_data) {
 
 						$final['status'] = true;
-						$final['message'] = 'Atualizado com sucesso.';
+						$final['message'] = 'Encontrado com sucesso.';
 						$final['response'] = $user_data;
 						$final['note'] = 'Dados encontrados get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					} else {
 
 						$final['status'] = false;
-						$final['message'] = 'Ocorreu um erro ao atualizar.';
+						$final['message'] = 'Ocorreu um erro ao pegar dados.';
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
@@ -846,13 +846,13 @@ class User extends REST_Controller
 						if ($update_user) {
 
 							$final['status'] = true;
-							$final['message'] = 'Perfil atualizado com sucesso.';
+							$final['message'] = 'Atualizado com sucesso.';
 							$final['note'] = 'Dados encontrados update_user_profile()';
 							$this->response($final, REST_Controller::HTTP_OK);
 						} else {
 
 							$final['status'] = false;
-							$final['message'] = 'Erro ao atualizar Perfil.';
+							$final['message'] = 'Erro ao atualizar dados.';
 							$final['note'] = 'Erro em update_user_profile()';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
@@ -941,13 +941,13 @@ class User extends REST_Controller
 						if ($update_user) {
 
 							$final['status'] = true;
-							$final['message'] = 'Perfil atualizado com sucesso.';
+							$final['message'] = 'Atualizado com sucesso.';
 							$final['note'] = 'Dados encontrados update_user_profile()';
 							$this->response($final, REST_Controller::HTTP_OK);
 						} else {
 
 							$final['status'] = false;
-							$final['message'] = 'Erro ao atualizar Perfil.';
+							$final['message'] = 'Erro ao atualizar dados.';
 							$final['note'] = 'Erro em update_user_profile()';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
