@@ -661,6 +661,69 @@ class User extends REST_Controller
 		}
 	}
 
+	
+	public function search_get_favorits_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('query', 'User ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$query = $this->input->post('query');
+
+					$favorits_data =  $this->user_model->search_get_favorits($user_id, $query);
+
+					if ($favorits_data) {
+
+						$final['status'] = true;
+						$final['response'] = $favorits_data;
+						$final['message'] = 'Favorito encontrado com sucesso.';
+						$final['note'] = 'Dados   encontrados get_favorits()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Erro ao encontrar favorito.';
+						$final['note'] = 'Erro em get_favorits()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
 	public function delete_favorit_post()
 	{
 

@@ -195,7 +195,21 @@ class User_model extends CI_Model
 		return $this->db->get()->result();
 	}
 
+	public function search_get_favorits($user_id, $query)
+	{
+		// Seleciona todas as propriedades favoritas do usuário com base no ID do usuário
+		$this->db->select('*');
+		$this->db->from('user_favorits');
+		$this->db->join('propertys', 'user_favorits.favorit_property_id = propertys.id');
+		$this->db->where('user_favorits.favorit_user_id', $user_id);
+		$this->db->where('user_favorits.is_deleted', 0);
+		$this->db->like('propertys.property_title', $query);
+		// Executa a consulta e retorna os resultados
+		return $this->db->get()->result();
+	}
 
+
+	
 	public function check_favorit($user_id, $property_id)
 	{
 
