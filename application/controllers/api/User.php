@@ -758,14 +758,14 @@ class User extends REST_Controller
 					if ($user_data) {
 
 						$final['status'] = true;
-						$final['message'] = 'Perfil encontrado com sucesso.';
+						$final['message'] = 'Atualizado com sucesso.';
 						$final['response'] = $user_data;
 						$final['note'] = 'Dados encontrados get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					} else {
 
 						$final['status'] = false;
-						$final['message'] = 'Erro ao encontrar Perfil.';
+						$final['message'] = 'Ocorreu um erro ao atualizar.';
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
