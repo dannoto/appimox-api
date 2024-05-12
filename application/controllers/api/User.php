@@ -822,18 +822,19 @@ class User extends REST_Controller
 					$data['user_city'] = $this->input->post('user_cidade');
 					$data['user_creci'] = $this->input->post('user_creci');
 					$data['user_cpf'] = $this->input->post('user_cpf');
+					$data['user_image'] = $this->input->post('user_imagem');
 
 
-					if (strlen($data['user_imagem']) > 0) {
+					if (strlen($data['user_image']) > 0) {
 
 						$path = 'public/images/users/';
-						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_imagem')));
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
 
 						$file_name = uniqid() . '.jpg';
 
-						$data['user_imagem'] = $path . $file_name;
+						$data['user_image'] = $path . $file_name;
 
-						if (file_put_contents($data['user_imagem'], $property_main_image)) {
+						if (file_put_contents($data['user_image'], $property_main_image)) {
 						} else {
 						}
 					}
@@ -914,20 +915,22 @@ class User extends REST_Controller
 					$data['user_email'] = $this->input->post('user_email');
 					$data['user_state'] = $this->input->post('user_state');
 					$data['user_city'] = $this->input->post('user_cidade');
+					$data['user_image'] = $this->input->post('user_imagem');
+
 					// $data['user_creci'] = $this->input->post('user_creci');
 					// $data['user_cpf'] = $this->input->post('user_cpf');
 
 
 					// ==
-					if (strlen($data['user_imagem']) > 0) {
+					if (strlen($data['user_image']) > 0) {
 						$path = 'public/images/users/';
-						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_imagem')));
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
 
 						$file_name = uniqid() . '.jpg';
 
-						$data['user_imagem'] = $path . $file_name;
+						$data['user_image'] = $path . $file_name;
 
-						if (file_put_contents($data['user_imagem'], $property_main_image)) {
+						if (file_put_contents($data['user_image'], $property_main_image)) {
 						} else {
 						}
 					}
