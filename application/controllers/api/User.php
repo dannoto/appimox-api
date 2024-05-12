@@ -822,7 +822,7 @@ class User extends REST_Controller
 					$data['user_city'] = $this->input->post('user_cidade');
 					$data['user_creci'] = $this->input->post('user_creci');
 					$data['user_cpf'] = $this->input->post('user_cpf');
-					$data['user_image'] = $this->input->post('user_imagem');
+					$data['user_image'] = $this->input->post('user_image');
 
 
 					if (strlen($data['user_image']) > 0) {
@@ -915,7 +915,7 @@ class User extends REST_Controller
 					$data['user_email'] = $this->input->post('user_email');
 					$data['user_state'] = $this->input->post('user_state');
 					$data['user_city'] = $this->input->post('user_cidade');
-					$data['user_image'] = $this->input->post('user_imagem');
+					$data['user_image'] = $this->input->post('user_image');
 
 					// $data['user_creci'] = $this->input->post('user_creci');
 					// $data['user_cpf'] = $this->input->post('user_cpf');
