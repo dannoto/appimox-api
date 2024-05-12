@@ -790,7 +790,6 @@ class User extends REST_Controller
 	{
 
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-		$this->form_validation->set_rules('user_image', 'Imagem', 'trim|required');
 		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
 		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
@@ -825,16 +824,16 @@ class User extends REST_Controller
 					$data['user_cpf'] = $this->input->post('user_cpf');
 
 
-					if (strlen($data['user_image']) > 0) {
+					if (strlen($data['user_imagem']) > 0) {
 
 						$path = 'public/images/users/';
-						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_imagem')));
 
 						$file_name = uniqid() . '.jpg';
 
-						$data['user_image'] = $path . $file_name;
+						$data['user_imagem'] = $path . $file_name;
 
-						if (file_put_contents($data['user_image'], $property_main_image)) {
+						if (file_put_contents($data['user_imagem'], $property_main_image)) {
 						} else {
 						}
 					}
@@ -885,7 +884,6 @@ class User extends REST_Controller
 	{
 
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-		$this->form_validation->set_rules('user_image', 'Imagem', 'trim|required');
 		$this->form_validation->set_rules('user_name', 'Nome', 'trim|required');
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
 		$this->form_validation->set_rules('user_estado', 'Estado', 'trim|required');
@@ -921,15 +919,15 @@ class User extends REST_Controller
 
 
 					// ==
-					if (strlen($data['user_image']) > 0) {
+					if (strlen($data['user_imagem']) > 0) {
 						$path = 'public/images/users/';
-						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
+						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_imagem')));
 
 						$file_name = uniqid() . '.jpg';
 
-						$data['user_image'] = $path . $file_name;
+						$data['user_imagem'] = $path . $file_name;
 
-						if (file_put_contents($data['user_image'], $property_main_image)) {
+						if (file_put_contents($data['user_imagem'], $property_main_image)) {
 						} else {
 						}
 					}
