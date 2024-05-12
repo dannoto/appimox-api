@@ -182,7 +182,7 @@ class User_model extends CI_Model
 
 	// favorits
 
-	public function get_favorites($user_id)
+	public function get_favorits($user_id)
 	{
 		// Seleciona todas as propriedades favoritas do usuário com base no ID do usuário
 		$this->db->select('*');
