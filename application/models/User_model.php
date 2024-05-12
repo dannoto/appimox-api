@@ -187,7 +187,7 @@ class User_model extends CI_Model
 		// Seleciona todas as propriedades favoritas do usuário com base no ID do usuário
 		$this->db->select('*');
 		$this->db->from('user_favorits');
-		$this->db->join('propertys', 'user_favorits.favority_property_id = propertys.id');
+		$this->db->join('propertys', 'user_favorits.favorit_property_id = propertys.id');
 		$this->db->where('user_favorits.favorit_user_id', $user_id);
 		$this->db->where('user_favorits.is_deleted', 0);
 
