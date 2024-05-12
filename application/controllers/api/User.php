@@ -786,6 +786,7 @@ class User extends REST_Controller
 			}
 		}
 	}
+	
 	public function update_broker_profile_post()
 	{
 
