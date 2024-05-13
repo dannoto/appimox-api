@@ -411,7 +411,6 @@ class Propertys extends REST_Controller
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
-                
             } else {
 
                 $final['status'] = false;
@@ -631,7 +630,8 @@ class Propertys extends REST_Controller
 
 
     // ===
-    public function get_broker_property_home_post() {
+    public function get_broker_property_home_post()
+    {
 
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('filter', 'User ID', 'trim|required');
@@ -676,7 +676,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -693,14 +692,14 @@ class Propertys extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
-
     }
 
 
     // 
     // search proprtyes 
 
-    public function get_propertys_by_range_post() {
+    public function get_propertys_by_range_post()
+    {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
@@ -721,9 +720,9 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $markers_data = str_replace($this->input->post('markers_data'), '"', '');
-                    $markers_data = str_replace($markers_data, ']', '');
-                    $markers_data = str_replace($markers_data, '[', '');
+                    $markers_data = str_replace('"', '', $this->input->post('markers_data'));
+                    $markers_data = str_replace(']', '', $markers_data);
+                    $markers_data = str_replace('[', '', $markers_data);
 
                     echo $markers_data;
 
@@ -756,7 +755,7 @@ class Propertys extends REST_Controller
                     // $final['note'] = 'Erro em $decodedToken["status"]';
                     // $this->response($final);
 
-             
+
 
                 } else {
 
@@ -774,6 +773,5 @@ class Propertys extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
-
     }
 }
