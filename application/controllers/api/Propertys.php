@@ -721,28 +721,30 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $markers_data = json_decode($this->input->post('markers_data'));
+                    $markers_data = explode(",", $this->input->post('markers_data'));
                     // $markers_data = json_decode($_POST['markers_data']);
 
-                    $propertys_data = array();
+                    echo $markers_data;
 
-                    foreach ($markers_data as $p) {
+                    // $propertys_data = array();
 
-                        $property_id =  $this->property_model->get_property_by_location_id($p->id);
-                        $property_data = $this->property_model->get_property($property_id);
+                    // foreach ($markers_data as $p) {
 
-
-                        // array_push($propertys_data, $property_data);
-
-                        $propertys_data[] = $property_data;
-                    }
+                    //     $property_id =  $this->property_model->get_property_by_location_id($p->id);
+                    //     $property_data = $this->property_model->get_property($property_id);
 
 
-                    $final['status'] = true;
-                    $final['message'] = 'Propriedades encontrados';
-                    $final['response'] =  $propertys_data;
-                    $final['note'] = 'Erro em $decodedToken["status"]';
-                    $this->response($final);
+                    //     // array_push($propertys_data, $property_data);
+
+                    //     $propertys_data[] = $property_data;
+                    // }
+
+
+                    // $final['status'] = true;
+                    // $final['message'] = 'Propriedades encontrados';
+                    // $final['response'] =  $propertys_data;
+                    // $final['note'] = 'Erro em $decodedToken["status"]';
+                    // $this->response($final);
 
              
 
