@@ -697,8 +697,9 @@ class Propertys extends REST_Controller
 
 
     // 
+    // search proprtyes 
 
-    public function get_propertys_by_range() {
+    public function get_propertys_by_range_post() {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
