@@ -707,7 +707,7 @@ class Propertys extends REST_Controller
 
             $final['status'] = false;
             $final['message'] = validation_errors();
-            $final['note'] = 'Erro no formulário.';
+            $final['note'] = 'Erro no formulárioi.';
 
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
