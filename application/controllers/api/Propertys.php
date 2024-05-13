@@ -734,11 +734,11 @@ class Propertys extends REST_Controller
                         $p = str_replace($p, ']', '');
                         $p = str_replace($p, '[', '');
 
-                        // echo $p;
+                        echo $p;
 
-                        $property_id =  $this->property_model->get_property_by_location_id($p);
-                        $property_data = $this->property_model->get_property($property_id);
-                        $propertys_data[] = $property_data;
+                        // $property_id =  $this->property_model->get_property_by_location_id($p);
+                        // $property_data = $this->property_model->get_property($property_id);
+                        // $propertys_data[] = $property_data;
 
                     }
 
