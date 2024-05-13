@@ -724,20 +724,20 @@ class Propertys extends REST_Controller
                     $markers_data = explode(",", $this->input->post('markers_data'));
                     // $markers_data = json_decode($_POST['markers_data']);
 
-                    echo $this->input->post('markers_data');
+                    // echo $this->input->post('markers_data');
+
+                    
 
                     // $propertys_data = array();
 
-                    // foreach ($markers_data as $p) {
+                    foreach ($markers_data as $p) {
 
-                    //     $property_id =  $this->property_model->get_property_by_location_id($p->id);
-                    //     $property_data = $this->property_model->get_property($property_id);
+                        // $property_id =  $this->property_model->get_property_by_location_id($p->id);
+                        // $property_data = $this->property_model->get_property($property_id);
+                        // $propertys_data[] = $property_data;
 
-
-                    //     // array_push($propertys_data, $property_data);
-
-                    //     $propertys_data[] = $property_data;
-                    // }
+                        echo $p."-";
+                    }
 
 
                     // $final['status'] = true;
