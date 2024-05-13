@@ -15,6 +15,7 @@ class Propertys extends REST_Controller
         $this->load->model('user_model');
         $this->load->model('email_model');
         $this->load->model('broker_model');
+        $this->load->model('property_model');
     }
 
     public function broker_propriety_post()
@@ -722,13 +723,19 @@ class Propertys extends REST_Controller
 
                     $markers_data = json_decode($this->input->post('markers_data'));
 
+                    $propertys_data = array();
 
                     foreach ($markers_data as $p) {
 
-                        echo $p->name." - ".$p->id;
+                        $property_data = $this->property_model->get_property($p->id);
+
+                        array_push($propertys_data, $property_data);
+
+
+                        // echo $p->name." - ".$p->id;
                     }
 
-                    // print_r($markers_data);
+                    print_r($propertys_data);
 
                     // $_broker_propertys =  $this->broker_model->search_broker_propertys_home($property_user_id, $filter);
 
