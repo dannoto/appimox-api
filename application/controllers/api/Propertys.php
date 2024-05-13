@@ -721,7 +721,8 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $markers_data = json_decode($this->input->post('markers_data'));
+                    // $markers_data = json_decode($this->input->post('markers_data'));
+                    $markers_data = json_decode($_POST['markers_data']);
 
                     $propertys_data = array();
 
@@ -731,8 +732,9 @@ class Propertys extends REST_Controller
                         $property_data = $this->property_model->get_property($property_id);
 
 
-                        array_push($propertys_data, $property_data);
+                        // array_push($propertys_data, $property_data);
 
+                        $propertys_data[] = $property_data;
                     }
 
 
@@ -740,7 +742,7 @@ class Propertys extends REST_Controller
                     $final['message'] = 'Propriedades encontrados';
                     $final['response'] =  $propertys_data;
                     $final['note'] = 'Erro em $decodedToken["status"]';
-                    $this->response($final);
+                    $this->response($markers_data);
 
              
 
