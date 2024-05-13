@@ -88,6 +88,8 @@ $route['get_broker_property_home'] = 'api/Propertys/get_broker_property_home';
 
 // Locations
 $route['get_locations'] = 'api/Locations/get_locations';
+$route['get_propertys_by_range'] = 'api/Propertys/get_propertys_by_range';
+
 
 // Locations
 
