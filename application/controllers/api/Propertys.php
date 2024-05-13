@@ -724,38 +724,23 @@ class Propertys extends REST_Controller
                     $markers_data = str_replace(']', '', $markers_data);
                     $markers_data = str_replace('[', '', $markers_data);
 
-                    echo $markers_data;
-
-
                     $markers_data = explode(",", $markers_data);
-                    // $markers_data = json_decode($_POST['markers_data']);
 
-                    // echo $this->input->post('markers_data');
+                    $propertys_data = array();
 
-                    // $propertys_data = array();
+                    foreach ($markers_data as $p) {
 
-                    // foreach ($markers_data as $p) {
+                        $property_id =  $this->property_model->get_property_by_location_id($p);
+                        $property_data = $this->property_model->get_property($property_id);
+                        $propertys_data[] = $property_data;
 
-                    //     // $p = str_replace($p, '"', '');
-                    //     // $p = str_replace($p, ']', '');
-                    //     // $p = str_replace($p, '[', '');
+                    }
 
-                    //     echo "NOVO DADOS: ".$p."<br>";
-
-                    //     // $property_id =  $this->property_model->get_property_by_location_id($p);
-                    //     // $property_data = $this->property_model->get_property($property_id);
-                    //     // $propertys_data[] = $property_data;
-
-                    // }
-
-
-                    // $final['status'] = true;
-                    // $final['message'] = 'Propriedades encontrados';
-                    // $final['response'] =  $propertys_data;
-                    // $final['note'] = 'Erro em $decodedToken["status"]';
-                    // $this->response($final);
-
-
+                    $final['status'] = true;
+                    $final['message'] = 'Propriedades encontrados';
+                    $final['response'] =  $propertys_data;
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($final);
 
                 } else {
 
