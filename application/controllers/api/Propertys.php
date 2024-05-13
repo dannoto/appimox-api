@@ -722,7 +722,13 @@ class Propertys extends REST_Controller
 
                     $markers_data = json_decode($this->input->post('markers_data'));
 
-                    print_r($markers_data);
+
+                    foreach ($markers_data as $p) {
+
+                        echo $p->name." - ".$p->id;
+                    }
+
+                    // print_r($markers_data);
 
                     // $_broker_propertys =  $this->broker_model->search_broker_propertys_home($property_user_id, $filter);
 
