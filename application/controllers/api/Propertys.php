@@ -721,7 +721,7 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $markers_data = $this->input->post('markers_data');
+                    $markers_data = json_encode($this->input->post('markers_data'));
 
                     // $propertys_data = array();
 
