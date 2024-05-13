@@ -721,7 +721,12 @@ class Propertys extends REST_Controller
 
                 if ($decodedToken['status']) {
 
-                    $markers_data = explode(",", $this->input->post('markers_data'));
+                    $markers_data = str_replace($this->input->post('markers_data'), '"', '');
+                    $markers_data = str_replace($markers_data, ']', '');
+                    $markers_data = str_replace($markers_data, '[', '');
+
+
+                    $markers_data = explode(",", $markers_data);
                     // $markers_data = json_decode($_POST['markers_data']);
 
                     // echo $this->input->post('markers_data');
