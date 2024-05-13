@@ -24,6 +24,6 @@ class Property_model extends CI_Model
         $this->db->where('id', $location_id);
         $this->db->where('is_deleted', 0);
         $data =  $this->db->get('propertys_location')->row();
-        return $data['property_id'];
+        return $data->property_id;
     }
 }
