@@ -740,7 +740,7 @@ class Propertys extends REST_Controller
 
                     $final['status'] = true;
                     $final['message'] = 'Propriedades encontrados';
-                    $final['response'] =  $propertys_data;
+                    $final['response'] =  $markers_data;
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($markers_data);
 
