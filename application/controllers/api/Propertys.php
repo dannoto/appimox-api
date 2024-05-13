@@ -736,7 +736,13 @@ class Propertys extends REST_Controller
                         // echo $p->name." - ".$p->id;
                     }
 
-                    print_r($propertys_data);
+                    // print_r($propertys_data);
+
+                    $final['status'] = true;
+                    $final['message'] = 'Propriedades encontrados';
+                    $final['response'] = $propertys_data;
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
 
                     // $_broker_propertys =  $this->broker_model->search_broker_propertys_home($property_user_id, $filter);
 
