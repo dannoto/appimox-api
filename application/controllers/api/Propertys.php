@@ -730,6 +730,7 @@ class Propertys extends REST_Controller
 
 
                     if (count($markers_data) > 0) {
+
                         foreach ($markers_data as $p) {
 
                             $property_id =  $this->property_model->get_property_by_location_id($p);
@@ -743,6 +744,7 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
+                        
                     } else {
 
                         $final['status'] = false;
