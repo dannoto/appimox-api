@@ -730,6 +730,10 @@ class Propertys extends REST_Controller
 
                     foreach ($markers_data as $p) {
 
+                        $p = str_replace($p, '"', '');
+                        $p = str_replace($p, ']', '');
+                        $p = str_replace($p, '[', '');
+
                         // echo $p;
 
                         $property_id =  $this->property_model->get_property_by_location_id($p);
