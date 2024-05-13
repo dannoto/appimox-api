@@ -748,14 +748,14 @@ class Propertys extends REST_Controller
                 } else {
 
                     $final['status'] = false;
-                    $final['message'] = 'Sua sessão expirou.';
+                    $final['message'] = 'Sua sessão expiroux.';
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Falha na autenticação.';
+                $final['message'] = 'Falha na autenticaçãoy.';
                 $final['note'] = 'Erro em validateToken()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
