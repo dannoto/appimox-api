@@ -723,47 +723,26 @@ class Propertys extends REST_Controller
 
                     $markers_data = json_decode($this->input->post('markers_data'));
 
-                    $propertys_data = array();
+                    // $propertys_data = array();
 
-                    foreach ($markers_data as $p) {
+                    // foreach ($markers_data as $p) {
 
-                        $property_id =  $this->property_model->get_property_by_location_id($p->id);
-                        $property_data = $this->property_model->get_property($property_id);
+                    //     $property_id =  $this->property_model->get_property_by_location_id($p->id);
+                    //     $property_data = $this->property_model->get_property($property_id);
 
 
-                        array_push($propertys_data, $property_data);
+                    //     array_push($propertys_data, $property_data);
 
-                        // echo $p->name." - ".$p->id;
-                    }
+                    // }
 
-                    // print_r($propertys_data);
 
                     $final['status'] = true;
                     $final['message'] = 'Propriedades encontrados';
-                    $final['response'] = $propertys_data;
+                    $final['response'] = $markers_data;
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
 
-                    // $_broker_propertys =  $this->broker_model->search_broker_propertys_home($property_user_id, $filter);
-
-                    // if ($_broker_propertys) {
-
-                    //     $final['status'] = true;
-                    //     $final['message'] = 'Imóveis encontradas com sucesso.';
-                    //     $final['response'] = $_broker_propertys;
-                    //     $final['note'] = 'Dados   encontrados search_broker_propertys_home()';
-
-                    //     $this->response($final, REST_Controller::HTTP_OK);
-                    // } else {
-
-                    //     $final['status'] = false;
-                    //     $final['message'] = 'Nenhum imovel encontrado.';
-                    //     $final['response'] = $_broker_propertys;
-
-                    //     $final['note'] = 'Erro em search_broker_propertys_home()';
-
-                    //     $this->response($final, REST_Controller::HTTP_OK);
-                    // }
+             
 
                 } else {
 
