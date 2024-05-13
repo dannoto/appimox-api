@@ -729,8 +729,9 @@ class Propertys extends REST_Controller
 
                         $property_data = $this->property_model->get_property($p->id);
 
-                        array_push($propertys_data, $property_data);
+                        print_r($property_data);
 
+                        array_push($propertys_data, $property_data);
 
                         // echo $p->name." - ".$p->id;
                     }
