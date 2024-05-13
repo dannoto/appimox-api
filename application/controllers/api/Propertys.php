@@ -724,7 +724,7 @@ class Propertys extends REST_Controller
                     $markers_data = explode(",", $this->input->post('markers_data'));
                     // $markers_data = json_decode($_POST['markers_data']);
 
-                    echo $markers_data;
+                    echo $this->input->post('markers_data');
 
                     // $propertys_data = array();
 
