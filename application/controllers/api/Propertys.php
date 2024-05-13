@@ -730,22 +730,20 @@ class Propertys extends REST_Controller
 
                     foreach ($markers_data as $p) {
 
-                        echo $p;
+                        echo $p."<br>";
 
-                        $property_id =  $this->property_model->get_property_by_location_id($p);
-                        
-                        echo $property_id;
+                        // $property_id =  $this->property_model->get_property_by_location_id($p);
                         // $property_data = $this->property_model->get_property($property_id);
                         // $propertys_data[] = $property_data;
 
                     }
 
 
-                    $final['status'] = true;
-                    $final['message'] = 'Propriedades encontrados';
-                    $final['response'] =  $propertys_data;
-                    $final['note'] = 'Erro em $decodedToken["status"]';
-                    $this->response($final);
+                    // $final['status'] = true;
+                    // $final['message'] = 'Propriedades encontrados';
+                    // $final['response'] =  $propertys_data;
+                    // $final['note'] = 'Erro em $decodedToken["status"]';
+                    // $this->response($final);
 
              
 
