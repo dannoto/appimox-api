@@ -1028,7 +1028,7 @@ class Propertys extends REST_Controller
 
     // ====================
 
-    public function get_broker_associate_properties()
+    public function get_broker_associate_properties_post()
     {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
