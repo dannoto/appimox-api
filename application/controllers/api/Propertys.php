@@ -1025,4 +1025,87 @@ class Propertys extends REST_Controller
             }
         }
     }
+
+    // ====================
+
+    public function get_broker_associate_properties()
+    {
+
+        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('broker_id', 'Broker ID', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulárioi.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $markers_data = str_replace('"', '', $this->input->post('markers_data'));
+                    $markers_data = str_replace(']', '', $markers_data);
+                    $markers_data = str_replace('[', '', $markers_data);
+
+                    $markers_data = explode(",", $markers_data);
+
+                    $propertys_data = array();
+
+                    // filters
+                    $broker_id_search =  htmlspecialchars($this->input->post('broker_id'));
+                  
+                    // filters
+
+                    if (count($markers_data) > 0) {
+
+                        foreach ($markers_data as $p) {
+
+                            $property_id =  $this->property_model->get_property_by_associate_broker_id($p, $broker_id_search);
+                            $property_data = $this->property_model->get_property($property_id);
+
+                            if ($property_data) {
+                                $propertys_data[] = $property_data;
+                            }
+                        }
+
+                        $final['status'] = true;
+                        $final['message'] = 'Propriedades encontrados';
+                        $final['response'] =  $propertys_data;
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Nenhuma propriedade encontrada';
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+                    }
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expiroux.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticaçãoy.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    
 }

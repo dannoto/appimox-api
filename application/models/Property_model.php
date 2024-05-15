@@ -50,11 +50,9 @@ class Property_model extends CI_Model
         if (strlen($f_data['filter_price_min']) > 0 && strlen($f_data['filter_price_max']) == 0) {
             // Somente preço mínimo foi definido.
             $this->db->where('property_price >=', $f_data['filter_price_min']);
-
         } else if (strlen($f_data['filter_price_min']) == 0 && strlen($f_data['filter_price_max']) > 0) {
             // Somente preço máximo foi definido.
             $this->db->where('property_price <=', $f_data['filter_price_max']);
-
         } else if (strlen($f_data['filter_price_min']) > 0 && strlen($f_data['filter_price_max']) > 0) {
             // Preço mínimo e preço máximo definidos.
             $this->db->where('property_price >=', $f_data['filter_price_min']);
@@ -109,10 +107,10 @@ class Property_model extends CI_Model
         // $this->db->where('users.user_verified_preferences', 1);
         // $this->db->where('users.user_status', 0);
         // $this->db->join('user_preferences', 'users.id = user_preferences.user_id', 'left');
-    
+
         // $query = $this->db->get();
         // $result = $query->result();
-    
+
         // // Agrupar os resultados por ID de usuário
         // $grouped_result = [];
         // foreach ($result as $row) {
@@ -127,10 +125,16 @@ class Property_model extends CI_Model
         //     unset($row->id, $row->user_id); // Remover redundâncias
         //     $grouped_result[$user_id]->user_preferences[] = $row;
         // }
-    
+
         // return $grouped_result;
     }
 
-    
-
+    public function get_property_by_associate_broker_id($location_id, $broker_id)
+    {
+        $this->db->where('id', $location_id);
+        $this->db->where('property_broker', $broker_id);
+        $this->db->where('is_deleted', 0);
+        $data =  $this->db->get('propertys_location')->row();
+        return $data->property_id;
+    }
 }

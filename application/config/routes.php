@@ -94,6 +94,11 @@ $route['get_propertys_by_range_filter'] = 'api/Propertys/get_propertys_by_range_
 
 $route['get_broker_by_range'] = 'api/Propertys/get_broker_by_range';
 $route['get_broker_by_range_filter'] = 'api/Propertys/get_broker_by_range_filter';
+
+$route['get_broker_associate_properties'] = 'api/Propertys/get_broker_associate_properties';
+
+
+
 // Locations
 
 
