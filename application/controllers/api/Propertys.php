@@ -744,7 +744,6 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     } else {
 
                         $final['status'] = false;
@@ -822,7 +821,6 @@ class Propertys extends REST_Controller
                             if ($property_data) {
                                 $propertys_data[] = $property_data;
                             }
-                            
                         }
 
 
@@ -831,7 +829,6 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-                        
                     } else {
 
                         $final['status'] = false;
@@ -839,7 +836,6 @@ class Propertys extends REST_Controller
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -897,7 +893,21 @@ class Propertys extends REST_Controller
 
                             $broker_id =  $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
-                            $brokers_data[] = $broker_data;
+
+                            $id_exists = false;
+                            foreach ($brokers_data as $existing_broker) {
+                                if ($existing_broker->id == $broker_data->id) {
+                                    $id_exists = true;
+                                    break;
+                                }
+                            }
+
+                            // Se o ID não existe, adiciona o corretor a brokers_data
+                            if (!$id_exists) {
+                                $brokers_data[] = $broker_data;
+                            }
+
+                            // $brokers_data[] = $broker_data;
                         }
 
 
@@ -906,7 +916,6 @@ class Propertys extends REST_Controller
                         $final['response'] =  $brokers_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     } else {
 
                         $final['status'] = false;
@@ -914,7 +923,6 @@ class Propertys extends REST_Controller
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -985,7 +993,6 @@ class Propertys extends REST_Controller
                             if ($property_data) {
                                 $propertys_data[] = $property_data;
                             }
-                            
                         }
 
 
@@ -994,7 +1001,6 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-                        
                     } else {
 
                         $final['status'] = false;
@@ -1002,7 +1008,6 @@ class Propertys extends REST_Controller
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
-
                 } else {
 
                     $final['status'] = false;

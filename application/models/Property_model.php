@@ -99,7 +99,7 @@ class Property_model extends CI_Model
         $this->db->where('user_verified_preferences', 1);
         $this->db->where('user_status', 0);
 
-        return $this->db->get('users')->row_array();
+        return $this->db->get('users')->row();
 
         // $this->db->select('users.*, user_preferences.*');
         // $this->db->from('users');
