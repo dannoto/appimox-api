@@ -857,4 +857,167 @@ class Propertys extends REST_Controller
             }
         }
     }
+
+    // ====================
+
+    public function get_broker_by_range_post()
+    {
+
+        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulárioi.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $markers_data = str_replace('"', '', $this->input->post('markers_data'));
+                    $markers_data = str_replace(']', '', $markers_data);
+                    $markers_data = str_replace('[', '', $markers_data);
+
+                    $markers_data = explode(",", $markers_data);
+
+                    $brokers_data = array();
+
+
+                    if (count($markers_data) > 0) {
+
+                        foreach ($markers_data as $p) {
+
+                            $broker_id =  $this->property_model->get_broker_by_location_id($p);
+                            $broker_data = $this->property_model->get_broker($broker_id);
+                            $brokers_data[] = $broker_data;
+                        }
+
+
+                        $final['status'] = true;
+                        $final['message'] = 'Propriedades encontrados';
+                        $final['response'] =  $brokers_data;
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Nenhuma propriedade encontrada';
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expiroux.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticaçãoy.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function get_broker_by_range_filter_post()
+    {
+
+        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulárioi.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $markers_data = str_replace('"', '', $this->input->post('markers_data'));
+                    $markers_data = str_replace(']', '', $markers_data);
+                    $markers_data = str_replace('[', '', $markers_data);
+
+                    $markers_data = explode(",", $markers_data);
+
+                    $propertys_data = array();
+
+                    // filters
+                    $f_data['filter_type'] =  htmlspecialchars($this->input->post('filter_type'));
+                    $f_data['filter_type_offer'] =  htmlspecialchars($this->input->post('filter_type_offer'));
+                    $f_data['filter_room'] =  htmlspecialchars($this->input->post('filter_room'));
+                    $f_data['filter_bathroom'] =  htmlspecialchars($this->input->post('filter_bathroom'));
+                    $f_data['filter_places'] =  htmlspecialchars($this->input->post('filter_places'));
+                    $f_data['filter_price_min'] =  htmlspecialchars($this->input->post('filter_price_min'));
+                    $f_data['filter_price_max'] =  htmlspecialchars($this->input->post('filter_price_max'));
+                    $f_data['filter_function'] =  htmlspecialchars($this->input->post('filter_function'));
+                    $f_data['filter_disponibility'] =  htmlspecialchars($this->input->post('filter_disponibility'));
+                    // filters
+
+                    if (count($markers_data) > 0) {
+
+                        foreach ($markers_data as $p) {
+
+                            $property_id =  $this->property_model->get_property_by_location_id($p);
+                            $property_data = $this->property_model->get_property_filter($property_id, $f_data);
+
+                            if ($property_data) {
+                                $propertys_data[] = $property_data;
+                            }
+                            
+                        }
+
+
+                        $final['status'] = true;
+                        $final['message'] = 'Propriedades encontrados';
+                        $final['response'] =  $propertys_data;
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+                        
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Nenhuma propriedade encontrada';
+                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        $this->response($final);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expiroux.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticaçãoy.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
 }

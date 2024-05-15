@@ -73,7 +73,6 @@ class Property_model extends CI_Model
         return $this->db->get('propertys')->row();
     }
 
-
     public function get_property_by_location_id($location_id)
     {
         $this->db->where('id', $location_id);
@@ -81,4 +80,50 @@ class Property_model extends CI_Model
         $data =  $this->db->get('propertys_location')->row();
         return $data->property_id;
     }
+
+    // =======
+
+    public function get_broker_by_location_id($location_id)
+    {
+        $this->db->where('id', $location_id);
+        $this->db->where('is_deleted', 0);
+        $data =  $this->db->get('propertys_location')->row();
+        return $data->property_broker;
+    }
+
+    public function get_broker($broker_id)
+    {
+        $this->db->select('users.*, user_preferences.*');
+        $this->db->from('users');
+        $this->db->where('users.id', $broker_id);
+        $this->db->where('users.user_type', 'broker');
+        $this->db->where('users.user_verified_creci', 1);
+        $this->db->where('users.user_verified_preferences', 1);
+        $this->db->where('users.user_status', 0);
+        $this->db->join('user_preferences', 'users.id = user_preferences.user_id', 'left');
+    
+        $query = $this->db->get();
+        $result = $query->result();
+    
+        // Agrupar os resultados por ID de usuário
+        $grouped_result = [];
+        foreach ($result as $row) {
+            $user_id = $row->id;
+            if (!isset($grouped_result[$user_id])) {
+                $grouped_result[$user_id] = (object)[
+                    'user_data' => [],
+                    'user_preferences' => []
+                ];
+            }
+            $grouped_result[$user_id]->user_data = $row;
+            unset($row->id, $row->user_id); // Remover redundâncias
+            $grouped_result[$user_id]->user_preferences[] = $row;
+        }
+    
+        return $grouped_result;
+    }
+    
+
+    
+
 }
