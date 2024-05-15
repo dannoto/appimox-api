@@ -812,9 +812,6 @@ class Propertys extends REST_Controller
                     $f_data['filter_disponibility'] =  htmlspecialchars($this->input->post('filter_disponibility'));
                     // filters
 
-
-
-
                     if (count($markers_data) > 0) {
 
                         foreach ($markers_data as $p) {

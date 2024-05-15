@@ -34,11 +34,15 @@ class Property_model extends CI_Model
         }
 
         if (strlen($f_data['filter_room']) > 0) {
-            $this->db->where('property_room', $f_data['filter_room']);
+            $this->db->where('property_room >=', $f_data['filter_room']);
+        }
+
+        if (strlen($f_data['filter_bathroom']) > 0) {
+            $this->db->where('property_bathroom >=', $f_data['filter_bathroom']);
         }
 
         if (strlen($f_data['filter_places']) > 0) {
-            $this->db->where('property_places', $f_data['filter_places']);
+            $this->db->where('property_places >=', $f_data['filter_places']);
         }
 
         // Filtrando Preço
@@ -50,7 +54,7 @@ class Property_model extends CI_Model
         } else if (strlen($f_data['filter_price_min']) == 0 && strlen($f_data['filter_price_max']) > 0) {
             // Somente preço máximo foi definido.
             $this->db->where('property_price <=', $f_data['filter_price_max']);
-            
+
         } else if (strlen($f_data['filter_price_min']) > 0 && strlen($f_data['filter_price_max']) > 0) {
             // Preço mínimo e preço máximo definidos.
             $this->db->where('property_price >=', $f_data['filter_price_min']);
