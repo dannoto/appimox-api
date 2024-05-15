@@ -34,15 +34,15 @@ class Property_model extends CI_Model
         }
 
         if (strlen($f_data['filter_room']) > 0) {
-            $this->db->where('property_room >=', $f_data['filter_room']);
+            $this->db->where('property_room', $f_data['filter_room']);
         }
 
         if (strlen($f_data['filter_bathroom']) > 0) {
-            $this->db->where('property_bathroom >=', $f_data['filter_bathroom']);
+            $this->db->where('property_bathroom', $f_data['filter_bathroom']);
         }
 
         if (strlen($f_data['filter_places']) > 0) {
-            $this->db->where('property_places >=', $f_data['filter_places']);
+            $this->db->where('property_places', $f_data['filter_places']);
         }
 
         // Filtrando Preço
