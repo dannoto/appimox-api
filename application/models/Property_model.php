@@ -129,7 +129,19 @@ class Property_model extends CI_Model
         // return $grouped_result;
     }
 
+    // filtra se os corretores encontrados possuem a prefeences
+    public function filter_broker_by_preferences($broker_id, $f_data)
+    {
+        $this->db->where('id', $broker_id);
+        $this->db->where('user_type', 'broker');
+        $this->db->where('user_verified_creci', 1);
+        $this->db->where('user_verified_preferences', 1);
+        $this->db->where('user_status', 0);
 
+        return $this->db->get('users')->row();
+
+    }
+    
     // busca propriedades associadas.
     public function get_property_by_associate_broker_id($location_id, $broker_id)
     {

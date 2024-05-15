@@ -969,30 +969,40 @@ class Propertys extends REST_Controller
 
                     $markers_data = explode(",", $markers_data);
 
-                    $propertys_data = array();
+                    $brokers_data = array();
 
                     // filters
                     $f_data['selected_preferences'] =  htmlspecialchars($this->input->post('selected_preferences'));
-     
+
                     // filters
 
                     if (count($markers_data) > 0) {
 
                         foreach ($markers_data as $p) {
 
-                            $property_id =  $this->property_model->get_property_by_location_id($p);
-                            $property_data = $this->property_model->get_property_filter($property_id,  $f_data['selected_preferences']);
+                            $broker_id =  $this->property_model->get_broker_by_location_id($p);
+                            $broker_data = $this->property_model->filter_broker_by_preferences($broker_id,  $f_data['selected_preferences']);
 
-                            if ($property_data) {
-                                $propertys_data[] = $property_data;
+
+                            $id_exists = false;
+                            foreach ($brokers_data as $existing_broker) {
+                                if ($existing_broker->id == $broker_data->id) {
+                                    $id_exists = true;
+                                    break;
+                                }
+                            }
+
+                            // Se o ID não existe, adiciona o corretor a brokers_data
+                            if (!$id_exists) {
+                                $brokers_data[] = $broker_data;
                             }
                         }
 
 
                         $final['status'] = true;
                         $final['message'] = 'Propriedades encontrados';
-                        $final['response'] =  $propertys_data;
-                        $final['como ta chegando'] =   $f_data['selected_preferences'];
+                        $final['response'] =  $brokers_data;
+                        $final['como ta chegando'] =  $f_data['selected_preferences'];
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     } else {
