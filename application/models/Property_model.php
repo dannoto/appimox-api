@@ -93,36 +93,43 @@ class Property_model extends CI_Model
 
     public function get_broker($broker_id)
     {
-        $this->db->select('users.*, user_preferences.*');
-        $this->db->from('users');
-        $this->db->where('users.id', $broker_id);
-        $this->db->where('users.user_type', 'broker');
-        $this->db->where('users.user_verified_creci', 1);
-        $this->db->where('users.user_verified_preferences', 1);
-        $this->db->where('users.user_status', 0);
-        $this->db->join('user_preferences', 'users.id = user_preferences.user_id', 'left');
+        $this->db->where('id', $broker_id);
+        $this->db->where('user_type', 'broker');
+        $this->db->where('user_verified_creci', 1);
+        $this->db->where('user_verified_preferences', 1);
+        $this->db->where('user_status', 0);
+
+        return $this->db->get('users')->row();
+
+        // $this->db->select('users.*, user_preferences.*');
+        // $this->db->from('users');
+        // $this->db->where('users.id', $broker_id);
+        // $this->db->where('users.user_type', 'broker');
+        // $this->db->where('users.user_verified_creci', 1);
+        // $this->db->where('users.user_verified_preferences', 1);
+        // $this->db->where('users.user_status', 0);
+        // $this->db->join('user_preferences', 'users.id = user_preferences.user_id', 'left');
     
-        $query = $this->db->get();
-        $result = $query->result();
+        // $query = $this->db->get();
+        // $result = $query->result();
     
-        // Agrupar os resultados por ID de usuário
-        $grouped_result = [];
-        foreach ($result as $row) {
-            $user_id = $row->id;
-            if (!isset($grouped_result[$user_id])) {
-                $grouped_result[$user_id] = (object)[
-                    'user_data' => [],
-                    'user_preferences' => []
-                ];
-            }
-            $grouped_result[$user_id]->user_data = $row;
-            unset($row->id, $row->user_id); // Remover redundâncias
-            $grouped_result[$user_id]->user_preferences[] = $row;
-        }
+        // // Agrupar os resultados por ID de usuário
+        // $grouped_result = [];
+        // foreach ($result as $row) {
+        //     $user_id = $row->id;
+        //     if (!isset($grouped_result[$user_id])) {
+        //         $grouped_result[$user_id] = (object)[
+        //             'user_data' => [],
+        //             'user_preferences' => []
+        //         ];
+        //     }
+        //     $grouped_result[$user_id]->user_data = $row;
+        //     unset($row->id, $row->user_id); // Remover redundâncias
+        //     $grouped_result[$user_id]->user_preferences[] = $row;
+        // }
     
-        return $grouped_result;
+        // return $grouped_result;
     }
-    
 
     
 
