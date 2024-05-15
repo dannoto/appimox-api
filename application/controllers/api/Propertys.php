@@ -978,11 +978,30 @@ class Propertys extends REST_Controller
 
                     if (count($markers_data) > 0) {
 
+                        // foreach ($markers_data as $p) {
+
+                        //     $broker_id =  $this->property_model->get_broker_by_location_id($p);
+                        //     $broker_data = $this->property_model->filter_broker_by_preferences($broker_id,  $f_data['selected_preferences']);
+
+
+                        //     $id_exists = false;
+                        //     foreach ($brokers_data as $existing_broker) {
+                        //         if ($existing_broker->id == $broker_data->id) {
+                        //             $id_exists = true;
+                        //             break;
+                        //         }
+                        //     }
+
+                        //     // Se o ID não existe, adiciona o corretor a brokers_data
+                        //     if (!$id_exists) {
+                        //         $brokers_data[] = $broker_data;
+                        //     }
+                        // }
+
                         foreach ($markers_data as $p) {
 
                             $broker_id =  $this->property_model->get_broker_by_location_id($p);
-                            $broker_data = $this->property_model->filter_broker_by_preferences($broker_id,  $f_data['selected_preferences']);
-
+                            $broker_data = $this->property_model->get_broker($broker_id);
 
                             $id_exists = false;
                             foreach ($brokers_data as $existing_broker) {
@@ -996,8 +1015,9 @@ class Propertys extends REST_Controller
                             if (!$id_exists) {
                                 $brokers_data[] = $broker_data;
                             }
-                        }
 
+                            // $brokers_data[] = $broker_data;
+                        }
 
                         $final['status'] = true;
                         $final['message'] = 'Propriedades encontrados';
