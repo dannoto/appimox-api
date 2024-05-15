@@ -972,15 +972,8 @@ class Propertys extends REST_Controller
                     $propertys_data = array();
 
                     // filters
-                    $f_data['filter_type'] =  htmlspecialchars($this->input->post('filter_type'));
-                    $f_data['filter_type_offer'] =  htmlspecialchars($this->input->post('filter_type_offer'));
-                    $f_data['filter_room'] =  htmlspecialchars($this->input->post('filter_room'));
-                    $f_data['filter_bathroom'] =  htmlspecialchars($this->input->post('filter_bathroom'));
-                    $f_data['filter_places'] =  htmlspecialchars($this->input->post('filter_places'));
-                    $f_data['filter_price_min'] =  htmlspecialchars($this->input->post('filter_price_min'));
-                    $f_data['filter_price_max'] =  htmlspecialchars($this->input->post('filter_price_max'));
-                    $f_data['filter_function'] =  htmlspecialchars($this->input->post('filter_function'));
-                    $f_data['filter_disponibility'] =  htmlspecialchars($this->input->post('filter_disponibility'));
+                    $f_data['selected_preferences'] =  htmlspecialchars($this->input->post('selected_preferences'));
+     
                     // filters
 
                     if (count($markers_data) > 0) {
@@ -988,7 +981,7 @@ class Propertys extends REST_Controller
                         foreach ($markers_data as $p) {
 
                             $property_id =  $this->property_model->get_property_by_location_id($p);
-                            $property_data = $this->property_model->get_property_filter($property_id, $f_data);
+                            $property_data = $this->property_model->get_property_filter($property_id,  $f_data['selected_preferences']);
 
                             if ($property_data) {
                                 $propertys_data[] = $property_data;
@@ -999,6 +992,7 @@ class Propertys extends REST_Controller
                         $final['status'] = true;
                         $final['message'] = 'Propriedades encontrados';
                         $final['response'] =  $propertys_data;
+                        $final['como ta chegando'] =   $f_data['selected_preferences'];
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     } else {
