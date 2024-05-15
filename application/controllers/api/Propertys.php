@@ -1069,10 +1069,13 @@ class Propertys extends REST_Controller
                         foreach ($markers_data as $p) {
 
                             $property_id =  $this->property_model->get_property_by_associate_broker_id($p, $broker_id_search);
-                            $property_data = $this->property_model->get_property($property_id);
+                            
+                            if ($property_id) {
+                                $property_data = $this->property_model->get_property($property_id);
 
                             if ($property_data) {
                                 $propertys_data[] = $property_data;
+                            }
                             }
                         }
 

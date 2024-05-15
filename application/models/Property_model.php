@@ -129,6 +129,8 @@ class Property_model extends CI_Model
         // return $grouped_result;
     }
 
+
+    // busca propriedades associadas.
     public function get_property_by_associate_broker_id($location_id, $broker_id)
     {
         $this->db->where('id', $location_id);
