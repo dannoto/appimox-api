@@ -137,6 +137,12 @@ class Property_model extends CI_Model
         $this->db->where('property_broker', $broker_id);
         $this->db->where('is_deleted', 0);
         $data =  $this->db->get('propertys_location')->row();
-        return $data->property_id;
+
+        if ($data) {
+            return $data->property_id;
+        } else {
+            return false;
+        }
+        
     }
 }

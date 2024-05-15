@@ -1061,7 +1061,7 @@ class Propertys extends REST_Controller
 
                     // filters
                     $broker_id_search =  htmlspecialchars($this->input->post('broker_id'));
-                  
+
                     // filters
 
                     if (count($markers_data) > 0) {
@@ -1069,13 +1069,13 @@ class Propertys extends REST_Controller
                         foreach ($markers_data as $p) {
 
                             $property_id =  $this->property_model->get_property_by_associate_broker_id($p, $broker_id_search);
-                            
+
                             if ($property_id) {
                                 $property_data = $this->property_model->get_property($property_id);
 
-                            if ($property_data) {
-                                $propertys_data[] = $property_data;
-                            }
+                                if ($property_data) {
+                                    $propertys_data[] = $property_data;
+                                }
                             }
                         }
 
@@ -1084,7 +1084,6 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     } else {
 
                         $final['status'] = false;
@@ -1109,6 +1108,4 @@ class Propertys extends REST_Controller
             }
         }
     }
-
-    
 }
