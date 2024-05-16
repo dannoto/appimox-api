@@ -191,18 +191,18 @@ class User extends REST_Controller
 	public function check_creci_validation()
 	{
 
-		$this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
-		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
-		$this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
+		// $this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
+		// $this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
+		// $this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
 
-		if ($this->form_validation->run() == false) {
+		// if ($this->form_validation->run() == false) {
 
-			$final['status'] = false;
-			$final['message'] = validation_errors();
-			$final['note'] = 'Erro no formulário.';
+		// 	$final['status'] = false;
+		// 	$final['message'] = validation_errors();
+		// 	$final['note'] = 'Erro no formulário.';
 
-			$this->response($final, REST_Controller::HTTP_OK);
-		} else {
+		// 	$this->response($final, REST_Controller::HTTP_OK);
+		// } else {
 
 			// set variables from the form
 			$user_creci = $this->input->post('user_creci');
@@ -237,7 +237,7 @@ class User extends REST_Controller
 			// 	// login failed
 			// 	$this->response($final, REST_Controller::HTTP_OK);
 			// }
-		}
+		// }
 	}
 
 	public function logout_post()
