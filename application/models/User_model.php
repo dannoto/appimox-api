@@ -22,7 +22,13 @@ class User_model extends CI_Model
 			'user_email'      => $user_email,
 			'user_password'   => $this->hash_password($user_password),
 			'user_register' => date('Y-m-j H:i:s'),
-			'user_auth_type' => $user_auth_type
+			'user_auth_type' => $user_auth_type,
+			'user_image' => 'public/images/users/default.jpg',
+			'user_verified_creci' => 0,
+			'user_verified_email' => 0,
+			'user_verified_preferences' => 0,
+			'user_rating' => 0,
+			'user_status' => 0,
 
 		);
 
@@ -209,7 +215,7 @@ class User_model extends CI_Model
 	}
 
 
-	
+
 	public function check_favorit($user_id, $property_id)
 	{
 

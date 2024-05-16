@@ -25,7 +25,7 @@ class User extends REST_Controller
 
 		$this->form_validation->set_rules('user_password', 'Senha', 'trim|required|min_length[6]');
 		$this->form_validation->set_rules('user_password_confirm', 'Confirmação de Senha', 'trim|required|min_length[6]|matches[user_password]');
-		$this->form_validation->set_rules('user_auth_type', 'Tipo de Cadastro', 'trim|required');
+		// $this->form_validation->set_rules('user_auth_type', 'Tipo de Cadastro', 'trim|required');
 
 		// $this->form_validation->set_rules('username', 'Username', 'trim|required|alpha_numeric|min_length[4]|is_unique[users.username]', array('is_unique' => 'This username already exists. Please choose another one.'));
 		// $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
