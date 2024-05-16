@@ -236,13 +236,13 @@ class User extends REST_Controller
 							if ($this->user_model->check_creci_is_unique($user_creci, $user_cpf)) {
 
 								$final['status'] = false;
-								$final['message'] = 'Esta inscrição já está sendo usado. Contate o suporte';
-								$final['note'] = 'Esta inscrição já está sendo usado. Contate o suporte';
+								$final['message'] = 'Esta inscrição já está sendo usada. Contate o suporte';
+								$final['note'] = 'Esta inscrição já está sendo usada. Contate o suporte';
 
 								$this->response($final, REST_Controller::HTTP_OK);
 
 							} else {
-								
+
 								$user_data['user_state'] = $user_state;
 								$user_data['user_verified_creci'] = 1;
 								$user_data['user_cpf'] = $c->cpf;
