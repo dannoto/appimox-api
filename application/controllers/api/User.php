@@ -15,7 +15,6 @@ class User extends REST_Controller
 		$this->load->model('user_model');
 		$this->load->model('email_model');
 		$this->load->model('broker_model');
-
 	}
 
 	public function register_post()
@@ -206,59 +205,64 @@ class User extends REST_Controller
 		// 	$this->response($final, REST_Controller::HTTP_OK);
 		// } else {
 
-			// set variables from the form
-			$user_creci = $this->input->post('user_creci');
-			$user_cpf = $this->input->post('user_cpf');
-			$user_state = $this->input->post('user_state');
+		// set variables from the form
+		$user_creci = $this->input->post('user_creci');
+		$user_cpf = $this->input->post('user_cpf');
+		$user_state = $this->input->post('user_state');
 
 
-			if ($user_state == "RN") {
+		if ($user_state == "RN") {
 
-				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-			} else if ($user_state == "PB") {
+			$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+		} else if ($user_state == "PB") {
 
-				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-			} else if ($user_state == "PE") {
+			$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+		} else if ($user_state == "PE") {
 
-				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
+			$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
+		}
+
+		if (count($creci_data->cadastros) > 0) {
+
+			foreach ($creci_data->cadastros as $c) {
+				
+				if ($c->tipo == 1) {
+
+					$final['status'] = true;
+					$final['response'] = $creci_data->cadastros;
+					$final['message'] = 'Validado com sucesso! Bem-vindo!';
+					$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
 			}
+		} else {
 
-			if (count($creci_data->cadastros) > 0) {
+			$final['status'] = false;
+			$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+			$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
 
-				$final['status'] = true;
-				$final['response'] = $creci_data->cadastros;
-				$final['message'] = 'Validado com sucesso! Bem-vindo!';
-				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-			
-				$this->response($final, REST_Controller::HTTP_OK);
+			$this->response($final, REST_Controller::HTTP_OK);
+		}
 
-			} else {
+		// print_r($creci_data->cadastros);
+		// echo "count cadastro".;
 
-				$final['status'] = false;
-				$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-			
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
+		// print_r($creci_data);
 
-			// print_r($creci_data->cadastros);
-			// echo "count cadastro".;
-
-			// print_r($creci_data);
-
-			// if ($this->user_model->update_user_type($user_id, $user_type )) {
+		// if ($this->user_model->update_user_type($user_id, $user_type )) {
 
 
 
-			// 	$this->response($final, REST_Controller::HTTP_OK);
-			// } else {
+		// 	$this->response($final, REST_Controller::HTTP_OK);
+		// } else {
 
-			// 	$final['status'] = false;
-			// 	$final['message'] = 'Não foi possivel definir o tipo. Tente novamente.';
-			// 	$final['note'] = 'Não foi possivel definir o tipo. Tente novamente.';
-			// 	// login failed
-			// 	$this->response($final, REST_Controller::HTTP_OK);
-			// }
+		// 	$final['status'] = false;
+		// 	$final['message'] = 'Não foi possivel definir o tipo. Tente novamente.';
+		// 	$final['note'] = 'Não foi possivel definir o tipo. Tente novamente.';
+		// 	// login failed
+		// 	$this->response($final, REST_Controller::HTTP_OK);
+		// }
 		// }
 	}
 
