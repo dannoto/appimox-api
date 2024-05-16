@@ -215,11 +215,9 @@ class User extends REST_Controller
 			if ($user_state == "RN") {
 
 				$creci_data = $this->broker_model->check_creci_rn($user_creci, $user_cpf);
-				
 			} else if ($user_state == "PB") {
 
 				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-
 			} else if ($user_state == "PE") {
 
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
@@ -242,7 +240,6 @@ class User extends REST_Controller
 								$final['note'] = 'Esta inscrição já está sendo usada. Contate o suporte';
 
 								$this->response($final, REST_Controller::HTTP_OK);
-
 							} else {
 
 								$user_data['user_state'] = $user_state;
@@ -1048,13 +1045,19 @@ class User extends REST_Controller
 
 					$user_id = $this->input->post('user_id');
 
+					$user_current_data = $this->user_model->get_user($user_id);
+
 					$data['user_name'] = $this->input->post('user_name');
 					$data['user_email'] = $this->input->post('user_email');
 					$data['user_state'] = $this->input->post('user_state');
 					$data['user_city'] = $this->input->post('user_cidade');
-					$data['user_creci'] = $this->input->post('user_creci');
-					$data['user_cpf'] = $this->input->post('user_cpf');
 
+					// Verificando se alterour creci ou cpf.
+
+					if ($user_current_data['user_creci'] != $this->input->post('user_creci') || $user_current_data['user_cpf'] !=  $this->input->post('user_cpf')) {
+						$data['user_creci'] = $this->input->post('user_creci');
+						$data['user_cpf'] = $this->input->post('user_cpf');
+					}
 
 					if (strlen($this->input->post('user_image')) > 0) {
 
@@ -1070,29 +1073,116 @@ class User extends REST_Controller
 						}
 					}
 
-					$update_user =  $this->user_model->update_user_profile($user_id, $data);
+					if ($user_current_data['user_creci'] != $this->input->post('user_creci') || $user_current_data['user_cpf'] !=  $this->input->post('user_cpf')) {
 
-					if (!$this->user_model->check_email($data['user_email'], $user_id)) {
 
-						if ($update_user) {
+						if ($data['user_state'] == "RN") {
 
-							$final['status'] = true;
-							$final['message'] = 'Atualizado com sucesso.';
-							$final['note'] = 'Dados encontrados update_user_profile()';
-							$this->response($final, REST_Controller::HTTP_OK);
+							$creci_data = $this->broker_model->check_creci_rn($user_current_data['user_creci'], $user_current_data['user_cpf']);
+						} else if ($data['user_state'] == "PB") {
+
+							$creci_data = $this->broker_model->check_creci_pb($user_current_data['user_creci'], $user_current_data['user_cpf']);
+						} else if ($data['user_state'] == "PE") {
+
+							$creci_data = $this->broker_model->check_creci_pe($user_current_data['user_creci'], $user_current_data['user_cpf']);
+						}
+
+						if (count($creci_data->cadastros) > 0) {
+
+							foreach ($creci_data->cadastros as $c) {
+
+								if ($c->tipo == 1) {
+
+									if ($c->situacao == 1) {
+
+										// verificando duplicidade
+
+										if ($this->user_model->check_creci_is_unique($user_current_data['user_creci'], $user_current_data['user_cpf'])) {
+
+											$final['status'] = false;
+											$final['message'] = 'Esta inscrição já está sendo usada. Contate o suporte';
+											$final['note'] = 'Esta inscrição já está sendo usada. Contate o suporte';
+
+											$this->response($final, REST_Controller::HTTP_OK);
+										} else {
+
+
+											if (!$this->user_model->check_email($data['user_email'], $user_id)) {
+
+												$update_user =  $this->user_model->update_user_profile($user_id, $data);
+												if ($update_user) {
+
+													$final['status'] = true;
+													$final['message'] = 'Atualizado com sucesso.';
+													$final['note'] = 'Dados encontrados update_user_profile()';
+													$this->response($final, REST_Controller::HTTP_OK);
+												} else {
+
+													$final['status'] = false;
+													$final['message'] = 'Erro ao atualizar dados.';
+													$final['note'] = 'Erro em update_user_profile()';
+													$this->response($final, REST_Controller::HTTP_OK);
+												}
+											} else {
+
+												$final['status'] = false;
+												$final['message'] = 'Este e-mail já esta em uso.';
+												$final['note'] = 'Erro em update_user_profile()';
+												$this->response($final, REST_Controller::HTTP_OK);
+											}
+										}
+									} else  if ($c->situacao == 8) {
+
+										$final['status'] = false;
+										$final['response'] = $c;
+										$final['message'] = 'Seu cadastro está inativo.';
+										$final['note'] = 'Seu cadastro está inativo.';
+
+										$this->response($final, REST_Controller::HTTP_OK);
+									} else {
+
+										$final['status'] = false;
+										$final['response'] = $c;
+										$final['message'] = 'Seu cadastro não está ativo.';
+										$final['note'] = 'Seu cadastro não está ativo.';
+
+										$this->response($final, REST_Controller::HTTP_OK);
+									}
+								}
+							}
 						} else {
 
 							$final['status'] = false;
-							$final['message'] = 'Erro ao atualizar dados.';
-							$final['note'] = 'Erro em update_user_profile()';
+							$final['message'] = 'Nenhuma inscrição encontrada. Confira seus dados.';
+							$final['note'] = 'Nenhuma inscrição encontrada. Confira seus dados.';
+
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
 					} else {
 
-						$final['status'] = false;
-						$final['message'] = 'Este e-mail já esta em uso.';
-						$final['note'] = 'Erro em update_user_profile()';
-						$this->response($final, REST_Controller::HTTP_OK);
+						if (!$this->user_model->check_email($data['user_email'], $user_id)) {
+
+							$update_user =  $this->user_model->update_user_profile($user_id, $data);
+							if ($update_user) {
+
+								$final['status'] = true;
+								$final['message'] = 'Atualizado com sucesso.';
+								$final['note'] = 'Dados encontrados update_user_profile()';
+								$this->response($final, REST_Controller::HTTP_OK);
+							} else {
+
+								$final['status'] = false;
+								$final['message'] = 'Erro ao atualizar dados.';
+								$final['note'] = 'Erro em update_user_profile()';
+								$this->response($final, REST_Controller::HTTP_OK);
+							}
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Este e-mail já esta em uso.';
+							$final['note'] = 'Erro em update_user_profile()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
 					}
 				} else {
 
