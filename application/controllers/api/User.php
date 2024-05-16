@@ -153,7 +153,7 @@ class User extends REST_Controller
 			$access_token = $this->input->post('access_token');
 
 
-			if ($this->user_model->update_user_type($user_id, $user_type )) {
+			if ($this->user_model->update_user_type($user_id, $user_type)) {
 
 				$user    = $this->user_model->get_user($user_id);
 
@@ -185,6 +185,58 @@ class User extends REST_Controller
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
 			}
+		}
+	}
+
+	public function check_creci_validation()
+	{
+
+		$this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
+		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
+		$this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			// set variables from the form
+			$user_creci = $this->input->post('user_creci');
+			$user_cpf = $this->input->post('user_cpf');
+			$user_state = $this->input->post('user_state');
+
+
+			if ($user_state == "RN") {
+
+				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+			} else if ($user_state == "PB") {
+
+				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+			} else if ($user_state == "PE") {
+
+				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
+			}
+
+			echo "ESTADO : " . $user_state . "<br>";
+			print_r($creci_data);
+
+			// if ($this->user_model->update_user_type($user_id, $user_type )) {
+
+
+
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// } else {
+
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Não foi possivel definir o tipo. Tente novamente.';
+			// 	$final['note'] = 'Não foi possivel definir o tipo. Tente novamente.';
+			// 	// login failed
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// }
 		}
 	}
 

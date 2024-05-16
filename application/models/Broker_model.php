@@ -119,12 +119,84 @@ class Broker_model extends CI_Model
     public function search_broker_propertys_home($user_id, $filter)
     {
 
-        $this->db->order_by('id','desc');
+        $this->db->order_by('id', 'desc');
 
         $this->db->where('property_user_id', $user_id);
         $this->db->where('property_type_offer', $filter);
         $this->db->where('is_deleted', 0);
 
         return $this->db->get('propertys')->result();
+    }
+
+    public function check_creci_pb($creci, $cpf)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://www.crecipb.conselho.net.br/form_pesquisa_cadastro_geral_site.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('inscricao' => $creci, 'cpf' => $cpf),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $data = json_encode($response);
+        return $data;
+    }
+
+    public function check_creci_pe($creci, $cpf)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://www.crecipe.conselho.net.br/form_pesquisa_cadastro_geral_site.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('inscricao' => $creci, 'cpf' => $cpf),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $data = json_encode($response);
+        return $data;
+    }
+
+    public function check_creci_rn($creci, $cpf)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://www.crecirn.conselho.net.br/form_pesquisa_cadastro_geral_site.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array('inscricao' => $creci, 'cpf' => $cpf),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $data = json_encode($response);
+        return $data;
     }
 }
