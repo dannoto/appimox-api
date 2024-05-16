@@ -223,7 +223,9 @@ class User extends REST_Controller
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
 			}
 
-			echo "ESTADO : " . $user_state . "<br>";
+			echo $creci_data['cadastros'];
+			echo "count cadastro".count($creci_data['cadastros']);
+
 			print_r($creci_data);
 
 			// if ($this->user_model->update_user_type($user_id, $user_type )) {
