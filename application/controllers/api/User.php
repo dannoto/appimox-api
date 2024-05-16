@@ -130,6 +130,65 @@ class User extends REST_Controller
 		}
 	}
 
+	public function set_user_type_post()
+	{
+
+		// set validation rules
+		$this->form_validation->set_rules('user_type', 'User Type', 'trim|required');
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('access_token', 'Access Token', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			// set variables from the form
+			$user_type = $this->input->post('user_type');
+			$user_id = $this->input->post('user_id');
+			$access_token = $this->input->post('access_token');
+
+			$d['user_type'] = $user_type;
+
+			if ($this->user_model->update_user($user_id, $d['user_type'] )) {
+
+				$user    = $this->user_model->get_user($user_id);
+
+				// set session user datas
+				$_SESSION['user_id']      = (int)$user->id;
+				$_SESSION['user_email']     = (string)$user->user_email;
+				$_SESSION['logged_in']    = (bool)true;
+				// $_SESSION['is_confirmed'] = (bool)$user->is_confirmed;
+				// $_SESSION['is_admin']     = (bool)$user->is_admin;
+
+				// user login ok
+				$token_data['uid'] = $user_id;
+				$token_data['user_email'] = $user->user_email;
+				$tokenData = $access_token;
+				$final = array();
+				$final['uid'] = $user_id;
+				$final['access_token'] = $tokenData;
+				$final['user_type'] = $user->user_type;
+				$final['status'] = true;
+				$final['message'] = 'Tipo definido com sucesso!';
+				$final['note'] = 'Tipo definido com sucesso!';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Não foi possivel definir o tipo. Tente novamente.';
+				$final['note'] = 'Não foi possivel definir o tipo. Tente novamente.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
 	public function logout_post()
 	{
 
@@ -661,7 +720,7 @@ class User extends REST_Controller
 		}
 	}
 
-	
+
 	public function search_get_favorits_post()
 	{
 
@@ -849,7 +908,7 @@ class User extends REST_Controller
 			}
 		}
 	}
-	
+
 	public function update_broker_profile_post()
 	{
 
@@ -984,7 +1043,7 @@ class User extends REST_Controller
 
 
 					// ==
-					if (strlen( $this->input->post('user_image')) > 0) {
+					if (strlen($this->input->post('user_image')) > 0) {
 						$path = 'public/images/users/';
 						$property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $this->input->post('user_image')));
 
