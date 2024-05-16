@@ -214,10 +214,12 @@ class User extends REST_Controller
 
 			if ($user_state == "RN") {
 
-				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+				$creci_data = $this->broker_model->check_creci_rn($user_creci, $user_cpf);
+				
 			} else if ($user_state == "PB") {
 
 				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+
 			} else if ($user_state == "PE") {
 
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
