@@ -148,7 +148,7 @@ class Broker_model extends CI_Model
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $data = json_encode($response);
+        $data = json_decode($response);
         return $data;
     }
 
@@ -172,7 +172,7 @@ class Broker_model extends CI_Model
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $data = json_encode($response);
+        $data = json_decode($response);
         return $data;
     }
 
@@ -196,7 +196,7 @@ class Broker_model extends CI_Model
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $data = json_encode($response);
+        $data = json_decode($response);
         return $data;
     }
 }
