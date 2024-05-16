@@ -1078,13 +1078,13 @@ class User extends REST_Controller
 
 						if ($data['user_state'] == "RN") {
 
-							$creci_data = $this->broker_model->check_creci_rn($user_current_data['user_creci'], $user_current_data['user_cpf']);
+							$creci_data = $this->broker_model->check_creci_rn($data['user_creci'], $data['user_cpf']);
 						} else if ($data['user_state'] == "PB") {
 
-							$creci_data = $this->broker_model->check_creci_pb($user_current_data['user_creci'], $user_current_data['user_cpf']);
+							$creci_data = $this->broker_model->check_creci_pb($data['user_creci'], $data['user_cpf']);
 						} else if ($data['user_state'] == "PE") {
 
-							$creci_data = $this->broker_model->check_creci_pe($user_current_data['user_creci'], $user_current_data['user_cpf']);
+							$creci_data = $this->broker_model->check_creci_pe($data['user_creci'], $data['user_cpf']);
 						}
 
 						if (count($creci_data->cadastros) > 0) {
@@ -1097,7 +1097,7 @@ class User extends REST_Controller
 
 										// verificando duplicidade
 
-										if ($this->user_model->check_creci_is_unique($user_current_data['user_creci'], $user_current_data['user_cpf'])) {
+										if ($this->user_model->check_creci_is_unique($data['user_creci'], $data['user_cpf'])) {
 
 											$final['status'] = false;
 											$final['message'] = 'Esta inscrição já está sendo usada. Contate o suporte';
