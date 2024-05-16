@@ -193,7 +193,7 @@ class User extends REST_Controller
 	{
 
 		$this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
-		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
+		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'required');
 		$this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
 		$this->form_validation->set_rules('user_id', 'USER STATE', 'trim|required');
 
