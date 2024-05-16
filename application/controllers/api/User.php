@@ -228,12 +228,24 @@ class User extends REST_Controller
 
 				if ($c->tipo == 1) {
 
-					$final['status'] = true;
-					$final['response'] = $c;
-					$final['message'] = 'Validado com sucesso! Bem-vindo!';
-					$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+					if ($c->situacao == 1) {
 
-					$this->response($final, REST_Controller::HTTP_OK);
+						$final['status'] = true;
+						$final['response'] = $c;
+						$final['message'] = 'Validado com sucesso! Bem-vindo!';
+						$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+
+					} else  if ($c->situacao == 8) {
+
+						$final['status'] = false;
+						$final['response'] = $c;
+						$final['message'] = 'Seu cadastro está inativo.';
+						$final['note'] = 'Seu cadastro está inativo.';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
 				}
 			}
 		} else {
