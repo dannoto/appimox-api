@@ -225,11 +225,11 @@ class User extends REST_Controller
 		if (count($creci_data->cadastros) > 0) {
 
 			foreach ($creci_data->cadastros as $c) {
-				
+
 				if ($c->tipo == 1) {
 
 					$final['status'] = true;
-					$final['response'] = $creci_data->cadastros;
+					$final['response'] = $c;
 					$final['message'] = 'Validado com sucesso! Bem-vindo!';
 					$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
 
