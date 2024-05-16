@@ -188,7 +188,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function check_creci_validation()
+	public function check_creci_validation_post()
 	{
 
 		// $this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
