@@ -240,7 +240,9 @@ class User extends REST_Controller
 								$final['note'] = 'Esta inscrição já está sendo usado. Contate o suporte';
 
 								$this->response($final, REST_Controller::HTTP_OK);
+
 							} else {
+								
 								$user_data['user_state'] = $user_state;
 								$user_data['user_verified_creci'] = 1;
 								$user_data['user_cpf'] = $c->cpf;
