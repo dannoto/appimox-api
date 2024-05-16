@@ -192,90 +192,96 @@ class User extends REST_Controller
 	public function check_creci_validation_post()
 	{
 
-		// $this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
-		// $this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
-		// $this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
+		$this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
+		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'trim|required');
+		$this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
+		$this->form_validation->set_rules('user_id', 'USER STATE', 'trim|required');
 
-		// if ($this->form_validation->run() == false) {
-
-		// 	$final['status'] = false;
-		// 	$final['message'] = validation_errors();
-		// 	$final['note'] = 'Erro no formulário.';
-
-		// 	$this->response($final, REST_Controller::HTTP_OK);
-		// } else {
-
-		// set variables from the form
-		$user_creci = $this->input->post('user_creci');
-		$user_cpf = $this->input->post('user_cpf');
-		$user_state = $this->input->post('user_state');
-
-
-		if ($user_state == "RN") {
-
-			$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-		} else if ($user_state == "PB") {
-
-			$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-		} else if ($user_state == "PE") {
-
-			$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
-		}
-
-		if (count($creci_data->cadastros) > 0) {
-
-			foreach ($creci_data->cadastros as $c) {
-
-				if ($c->tipo == 1) {
-
-					if ($c->situacao == 1) {
-
-						$final['status'] = true;
-						$final['response'] = $c;
-						$final['message'] = 'Validado com sucesso! Bem-vindo!';
-						$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-
-						$this->response($final, REST_Controller::HTTP_OK);
-
-					} else  if ($c->situacao == 8) {
-
-						$final['status'] = false;
-						$final['response'] = $c;
-						$final['message'] = 'Seu cadastro está inativo.';
-						$final['note'] = 'Seu cadastro está inativo.';
-
-						$this->response($final, REST_Controller::HTTP_OK);
-					}
-				}
-			}
-		} else {
+		if ($this->form_validation->run() == false) {
 
 			$final['status'] = false;
-			$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-			$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$user_id = $this->input->post('user_id');
+			$user_creci = $this->input->post('user_creci');
+			$user_cpf = $this->input->post('user_cpf');
+			$user_state = $this->input->post('user_state');
+
+
+			if ($user_state == "RN") {
+
+				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+			} else if ($user_state == "PB") {
+
+				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
+			} else if ($user_state == "PE") {
+
+				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
+			}
+
+			if (count($creci_data->cadastros) > 0) {
+
+				foreach ($creci_data->cadastros as $c) {
+
+					if ($c->tipo == 1) {
+
+						if ($c->situacao == 1) {
+
+							$user_data['user_state'] = $user_state;
+							$user_data['user_verified_creci'] = 1;
+							$user_data['user_cpf'] = $c->cpf;
+							$user_data['user_creci'] = $c->creci;
+
+							if ($this->user_model->update_user($user_id, $user_data)) {
+
+								$final['status'] = true;
+								$final['response'] = $c;
+								$final['message'] = 'Validado com sucesso! Bem-vindo!';
+								$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+
+								$this->response($final, REST_Controller::HTTP_OK);
+							} else {
+
+								$final['status'] = false;
+
+								$final['message'] = 'Houve um erro ao verificar! Tente novamente!';
+								$final['note'] = 'Houve um erro ao verificar! Tente novamente!';
+
+								$this->response($final, REST_Controller::HTTP_OK);
+							}
+							
+						} else  if ($c->situacao == 8) {
+
+							$final['status'] = false;
+							$final['response'] = $c;
+							$final['message'] = 'Seu cadastro está inativo.';
+							$final['note'] = 'Seu cadastro está inativo.';
+
+							$this->response($final, REST_Controller::HTTP_OK);
+						} else {
+
+							$final['status'] = false;
+							$final['response'] = $c;
+							$final['message'] = 'Seu cadastro não está ativo.';
+							$final['note'] = 'Seu cadastro não está ativo.';
+
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+					}
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
 		}
-
-		// print_r($creci_data->cadastros);
-		// echo "count cadastro".;
-
-		// print_r($creci_data);
-
-		// if ($this->user_model->update_user_type($user_id, $user_type )) {
-
-
-
-		// 	$this->response($final, REST_Controller::HTTP_OK);
-		// } else {
-
-		// 	$final['status'] = false;
-		// 	$final['message'] = 'Não foi possivel definir o tipo. Tente novamente.';
-		// 	$final['note'] = 'Não foi possivel definir o tipo. Tente novamente.';
-		// 	// login failed
-		// 	$this->response($final, REST_Controller::HTTP_OK);
-		// }
-		// }
 	}
 
 	public function logout_post()
