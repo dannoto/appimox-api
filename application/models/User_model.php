@@ -91,6 +91,14 @@ class User_model extends CI_Model
 		return $this->db->get()->row();
 	}
 
+	public function check_creci_is_unique($user_creci, $user_cpf) {
+		$this->db->where('user_creci', $user_creci);
+		$this->db->where('user_cpf', $user_cpf);
+		$this->db->where('user_verified_creci', 1);
+
+		return $this->db->get('users')->row();
+	}
+
 	// Init
 
 	public function get_user($user_id)

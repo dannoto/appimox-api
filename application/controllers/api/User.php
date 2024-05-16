@@ -231,29 +231,39 @@ class User extends REST_Controller
 
 						if ($c->situacao == 1) {
 
-							$user_data['user_state'] = $user_state;
-							$user_data['user_verified_creci'] = 1;
-							$user_data['user_cpf'] = $c->cpf;
-							$user_data['user_creci'] = $c->creci;
+							// verificando duplicidade
 
-							if ($this->user_model->update_user($user_id, $user_data)) {
+							if ($this->user_model->check_creci_is_unique($user_creci, $user_cpf)) {
 
-								$final['status'] = true;
-								$final['response'] = $c;
-								$final['message'] = 'Validado com sucesso! Bem-vindo!';
-								$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+								$final['status'] = false;
+								$final['message'] = 'Esta inscrição já está sendo usado. Contate o suporte';
+								$final['note'] = 'Esta inscrição já está sendo usado. Contate o suporte';
 
 								$this->response($final, REST_Controller::HTTP_OK);
 							} else {
+								$user_data['user_state'] = $user_state;
+								$user_data['user_verified_creci'] = 1;
+								$user_data['user_cpf'] = $c->cpf;
+								$user_data['user_creci'] = $c->creci;
 
-								$final['status'] = false;
+								if ($this->user_model->update_user($user_id, $user_data)) {
 
-								$final['message'] = 'Houve um erro ao verificar! Tente novamente!';
-								$final['note'] = 'Houve um erro ao verificar! Tente novamente!';
+									$final['status'] = true;
+									$final['response'] = $c;
+									$final['message'] = 'Validado com sucesso! Bem-vindo!';
+									$final['note'] = 'Validado com sucesso! Bem-vindo!';
 
-								$this->response($final, REST_Controller::HTTP_OK);
+									$this->response($final, REST_Controller::HTTP_OK);
+								} else {
+
+									$final['status'] = false;
+
+									$final['message'] = 'Houve um erro ao verificar! Tente novamente!';
+									$final['note'] = 'Houve um erro ao verificar! Tente novamente!';
+
+									$this->response($final, REST_Controller::HTTP_OK);
+								}
 							}
-							
 						} else  if ($c->situacao == 8) {
 
 							$final['status'] = false;
@@ -276,8 +286,8 @@ class User extends REST_Controller
 			} else {
 
 				$final['status'] = false;
-				$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
-				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+				$final['message'] = 'Nenhuma inscrição encontrada. Confira seus dados.';
+				$final['note'] = 'Nenhuma inscrição encontrada. Confira seus dados.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
 			}
