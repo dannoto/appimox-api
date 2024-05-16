@@ -152,9 +152,8 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 			$access_token = $this->input->post('access_token');
 
-			$dx['user_type'] = $user_type;
 
-			if ($this->user_model->update_user($user_id, $dx['user_type'] )) {
+			if ($this->user_model->update_user_type($user_id, $user_type )) {
 
 				$user    = $this->user_model->get_user($user_id);
 

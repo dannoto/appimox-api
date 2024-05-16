@@ -36,6 +36,18 @@ class User_model extends CI_Model
 		return $this->db->insert_id();
 	}
 
+
+
+	public function update_user_type($user_id, $user_type)
+	{
+		$this->db->where('id', $user_id);
+
+		$data = array(
+			'user_type' => $user_type
+		);
+		
+		return $this->db->update('users', $data);
+	}
 	public function update_user($user_id, $data)
 	{
 		$this->db->where('id', $user_id);
