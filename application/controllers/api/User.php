@@ -223,10 +223,28 @@ class User extends REST_Controller
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
 			}
 
-			print_r($creci_data->cadastros);
-			echo "count cadastro".count($creci_data->cadastros);
+			if (count($creci_data->cadastros) > 0) {
 
-			print_r($creci_data);
+				$final['status'] = true;
+				$final['response'] = $creci_data->cadastros;
+				$final['message'] = 'Validado com sucesso! Bem-vindo!';
+				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+			
+				$this->response($final, REST_Controller::HTTP_OK);
+
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+				$final['note'] = 'Nenhum inscrição encontrada. Confira seus dados.';
+			
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+
+			// print_r($creci_data->cadastros);
+			// echo "count cadastro".;
+
+			// print_r($creci_data);
 
 			// if ($this->user_model->update_user_type($user_id, $user_type )) {
 
