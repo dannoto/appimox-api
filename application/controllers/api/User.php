@@ -1054,7 +1054,7 @@ class User extends REST_Controller
 
 					// Verificando se alterour creci ou cpf.
 
-					if ($user_current_data['user_creci'] != $this->input->post('user_creci') || $user_current_data['user_cpf'] !=  $this->input->post('user_cpf')) {
+					if ($user_current_data->user_creci != $this->input->post('user_creci') || $user_current_data->user_cpf !=  $this->input->post('user_cpf')) {
 						$data['user_creci'] = $this->input->post('user_creci');
 						$data['user_cpf'] = $this->input->post('user_cpf');
 					}
@@ -1073,7 +1073,7 @@ class User extends REST_Controller
 						}
 					}
 
-					if ($user_current_data['user_creci'] != $this->input->post('user_creci') || $user_current_data['user_cpf'] !=  $this->input->post('user_cpf')) {
+					if ($user_current_data->user_creci != $this->input->post('user_creci') || $user_current_data->user_cpf !=  $this->input->post('user_cpf')) {
 
 
 						if ($data['user_state'] == "RN") {
