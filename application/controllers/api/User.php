@@ -14,6 +14,8 @@ class User extends REST_Controller
 		$this->load->library('Authorization_Token');
 		$this->load->model('user_model');
 		$this->load->model('email_model');
+		$this->load->model('broker_model');
+
 	}
 
 	public function register_post()
