@@ -223,7 +223,7 @@ class User extends REST_Controller
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
 			}
 
-			echo $creci_data->cadastros;
+			print_r($creci_data->cadastros);
 			echo "count cadastro".count($creci_data->cadastros);
 
 			print_r($creci_data);
