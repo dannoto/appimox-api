@@ -128,3 +128,8 @@ $route['update_broker_profile'] = 'api/User/update_broker_profile';
 $route['update_client_profile'] = 'api/User/update_client_profile';
 
 // Profile
+
+// schedule
+$route['add_schedule'] = 'api/Schedule/add_schedule';
+
+// schedule
