@@ -136,13 +136,9 @@ class Schedule extends REST_Controller
                     $poperty_data = $this->property_model->get_property($sc->schedule_property);
                     $schedules_data = $sc;
 
-                    
-
-                    $schedules_data['broker_data'] = $broker_data;
-                    $schedules_data['property_data'] = $poperty_data;
-                    
-                    $dx = $schedules_data;
-
+                    $dx['broker_data'] = $broker_data;
+                    $dx['property_data'] = $poperty_data;
+                    $dx['schedule_data'] = $schedules_data;
 
 
                     $response[] = $dx;
