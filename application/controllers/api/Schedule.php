@@ -132,7 +132,7 @@ class Schedule extends REST_Controller
                     $dx = array();
 
 
-                    $broker_data = $this->broker_model->get_user($sc->schedule_broker);
+                    $broker_data = $this->user_model->get_user($sc->schedule_broker);
                     $poperty_data = $this->property_model->get_property($sc->schedule_property);
                     $schedules_data = $sc;
 
