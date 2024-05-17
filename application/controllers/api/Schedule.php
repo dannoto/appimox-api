@@ -46,7 +46,7 @@ class Schedule extends REST_Controller
             $schedule_date = $this->input->post('schedule_date');
             $schedule_time = $this->input->post('schedule_time');
 
-            $schedule_date[0] = explode("T", $schedule_date);
+            // $schedule_date[0] = explode("T", $schedule_date);
 
             if ($client_id ==  $broker_id) {
                 $final['status'] = false;
