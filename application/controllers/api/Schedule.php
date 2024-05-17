@@ -72,8 +72,8 @@ class Schedule extends REST_Controller
                 } else {
 
                     $final['status'] = false;
-                    $final['message'] = 'Erro ao adicionar aendamenteo. Tente novamente.';
-                    $final['note'] = 'Erro ao adicionar aendamenteo. Tente novamente.';
+                    $final['message'] = 'Erro ao adicionar agendamento. Tente novamente.';
+                    $final['note'] = 'Erro ao adicionar agendamento. Tente novamente.';
     
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
@@ -82,8 +82,8 @@ class Schedule extends REST_Controller
 			} else {
 
 				$final['status'] = false;
-				$final['message'] = 'Já existe agendamento nesta data/hora.';
-				$final['note'] = 'Já existe agendamento nesta data/hora.';
+				$final['message'] = 'Já existe agendamento nesta data/hora. Escolha outro.';
+				$final['note'] = 'Já existe agendamento nesta data/hora. Escolha outro.';
 
 				// user creation failed, this should never happen
 				$this->response($final, REST_Controller::HTTP_OK);
