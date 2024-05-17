@@ -131,5 +131,9 @@ $route['update_client_profile'] = 'api/User/update_client_profile';
 
 // schedule
 $route['add_schedule'] = 'api/Schedule/add_schedule';
+$route['get_broker_schedules'] = 'api/Schedule/get_broker_schedules';
+$route['get_client_schedules'] = 'api/Schedule/get_client_schedules';
+$route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
+$route['search_client_schedules'] = 'api/Schedule/search_client_schedules';
 
 // schedule
