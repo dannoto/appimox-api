@@ -56,7 +56,7 @@ class Schedule extends REST_Controller
                 $data['schedule_created'] = date('Y-m-d H:i:s');
                 $data['schedule_date'] = $schedule_date;
                 $data['schedule_time'] = $schedule_time;
-                $data['status'] = 0;
+                $data['schedule_status'] = 0;
                 $data['is_deleted'] = 0;
 
 
