@@ -131,6 +131,7 @@ class Schedule extends REST_Controller
 
                     $dx = array();
 
+                    $client_data = $this->user_model->get_user($sc->schedule_client);
 
                     $broker_data = $this->user_model->get_user($sc->schedule_broker);
                     $poperty_data = $this->property_model->get_property($sc->schedule_property);
@@ -139,6 +140,7 @@ class Schedule extends REST_Controller
                     $dx['broker_data'] = $broker_data;
                     $dx['property_data'] = $poperty_data;
                     $dx['schedule_data'] = $schedules_data;
+                    $dx['client_data'] = $client_data;
 
 
                     $response[] = $dx;
