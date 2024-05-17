@@ -21,7 +21,7 @@ class Schedule_model extends CI_Model
         
         $this->db->where('schedule_client', $client_id);
         $this->db->where('schedule_broker', $broker_id);
-        $this->db->where('schedule_property', $schedule_date);
+        $this->db->where('schedule_property', $property_id);
         $this->db->where('schedule_date', $schedule_date);
         $this->db->where('schedule_time', $schedule_time);
 
