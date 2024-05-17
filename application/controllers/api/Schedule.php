@@ -14,6 +14,9 @@ class Schedule extends REST_Controller
         $this->load->library('Authorization_Token');
         $this->load->model('user_model');
         $this->load->model('schedule_model');
+        $this->load->model('broker_model');
+        $this->load->model('property_model');
+
     }
 
     public function add_schedule_post()
