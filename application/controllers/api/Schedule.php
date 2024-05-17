@@ -46,16 +46,15 @@ class Schedule extends REST_Controller
             $schedule_date = $this->input->post('schedule_date');
             $schedule_time = $this->input->post('schedule_time');
 
-            // $schedule_date[0] = explode("T", $schedule_date);
 
-            if ($client_id ==  $broker_id) {
-                $final['status'] = false;
-                $final['message'] = 'Você não pode agendar consigo mesmo.';
-                $final['note'] = 'Você não pode agendar consigo mesmo.';
+            // if ($client_id ==  $broker_id) {
+            //     $final['status'] = false;
+            //     $final['message'] = 'Você não pode agendar consigo mesmo.';
+            //     $final['note'] = 'Você não pode agendar consigo mesmo.';
 
-                // user creation failed, this should never happen
-                $this->response($final, REST_Controller::HTTP_OK);
-            }
+            //     // user creation failed, this should never happen
+            //     $this->response($final, REST_Controller::HTTP_OK);
+            // }
 
             if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date, $schedule_time)) {
 
