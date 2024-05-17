@@ -114,6 +114,7 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+            
         } else {
 
             // set variables from the form
