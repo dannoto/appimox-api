@@ -18,7 +18,7 @@ class Schedule extends REST_Controller
         $this->load->model('property_model');
     }
 
-   
+
 
     public function add_schedule_post()
     {
@@ -285,6 +285,42 @@ class Schedule extends REST_Controller
             $schedule_id = $this->input->post('schedule_id');
             $schedule_date = $this->input->post('schedule_date');
 
+            // Impedindo cancelamento se tiver 1 hora antes
+            $schedule_data_check =  $this->schedule_model->get_schedule($schedule_id);
+
+            if ($schedule_data_check) {
+                $schedule_date = $schedule_data_check->schedule_date; // Atribua a data do agendamento da base de dados
+                $current_datetime = new DateTime();
+                $schedule_datetime = new DateTime($schedule_date);
+            
+                // Calcula a diferença em horas entre a data atual e a data do agendamento
+                $interval = $current_datetime->diff($schedule_datetime);
+                $hours_difference = ($interval->days * 24) + $interval->h + ($interval->i / 60);
+            
+                // Verifica se faltam mais de uma hora para o agendamento
+                if ($hours_difference > 1) {
+                    // Permitir cancelamento
+                    // $this->schedule_model->cancel_schedule($schedule_id);
+                    // echo "Agendamento cancelado com sucesso.";
+                    // pass
+                } else {
+                   
+                    $final['status'] = false;
+                    $final['message'] = 'Não é possível cancelar o agendamento com menos de uma hora de antecedência. Contate o cliente via chat.';
+                    $final['note'] = 'Não é possível cancelar o agendamento com menos de uma hora de antecedência. Contate o cliente via chat.';
+    
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
+                }
+
+            } else {
+                echo "Agendamento não encontrado.";
+                return false;
+            }
+
+
+
+            // Impedindo cancelamento se tiver 1 hora antes
 
             $schedule_data['schedule_status'] = 2;
 
@@ -320,7 +356,7 @@ class Schedule extends REST_Controller
         }
     }
 
-    public function search_broker_schedules_post() 
+    public function search_broker_schedules_post()
     {
 
         // set validation rules
