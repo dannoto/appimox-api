@@ -209,7 +209,7 @@ class Schedule extends REST_Controller
             if ($formatted_date_time <= $current_datetime) {
 
                 $final['status'] = false;
-                $final['message'] = 'Escolha uma data futura.';
+                $final['message'] = 'Escolha uma data futura.'.  $current_datetime;
                 $final['note'] = 'Escolha uma data futura.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
