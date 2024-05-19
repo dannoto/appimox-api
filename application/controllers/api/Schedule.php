@@ -204,7 +204,7 @@ class Schedule extends REST_Controller
             // formatando data para datetime
 
             // validando data futura
-            $current_datetime = new DateTime();
+            $current_datetime = date('Y-m-d H:i:s');
 
             if ($formatted_date_time <= $current_datetime) {
 
