@@ -55,33 +55,45 @@ class Schedule extends REST_Controller
 
             if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date)) {
 
+                if (!$this->schedule_model->check_schedule_duplicated($client_id, $broker_id, $property_id)) {
 
-                $data['schedule_client'] = $client_id;
-                $data['schedule_broker'] = $broker_id;
-                $data['schedule_property'] = $property_id;
-                $data['schedule_created'] = date('Y-m-d H:i:s');
-                $data['schedule_date'] = $schedule_date;
-                $data['schedule_status'] = 0;
-                $data['is_deleted'] = 0;
+                    $data['schedule_client'] = $client_id;
+                    $data['schedule_broker'] = $broker_id;
+                    $data['schedule_property'] = $property_id;
+                    $data['schedule_created'] = date('Y-m-d H:i:s');
+                    $data['schedule_date'] = $schedule_date;
+                    $data['schedule_status'] = 0;
+                    $data['is_deleted'] = 0;
 
 
-                if ($this->schedule_model->add_schedule($data)) {
+                    if ($this->schedule_model->add_schedule($data)) {
 
-                    $final['status'] = true;
-                    $final['message'] = 'Agendado com sucesso.';
-                    $final['note'] = 'Agendado com sucesso.';
+                        $final['status'] = true;
+                        $final['message'] = 'Agendado com sucesso.';
+                        $final['note'] = 'Agendado com sucesso.';
 
-                    // user creation failed, this should never happen
-                    $this->response($final, REST_Controller::HTTP_OK);
+                        // user creation failed, this should never happen
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao adicionar agendamento. Tente novamente.';
+                        $final['note'] = 'Erro ao adicionar agendamento. Tente novamente.';
+
+                        // user creation failed, this should never happen
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+
                 } else {
 
                     $final['status'] = false;
-                    $final['message'] = 'Erro ao adicionar agendamento. Tente novamente.';
-                    $final['note'] = 'Erro ao adicionar agendamento. Tente novamente.';
+                    $final['message'] = 'Você já possui um agendamento "em aberto" neste imóvel com este corretor.';
+                    $final['note'] = 'Você já possui um agendamento "em aberto" neste imóvel com este corretor.';
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
+
             } else {
 
                 $final['status'] = false;
@@ -161,7 +173,7 @@ class Schedule extends REST_Controller
 
 
     // Corretor atualiza a data do agendamento.
-    public function update_schedule_broker_date()
+    public function update_schedule_broker_date_post()
     {
 
         $this->form_validation->set_rules('schedule_id', 'ID do Agendamento', 'trim|required');
@@ -178,6 +190,7 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+            
         } else {
 
             // set variables from the form
