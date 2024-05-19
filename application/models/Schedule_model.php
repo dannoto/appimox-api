@@ -89,20 +89,22 @@ class Schedule_model extends CI_Model
     public function search_broker_schedules($broker_id, $query = null)
     {
         // Adiciona condição para verificar se o agendamento é do corretor especificado
-        $this->db->where('user_schedules.schedule_client', $broker_id);
+        $this->db->where('user_schedules.schedule_broker', $broker_id);
         $this->db->where('user_schedules.is_deleted', 0);
-
-        // Se uma consulta de pesquisa for fornecida, adiciona uma junção com a tabela 'users'
+    
+        // Se uma consulta de pesquisa for fornecida, adiciona uma junção com a tabela 'users' onde está o cliente
         if (!empty($query)) {
             $this->db->join('users', 'user_schedules.schedule_client = users.id');
             $this->db->like('users.user_name', $query);
         }
-
+    
         $this->db->order_by('user_schedules.id', 'desc');
-
+    
         return $this->db->get('user_schedules')->result();
     }
+    
 
+    
 
     public function get_broker_schedules_filter($broker_id, $schedule_status)
     {
