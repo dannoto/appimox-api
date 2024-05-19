@@ -292,11 +292,11 @@ class Schedule extends REST_Controller
                 $schedule_date = $schedule_data_check->schedule_date; // Atribua a data do agendamento da base de dados
                 $current_datetime = new DateTime();
                 $schedule_datetime = new DateTime($schedule_date);
-            
+
                 // Calcula a diferença em horas entre a data atual e a data do agendamento
                 $interval = $current_datetime->diff($schedule_datetime);
                 $hours_difference = ($interval->days * 24) + $interval->h + ($interval->i / 60);
-            
+
                 // Verifica se faltam mais de uma hora para o agendamento
                 if ($hours_difference > 1) {
                     // Permitir cancelamento
@@ -304,18 +304,21 @@ class Schedule extends REST_Controller
                     // echo "Agendamento cancelado com sucesso.";
                     // pass
                 } else {
-                   
+
                     $final['status'] = false;
                     $final['message'] = 'Não é possível cancelar o agendamento com menos de uma hora de antecedência. Contate o cliente via chat.';
                     $final['note'] = 'Não é possível cancelar o agendamento com menos de uma hora de antecedência. Contate o cliente via chat.';
-    
+
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
-
             } else {
-                echo "Agendamento não encontrado.";
-                return false;
+                $final['status'] = false;
+                $final['message'] = 'Erro ao cancelar agendamento. Agendamento não encontrado.';
+                $final['note'] = 'Erro ao cancelar agendamento. Agendamento não encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
             }
 
 
