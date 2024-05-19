@@ -267,7 +267,6 @@ class Schedule extends REST_Controller
     {
 
         $this->form_validation->set_rules('schedule_id', 'ID do Agendamento', 'trim|required');
-        $this->form_validation->set_rules('schedule_date', 'Dia do agendamento', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
