@@ -205,14 +205,16 @@ class Schedule extends REST_Controller
 
             // validando data futura
             $current_datetime = new DateTime();
-            
-            if ($formatted_date_time > $current_datetime) {
-                // A data e hora agendadas estão no futuro
-                echo "A data e hora agendadas estão no futuro.";
-            } else {
-                // A data e hora agendadas estão no passado ou é a mesma que a atual
-                echo "A data e hora agendadas estão no passado ou é a mesma que a atual.";
+
+            if ($formatted_date_time < $current_datetime) {
+
+                $final['status'] = false;
+                $final['message'] = 'Escolha uma data futura.';
+                $final['note'] = 'Escolha uma data futura.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
             }
+
             // validando data futura
 
             if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date)) {
