@@ -197,21 +197,17 @@ class Schedule extends REST_Controller
             $broker_id    = $this->input->post('broker_id');
             $schedule_date = $this->input->post('schedule_date');
 
-
-            // if ($client_id ==  $broker_id) {
-            //     $final['status'] = false;
-            //     $final['message'] = 'Você não pode agendar consigo mesmo.';
-            //     $final['note'] = 'Você não pode agendar consigo mesmo.';
-
-            //     // user creation failed, this should never happen
-            //     $this->response($final, REST_Controller::HTTP_OK);
-            // }
+            // formatando data para datetime
+            $date_time = DateTime::createFromFormat('d-m-Y H:i:s', $schedule_date);
+            $formatted_date_time = $date_time->format('Y-m-d H:i:s');
+            $schedule_date =  $formatted_date_time;
+            // formatando data para datetime
 
             if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date)) {
 
-              
+
                 $schedule_data['schedule_date'] = $schedule_date;
-               
+
 
                 if ($this->schedule_model->update_broker_schedule($schedule_id, $schedule_data)) {
 
