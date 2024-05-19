@@ -141,6 +141,7 @@ $route['search_client_schedules'] = 'api/Schedule/search_client_schedules';
 
 $route['update_schedule_broker_date'] = 'api/Schedule/update_schedule_broker_date';
 $route['broker_cancel_schedule'] = 'api/Schedule/broker_cancel_schedule';
+$route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
 
 
 // schedule

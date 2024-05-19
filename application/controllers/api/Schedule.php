@@ -18,6 +18,8 @@ class Schedule extends REST_Controller
         $this->load->model('property_model');
     }
 
+   
+
     public function add_schedule_post()
     {
 
@@ -311,6 +313,72 @@ class Schedule extends REST_Controller
                 $final['status'] = false;
                 $final['message'] = 'Erro ao cancelar agendamento. Tente novamente.';
                 $final['note'] = 'Erro ao cancelar agendamento. Tente novamente.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function search_broker_schedules_post() 
+    {
+
+        // set validation rules
+        $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('query', 'Query', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            // set variables from the form
+            $user_id = $this->input->post('user_id');
+            $query = $this->input->post('query');
+
+            $schedules_data = $this->schedule_model->search_broker_schedules($user_id, $query);
+
+            if ($schedules_data) {
+
+
+                $response = array();
+
+                foreach ($schedules_data as $sc) {
+
+                    $dx = array();
+
+                    $client_data = $this->user_model->get_user($sc->schedule_client);
+
+                    $broker_data = $this->user_model->get_user($sc->schedule_broker);
+                    $poperty_data = $this->property_model->get_property($sc->schedule_property);
+                    $schedules_data = $sc;
+
+                    $dx['broker_data'] = $broker_data;
+                    $dx['property_data'] = $poperty_data;
+                    $dx['schedule_data'] = $schedules_data;
+                    $dx['client_data'] = $client_data;
+
+
+                    $response[] = $dx;
+                }
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
