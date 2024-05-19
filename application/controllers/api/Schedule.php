@@ -206,7 +206,7 @@ class Schedule extends REST_Controller
             // validando data futura
             $current_datetime = new DateTime();
 
-            if ($formatted_date_time < $current_datetime) {
+            if ($formatted_date_time <= $current_datetime) {
 
                 $final['status'] = false;
                 $final['message'] = 'Escolha uma data futura.';
