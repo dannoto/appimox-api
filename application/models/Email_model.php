@@ -20,4 +20,10 @@ class Email_model extends CI_Model
     {
         return true;
     }
+
+    // schedule
+
+    public function broker_update_schedule($broker_data, $cliente_data, $schedule_data) {
+        
+    }
 }
