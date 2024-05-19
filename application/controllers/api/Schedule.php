@@ -209,7 +209,7 @@ class Schedule extends REST_Controller
             if ($formatted_date_time <= $current_datetime) {
 
                 $final['status'] = false;
-                $final['message'] = 'Escolha uma data futura.'. $current_datetime;
+                $final['message'] = 'Escolha uma data futura.';
                 $final['note'] = 'Escolha uma data futura.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
@@ -256,6 +256,62 @@ class Schedule extends REST_Controller
                 $final['status'] = false;
                 $final['message'] = 'Já existe agendamento nesta data/hora. Escolha outro.';
                 $final['note'] = 'Já existe agendamento nesta data/hora. Escolha outro.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function broker_cancel_schedule_post()
+    {
+
+        $this->form_validation->set_rules('schedule_id', 'ID do Agendamento', 'trim|required');
+        $this->form_validation->set_rules('schedule_date', 'Dia do agendamento', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            // set variables from the form
+            $schedule_id = $this->input->post('schedule_id');
+            $schedule_date = $this->input->post('schedule_date');
+
+
+            $schedule_data['schedule_status'] = 2;
+
+
+            if ($this->schedule_model->update_broker_schedule($schedule_id, $schedule_data)) {
+
+                // Registrando Action
+                $schedule_data_action['schedule_id'] = $schedule_id;
+                $schedule_data_action['schedule_action_id'] = 2;
+                $schedule_data_action['schedule_action_description'] = 'Cancelado pelo Corretor';
+                $schedule_data_action['schedule_action_date'] = date('Y-m-d H:i:s');
+                $schedule_data_action['is_deleted'] = 0;
+
+                $this->schedule_model->add_schedule_action($schedule_data_action);
+                // Registrando Action
+
+
+                $final['status'] = true;
+                $final['message'] = 'Agendamento cancelado com sucesso.';
+                $final['note'] = 'Agendamento cancelado com sucesso.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao cancelar agendamento. Tente novamente.';
+                $final['note'] = 'Erro ao cancelar agendamento. Tente novamente.';
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
