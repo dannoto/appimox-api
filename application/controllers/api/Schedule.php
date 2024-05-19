@@ -200,7 +200,7 @@ class Schedule extends REST_Controller
             // formatando data para datetime
             $date_time = DateTime::createFromFormat('d-m-Y H:i:s', $schedule_date);
             $formatted_date_time = $date_time->format('Y-m-d H:i:s');
-            $schedule_date =  $formatted_date_time;
+            // $schedule_date =  $formatted_date_time;
             // formatando data para datetime
 
             // validando data futura
@@ -209,7 +209,7 @@ class Schedule extends REST_Controller
             if ($formatted_date_time <= $current_datetime) {
 
                 $final['status'] = false;
-                $final['message'] = 'Escolha uma data futura.'.  $current_datetime;
+                $final['message'] = 'Escolha uma data futura.'. $current_datetime;
                 $final['note'] = 'Escolha uma data futura.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
@@ -217,10 +217,10 @@ class Schedule extends REST_Controller
 
             // validando data futura
 
-            if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date)) {
+            if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $formatted_date_time)) {
 
 
-                $schedule_data['schedule_date'] = $schedule_date;
+                $schedule_data['schedule_date'] = $formatted_date_time;
 
 
                 if ($this->schedule_model->update_broker_schedule($schedule_id, $schedule_data)) {
