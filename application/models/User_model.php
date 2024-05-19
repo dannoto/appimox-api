@@ -23,7 +23,7 @@ class User_model extends CI_Model
 			'user_password'   => $this->hash_password($user_password),
 			'user_register' => date('Y-m-j H:i:s'),
 			'user_auth_type' => $user_auth_type,
-			'user_image' => 'public/images/users/default.jpg',
+			'user_image' => 'public/images/users/default.png',
 			'user_verified_creci' => 0,
 			'user_verified_email' => 0,
 			'user_verified_preferences' => 0,
