@@ -179,7 +179,7 @@ class Chat extends REST_Controller
 
                 $response = array();
 
-
+               
                 foreach ($broker_chats as $c) {
 
                     $format_response = array();
@@ -273,6 +273,7 @@ class Chat extends REST_Controller
     {
 
         $this->form_validation->set_rules('chat_id', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
@@ -282,10 +283,14 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $chat_id  = $this->input->post('chat_id');
+            $user_id  = $this->input->post('user_id');
 
+             // update unread
+            $this->chat_model->update_unread_count($chat_id, $user_id);
 
             $chat_message = $this->chat_model->get_chat_message($chat_id);
 
