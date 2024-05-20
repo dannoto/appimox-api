@@ -151,5 +151,6 @@ $route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
 $route['add_chat'] = 'api/Chat/add_chat';
 $route['get_broker_chat'] = 'api/Chat/get_broker_chat';
 
+$route['add_chat_message'] = 'api/Chat/add_chat_message';
 
 // Chats
