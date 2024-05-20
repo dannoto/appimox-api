@@ -210,6 +210,62 @@ class Chat extends REST_Controller
         }
     }
 
+    public function search_broker_chat_post()
+    {
+
+        $this->form_validation->set_rules('broker_id', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('query', 'ID do usuário', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $broker_id = $this->input->post('broker_id');
+            $query = $this->input->post('query');
+
+            $broker_chats = $this->chat_model->search_broker_chats($broker_id, $query);
+
+            if ($broker_chats) {
+
+
+                $response = array();
+
+
+                foreach ($broker_chats as $c) {
+
+                    $format_response = array();
+
+                    $format_response['chat_data'] = $c;
+                    $format_response['client_data'] = $this->user_model->get_user($c->chat_user_client);
+                    $format_response['chat_message_data'] = $this->chat_model->get_chat_message_preview($c->id);
+
+                    $response[] = $format_response;
+                }
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Encontrado com sucesso.';
+                $final['note'] = 'Encontrado com sucesso.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao encontrar.';
+                $final['note'] = 'Erro ao encontrar.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
 
 
     public function get_chat_messages_post()

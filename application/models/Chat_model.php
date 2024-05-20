@@ -122,12 +122,20 @@ class Chat_model extends CI_Model
     }
 
 
-
-    public function search_broker_chats($broker_id, $query)
+    public function search_broker_chats($broker_id, $query = null)
     {
+        // Obter todos os chats do corretor que não foram deletados
         $this->db->where('chat_user_broker', $broker_id);
         $this->db->where('is_deleted', 0);
         $this->db->where('broker_is_deleted', 0);
+
+        // Se uma consulta de pesquisa for fornecida, buscar o ID do cliente pelo nome
+        if (!empty($query)) {
+            $this->db->join('users', 'user_chat.chat_user_client = users.id');
+            $this->db->like('users.user_name', $query);
+            $this->db->select('user_chat.*'); // Selecionar apenas colunas da tabela user_chat para evitar conflito
+        }
+
         $chats = $this->db->get('user_chat')->result();
 
         $chats_with_messages = [];
@@ -136,16 +144,49 @@ class Chat_model extends CI_Model
             // Verificar se existem mensagens para cada chat
             $this->db->where('chat_id', $chat->id);
             $this->db->where('is_deleted', 0);
+            $this->db->order_by('message_date', 'DESC');
             $messages = $this->db->get('user_chat_messages')->result();
 
             if (count($messages) > 0) {
                 // Adicionar o chat à lista se houver pelo menos uma mensagem
+                $chat->last_message_date = $messages[0]->message_date; // Obter a data da última mensagem
                 $chats_with_messages[] = $chat;
             }
         }
 
+        // Ordenar os chats pela data da última mensagem
+        usort($chats_with_messages, function ($a, $b) {
+            return strcmp($b->last_message_date, $a->last_message_date);
+        });
+
         return $chats_with_messages;
     }
+
+
+
+    // public function search_broker_chats($broker_id, $query)
+    // {
+    //     $this->db->where('chat_user_broker', $broker_id);
+    //     $this->db->where('is_deleted', 0);
+    //     $this->db->where('broker_is_deleted', 0);
+    //     $chats = $this->db->get('user_chat')->result();
+
+    //     $chats_with_messages = [];
+
+    //     foreach ($chats as $chat) {
+    //         // Verificar se existem mensagens para cada chat
+    //         $this->db->where('chat_id', $chat->id);
+    //         $this->db->where('is_deleted', 0);
+    //         $messages = $this->db->get('user_chat_messages')->result();
+
+    //         if (count($messages) > 0) {
+    //             // Adicionar o chat à lista se houver pelo menos uma mensagem
+    //             $chats_with_messages[] = $chat;
+    //         }
+    //     }
+
+    //     return $chats_with_messages;
+    // }
 
     public function add_chat_message($chat_data)
     {
