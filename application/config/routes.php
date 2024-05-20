@@ -153,4 +153,7 @@ $route['get_broker_chat'] = 'api/Chat/get_broker_chat';
 
 $route['add_chat_message'] = 'api/Chat/add_chat_message';
 
+$route['get_chat_messages'] = 'api/Chat/get_chat_messages';
+
+
 // Chats

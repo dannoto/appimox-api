@@ -193,4 +193,49 @@ class Chat extends REST_Controller
             }
         }
     }
+
+
+    
+    public function get_chat_messages_post()
+    {
+
+        $this->form_validation->set_rules('chat_id', 'ID do usuário', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $chat_id  = $this->input->post('chat_id');
+           
+
+            $chat_message = $this->chat_model->get_chat_message($chat_id);
+
+            if ($chat_message) {
+
+                $final['status'] = true;
+                $final['response'] = $chat_message;
+                $final['message'] = 'Mensagens encontradas';
+                $final['note'] = 'Mensagens encontradas';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhuma mensagem encontrada.';
+                $final['note'] = 'Nenhuma mensagem encontrada.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    
 }
