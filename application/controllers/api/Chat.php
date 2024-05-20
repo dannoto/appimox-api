@@ -32,7 +32,6 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $broker_data =   $this->user_model->get_user($this->input->post('chat_user_broker'));
@@ -84,8 +83,16 @@ class Chat extends REST_Controller
                 }
             } else {
 
+
+                $response = array();
+
+                $response['chat_data'] = $check_chat;
+                $response['client_data'] = $broker_data;
+                $response['broker_data'] = $client_data;
+
+
                 $final['status'] = true;
-                $final['response'] = $check_chat;
+                $final['response'] = $response;
                 $final['message'] = 'Já existe o chat criado.';
                 $final['note'] = 'Já existe o chat criado.';
 
@@ -115,7 +122,6 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $chat_data['chat_id']  = $this->input->post('chat_id');
@@ -155,7 +161,7 @@ class Chat extends REST_Controller
     {
 
         $this->form_validation->set_rules('broker_id', 'ID do usuário', 'trim|required');
-     
+
         if ($this->form_validation->run() === false) {
 
             $final['status'] = false;
@@ -163,7 +169,6 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
         } else {
 
             $broker_id = $this->input->post('broker_id');
@@ -177,7 +182,6 @@ class Chat extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
