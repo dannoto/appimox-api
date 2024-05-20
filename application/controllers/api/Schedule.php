@@ -312,6 +312,7 @@ class Schedule extends REST_Controller
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
+                
             } else {
                 $final['status'] = false;
                 $final['message'] = 'Erro ao cancelar agendamento. Agendamento não encontrado.';
