@@ -210,4 +210,15 @@ class Chat_model extends CI_Model
 
         return $this->db->get('user_chat_messages')->result();
     }
+    public function unread_count($chat_id, $chat_user_broker) {
+
+        $this->db->where('chat_id', $chat_id);
+        $this->db->where('message_receiver_id', $chat_user_broker);
+        $this->db->where('is_deleted', 0);
+
+        $data = $this->db->get('user_chat_messages')->result();
+
+        return count($data);
+
+    }
 }
