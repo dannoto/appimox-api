@@ -177,6 +177,7 @@ class Chat extends REST_Controller
             if ($broker_chats) {
 
                 $final['status'] = true;
+                $final['response'] = $broker_chats;
                 $final['message'] = 'Encontrado com sucesso.';
                 $final['note'] = 'Encontrado com sucesso.';
 
