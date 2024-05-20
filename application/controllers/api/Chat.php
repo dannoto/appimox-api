@@ -180,7 +180,6 @@ class Chat extends REST_Controller
                 $response = array();
 
 
-
                 foreach ($broker_chats as $c) {
 
                     $format_response = array();
