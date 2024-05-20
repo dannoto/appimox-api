@@ -106,7 +106,7 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
+
         } else {
 
             $chat_data['chat_id']  = $this->input->post('chat_id');
@@ -135,6 +135,46 @@ class Chat extends REST_Controller
                 $final['status'] = false;
                 $final['message'] = 'Erro ao enviar.';
                 $final['note'] = 'Erro ao enviar.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
+    public function get_broker_chat_post()
+    {
+
+        $this->form_validation->set_rules('broker_id', 'ID do usuário', 'trim|required');
+     
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+            
+        } else {
+
+            $broker_id = $this->input->post('broker_id');
+            $broker_chats = $this->chat_model->get_broker_chats($broker_id);
+
+            if ($broker_chats) {
+
+                $final['status'] = true;
+                $final['message'] = 'Encontrado com sucesso.';
+                $final['note'] = 'Encontrado com sucesso.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao encontrar.';
+                $final['note'] = 'Erro ao encontrar.';
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);

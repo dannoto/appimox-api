@@ -145,3 +145,10 @@ $route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
 
 
 // schedule
+
+
+// Chats
+$route['get_broker_chat'] = 'api/Chat/get_broker_chat';
+
+
+// Chats
