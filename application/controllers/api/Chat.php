@@ -61,8 +61,8 @@ class Chat extends REST_Controller
                     $response = array();
 
                     $response['chat_data'] = $this->chat_model->get_chat($chat_id);
-                    $response['client_data'] = $broker_data;
-                    $response['broker_data'] = $client_data;
+                    $response['broker_data'] = $broker_data;
+                    $response['client_data'] = $client_data;
 
 
                     $final['status'] = true;
@@ -87,8 +87,8 @@ class Chat extends REST_Controller
                 $response = array();
 
                 $response['chat_data'] = $check_chat;
-                $response['client_data'] = $broker_data;
-                $response['broker_data'] = $client_data;
+                $response['client_data'] = $client_data;
+                $response['broker_data'] = $broker_data;
 
 
                 $final['status'] = true;
