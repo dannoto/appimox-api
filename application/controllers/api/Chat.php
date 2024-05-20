@@ -176,8 +176,24 @@ class Chat extends REST_Controller
 
             if ($broker_chats) {
 
+
+                $response = array();
+
+
+
+                foreach ($broker_chats as $c) {
+
+                    $format_response = array();
+
+                    $format_response['chat_data'] = $c;
+                    $format_response['client_data'] = $this->user_model->get_user($c->chat_user_client);
+                    $format_response['chat_message_data'] = $this->chat_model->get_chat_message_preview($c->id);
+
+                    $response[] = $format_response;
+                }
+
                 $final['status'] = true;
-                $final['response'] = $broker_chats;
+                $final['response'] = $response;
                 $final['message'] = 'Encontrado com sucesso.';
                 $final['note'] = 'Encontrado com sucesso.';
 
@@ -196,7 +212,7 @@ class Chat extends REST_Controller
     }
 
 
-    
+
     public function get_chat_messages_post()
     {
 
@@ -213,7 +229,7 @@ class Chat extends REST_Controller
         } else {
 
             $chat_id  = $this->input->post('chat_id');
-           
+
 
             $chat_message = $this->chat_model->get_chat_message($chat_id);
 
@@ -237,6 +253,4 @@ class Chat extends REST_Controller
             }
         }
     }
-
-    
 }

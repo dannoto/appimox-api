@@ -93,4 +93,14 @@ class Chat_model extends CI_Model
 
         return $this->db->get('user_chat_messages')->result();
     }
+
+    public function get_chat_message_preview($chat_id)
+    {
+        $this->db->where('chat_id', $chat_id);
+        $this->db->where('is_deleted', 0);
+        $this->db->where('limit', 1);
+        $this->db->order_by('id', 'desc');
+
+        return $this->db->get('user_chat_messages')->result();
+    }
 }
