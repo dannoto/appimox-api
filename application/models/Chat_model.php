@@ -88,7 +88,7 @@ class Chat_model extends CI_Model
 
     public function get_chat_message($chat_id)
     {
-        $this->db->where('id', $chat_id);
+        $this->db->where('chat_id', $chat_id);
         $this->db->where('is_deleted', 0);
 
         return $this->db->get('user_chat_messages')->result();
