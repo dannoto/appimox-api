@@ -32,6 +32,7 @@ class Chat extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $broker_data =   $this->user_model->get_user($this->input->post('chat_user_broker'));
@@ -57,8 +58,16 @@ class Chat extends REST_Controller
 
                 if ($chat_id) {
 
+
+                    $response = array();
+
+                    $response['chat_data'] = $this->chat_model->get_chat($chat_id);
+                    $response['client_data'] = $broker_data;
+                    $response['broker_data'] = $client_data;
+
+
                     $final['status'] = true;
-                    $final['response'] = $this->chat_model->get_chat($chat_id);
+                    $final['response'] = $response;
                     $final['message'] = 'Chat criado com sucesso.';
                     $final['note'] = 'Chat criado com sucesso.';
 
@@ -141,7 +150,6 @@ class Chat extends REST_Controller
             }
         }
     }
-
 
     public function get_broker_chat_post()
     {
