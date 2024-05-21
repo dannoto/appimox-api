@@ -1213,8 +1213,7 @@ class User extends REST_Controller
 		$this->form_validation->set_rules('user_email', 'E-mail', 'trim|required');
 		$this->form_validation->set_rules('user_state', 'Estado', 'trim|required');
 		$this->form_validation->set_rules('user_cidade', 'Cidade', 'trim|required');
-		$this->form_validation->set_rules('user_creci', 'CRECI', 'trim|required');
-		$this->form_validation->set_rules('user_cpf', 'CPF', 'trim|required');
+
 
 		if ($this->form_validation->run() == false) {
 
@@ -1258,10 +1257,11 @@ class User extends REST_Controller
 						}
 					}
 
-					$update_user =  $this->user_model->update_user_profile($user_id, $data);
-
+					
 					if (!$this->user_model->check_email($data['user_email'], $user_id)) {
-
+						
+						$update_user =  $this->user_model->update_user_profile($user_id, $data);
+						
 						if ($update_user) {
 
 							$final['status'] = true;

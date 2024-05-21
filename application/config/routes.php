@@ -90,8 +90,10 @@ $route['update_broker_property'] = 'api/Propertys/update_broker_property';
 $route['add_broker_property_others_images'] = 'api/Propertys/add_broker_property_others_images';
 $route['get_broker_property_data'] = 'api/Propertys/get_broker_property_data';
 $route['delete_broker_property'] = 'api/Propertys/delete_broker_property';
-
 $route['get_broker_property_home'] = 'api/Propertys/get_broker_property_home';
+
+// Client
+
 
 // Property Broker
 
@@ -124,9 +126,9 @@ $route['check_favorit'] = 'api/User/check_favorit';
 
 // Profile
 $route['get_user_profile_data'] = 'api/User/get_user_profile_data';
+
 $route['update_broker_profile'] = 'api/User/update_broker_profile';
 $route['update_client_profile'] = 'api/User/update_client_profile';
-
 // Profile
 
 // schedule
