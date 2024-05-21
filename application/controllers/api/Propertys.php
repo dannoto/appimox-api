@@ -527,7 +527,7 @@ class Propertys extends REST_Controller
                     $data['property_id'] = $this->input->post('property_id');
 
 
-                    if ($this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
+                    // if ($this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
 
                         $final['status'] = true;
                         $final['message'] = 'Imovel recuperados com sucesso.';
@@ -537,14 +537,14 @@ class Propertys extends REST_Controller
                         $final['note'] = 'get_broker_property_data';
 
                         $this->response($final, REST_Controller::HTTP_OK);
-                    } else {
+                    // } else {
 
-                        $final['status'] = false;
-                        $final['message'] = 'Você não é proprietário deste imóvel.';
-                        $final['note'] = 'Erro em get_broker_property_data()';
+                    //     $final['status'] = false;
+                    //     $final['message'] = 'Você não é proprietário deste imóvel.';
+                    //     $final['note'] = 'Erro em get_broker_property_data()';
 
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    }
+                    //     $this->response($final, REST_Controller::HTTP_OK);
+                    // }
                 } else {
 
                     $final['status'] = false;
@@ -1015,7 +1015,7 @@ class Propertys extends REST_Controller
                             $broker_data = $this->property_model->get_broker($broker_id);
 
                             if ($broker_id) {
-                                
+
                                 if ($broker_data) {
 
                                     $id_exists = false;
