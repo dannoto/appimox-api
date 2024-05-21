@@ -429,7 +429,7 @@ class Schedule extends REST_Controller
     public function filter_broker_schedules_post()
     {
         $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
-        $this->form_validation->set_rules('schedule_schedules', 'schedule_schedules', 'trim|required');
+        $this->form_validation->set_rules('schedule_status', 'schedule_status', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -443,9 +443,9 @@ class Schedule extends REST_Controller
         } else {
 
             $user_id = $this->input->post('user_id');
-            $schedule_schedules = $this->input->post('schedule_schedules');
+            $schedule_status = $this->input->post('schedule_status');
 
-            $schedules_data = $this->schedule_model->filter_broker_schedules($user_id, $schedule_schedules);
+            $schedules_data = $this->schedule_model->filter_broker_schedules($user_id, $schedule_status);
 
             if ($schedules_data) {
 
@@ -478,7 +478,7 @@ class Schedule extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-                
+
             } else {
 
                 $final['status'] = false;
