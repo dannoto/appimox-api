@@ -102,6 +102,18 @@ class Schedule_model extends CI_Model
     
         return $this->db->get('user_schedules')->result();
     }
+
+
+    public function filter_broker_schedules($broker_id, $schedule_status)
+    {
+        // Adiciona condição para verificar se o agendamento é do corretor especificado
+        $this->db->where('user_schedules.schedule_broker', $broker_id);
+        $this->db->where('user_schedules.schedule_status', $schedule_status);
+        $this->db->where('user_schedules.is_deleted', 0);
+        $this->db->order_by('user_schedules.id', 'desc');
+    
+        return $this->db->get('user_schedules')->result();
+    }
     
 
     
