@@ -894,18 +894,29 @@ class Propertys extends REST_Controller
                             $broker_id =  $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
-                            $id_exists = false;
-                            foreach ($brokers_data as $existing_broker) {
-                                if ($existing_broker->id == $broker_data->id) {
-                                    $id_exists = true;
-                                    break;
+
+                            if ($broker_id) {
+
+                                if ($broker_data) {
+
+
+                                    $id_exists = false;
+                                    foreach ($brokers_data as $existing_broker) {
+                                        if ($existing_broker->id == $broker_data->id) {
+                                            $id_exists = true;
+                                            break;
+                                        }
+                                    }
+        
+                                    // Se o ID não existe, adiciona o corretor a brokers_data
+                                    if (!$id_exists) {
+                                        $brokers_data[] = $broker_data;
+                                    }
                                 }
+
                             }
 
-                            // Se o ID não existe, adiciona o corretor a brokers_data
-                            if (!$id_exists) {
-                                $brokers_data[] = $broker_data;
-                            }
+                          
 
                             // $brokers_data[] = $broker_data;
                         }
@@ -1003,18 +1014,27 @@ class Propertys extends REST_Controller
                             $broker_id =  $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
-                            $id_exists = false;
-                            foreach ($brokers_data as $existing_broker) {
-                                if ($existing_broker->id == $broker_data->id) {
-                                    $id_exists = true;
-                                    break;
+                            if ($broker_id) {
+                                
+                                if ($broker_data) {
+
+                                    $id_exists = false;
+                                    foreach ($brokers_data as $existing_broker) {
+                                        if ($existing_broker->id == $broker_data->id) {
+                                            $id_exists = true;
+                                            break;
+                                        }
+                                    }
+        
+                                    // Se o ID não existe, adiciona o corretor a brokers_data
+                                    if (!$id_exists) {
+                                        $brokers_data[] = $broker_data;
+                                    }
+
                                 }
                             }
 
-                            // Se o ID não existe, adiciona o corretor a brokers_data
-                            if (!$id_exists) {
-                                $brokers_data[] = $broker_data;
-                            }
+                           
 
                             // $brokers_data[] = $broker_data;
                         }
