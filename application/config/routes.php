@@ -156,10 +156,12 @@ $route['add_chat'] = 'api/Chat/add_chat';
 
 $route['get_broker_chat'] = 'api/Chat/get_broker_chat';
 $route['search_broker_chat'] = 'api/Chat/search_broker_chat';
-
 $route['add_chat_message'] = 'api/Chat/add_chat_message';
-
 $route['get_chat_messages'] = 'api/Chat/get_chat_messages';
+
+// -------------------------
+$route['get_client_chat'] = 'api/Chat/get_client_chat';
+$route['search_client_chat'] = 'api/Chat/search_client_chat';
 
 
 // Chats
