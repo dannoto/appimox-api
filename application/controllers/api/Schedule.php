@@ -600,7 +600,7 @@ class Schedule extends REST_Controller
             // set variables from the form
             $user_id = $this->input->post('user_id');
 
-            $schedules_data = $this->schedule_model->get_broker_schedules($user_id);
+            $schedules_data = $this->schedule_model->get_client_schedules($user_id);
 
             if ($schedules_data) {
 
@@ -666,7 +666,7 @@ class Schedule extends REST_Controller
             $user_id = $this->input->post('user_id');
             $query = $this->input->post('query');
 
-            $schedules_data = $this->schedule_model->search_broker_schedules($user_id, $query);
+            $schedules_data = $this->schedule_model->search_client_schedules($user_id, $query);
 
             if ($schedules_data) {
 
