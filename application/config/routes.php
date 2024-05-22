@@ -134,18 +134,19 @@ $route['update_client_profile'] = 'api/User/update_client_profile';
 // schedule
 $route['add_schedule'] = 'api/Schedule/add_schedule';
 $route['get_broker_schedules'] = 'api/Schedule/get_broker_schedules';
-$route['get_client_schedules'] = 'api/Schedule/get_client_schedules';
+
 $route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
-$route['search_client_schedules'] = 'api/Schedule/search_client_schedules';
-
-
-// -----------
-
 $route['update_schedule_broker_date'] = 'api/Schedule/update_schedule_broker_date';
 $route['broker_cancel_schedule'] = 'api/Schedule/broker_cancel_schedule';
 $route['search_broker_schedules'] = 'api/Schedule/search_broker_schedules';
 $route['filter_broker_schedules'] = 'api/Schedule/filter_broker_schedules';
 
+// --------- client ----------
+
+$route['get_client_schedules'] = 'api/Schedule/get_client_schedules';
+$route['search_client_schedules'] = 'api/Schedule/search_client_schedules';
+$route['update_schedule_client_date'] = 'api/Schedule/update_schedule_client_date';
+$route['client_cancel_schedule'] = 'api/Schedule/client_cancel_schedule';
 
 // schedule
 
