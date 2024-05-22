@@ -806,5 +806,67 @@ class Schedule extends REST_Controller
         }
     }
 
+    public function filter_client_schedules_post()
+    {
+        $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('schedule_status', 'schedule_status', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $user_id = $this->input->post('user_id');
+            $schedule_status = $this->input->post('schedule_status');
+
+            $schedules_data = $this->schedule_model->filter_client_schedules($user_id, $schedule_status);
+
+            if ($schedules_data) {
+
+
+                $response = array();
+
+                foreach ($schedules_data as $sc) {
+
+                    $dx = array();
+
+                    $client_data = $this->user_model->get_user($sc->schedule_client);
+
+                    $broker_data = $this->user_model->get_user($sc->schedule_broker);
+                    $poperty_data = $this->property_model->get_property($sc->schedule_property);
+                    $schedules_data = $sc;
+
+                    $dx['broker_data'] = $broker_data;
+                    $dx['property_data'] = $poperty_data;
+                    $dx['schedule_data'] = $schedules_data;
+                    $dx['client_data'] = $client_data;
+
+
+                    $response[] = $dx;
+                }
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
 
 }
