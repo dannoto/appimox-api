@@ -296,7 +296,7 @@ class Chat extends REST_Controller
                     $format_response = array();
 
                     $format_response['chat_data'] = $c;
-                    $format_response['broker_data'] = $this->user_model->get_user($c->chat_user_client);
+                    $format_response['broker_data'] = $this->user_model->get_user($c->chat_user_broker);
                     $format_response['chat_message_data'] = $this->chat_model->get_chat_message_preview($c->id);
                     $format_response['unread_count'] = $this->chat_model->unread_count($c->id, $c->chat_user_client);
 
