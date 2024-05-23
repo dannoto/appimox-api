@@ -189,6 +189,6 @@ class Property_model extends CI_Model
     public function get_estado_label($estado_id) {
         $this->db->where('id', $estado_id);
         $data =  $this->db->get('db_estados')->row();
-        return $data->nome;
+        return $data->uf;
     }
 }
