@@ -177,4 +177,18 @@ class Property_model extends CI_Model
         $this->db->limit(20);
         return $this->db->get('propertys')->result();
     }
+
+
+
+    public function get_cidade_label($cidade_id) {
+        $this->db->where('id', $cidade_id);
+        $data =  $this->db->get('db_cidades')->row();
+        return $data->nome;
+    }
+
+    public function get_estado_label($estado_id) {
+        $this->db->where('id', $estado_id);
+        $data =  $this->db->get('db_estados')->row();
+        return $data->nome;
+    }
 }
