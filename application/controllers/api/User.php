@@ -1303,7 +1303,7 @@ class User extends REST_Controller
 
 	// cidades
 
-	public function get_cidades_by_estado()
+	public function get_cidades_by_estado_post()
 	{
 
 		$this->form_validation->set_rules('uf', 'User ID', 'trim|required');
@@ -1362,7 +1362,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function get_estados()
+	public function get_estados_post()
 	{
 
 		if ($this->form_validation->run() == false) {
