@@ -1571,8 +1571,8 @@ class User extends REST_Controller
 
 					if ($user_data) {
 
-						$broker_estado = $this->broker_model->suggest_broker_by_estado($user_data['user_state']);
-						$broker_cidade = $this->broker_model->suggest_broker_by_cidade($user_data['user_city']);
+						$broker_estado = $this->broker_model->suggest_broker_by_estado($user_data->user_state);
+						$broker_cidade = $this->broker_model->suggest_broker_by_cidade($user_data->user_city);
 
 
 						if (count($broker_cidade) > 0) {
@@ -1614,7 +1614,7 @@ class User extends REST_Controller
 					$final['status'] = false;
 					$final['message'] = 'Sua sessão expirou.';
 					$final['note'] = 'Erro em $decodedToken["status"]';
-					$this->response($decodedToken);
+					$this->response($final, REST_Controller::HTTP_OK);
 				}
 			} else {
 
