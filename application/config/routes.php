@@ -79,6 +79,9 @@ $route['check_init_preferences'] = 'api/User/check_init_preferences';
 // creci
 $route['check_creci_validation'] = 'api/User/check_creci_validation';
 
+
+$route['update_client_location'] = 'api/User/update_client_location';
+
 // creci
 
 

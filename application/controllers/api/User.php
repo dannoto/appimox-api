@@ -488,6 +488,68 @@ class User extends REST_Controller
 		}
 	}
 
+	public function update_client_location_post()
+	{
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('user_state', 'Cidade', 'trim|required');
+		$this->form_validation->set_rules('user_city', 'Estado', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+					$data['user_state'] = $this->input->post('user_state');
+					$data['user_city'] = $this->input->post('user_city');
+				
+					if ($this->user_model->update_user($user_id, $data)) {
+
+						$final['status'] = true;
+						$final['message'] = 'Atualizado com sucesso.';
+						$final['note'] = 'Dados atualizado update_user()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Erro ao atualizar.';
+						$final['note'] = 'Erro em update_user()';
+
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	
 	public function preferences_get()
 	{
 
