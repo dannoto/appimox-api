@@ -191,7 +191,7 @@ class Propertys extends REST_Controller
                     $data['property_function'] = $this->input->post('property_function');
                     $data['property_disponibility'] = $this->input->post('property_disponibility');
                     $data['property_exclusive'] = $this->input->post('property_exclusive');
-                    $data['property_address'] = $this->input->post('location_address');
+
 
 
                     $data['property_condominio'] = $this->input->post('property_condominio');
@@ -209,6 +209,10 @@ class Propertys extends REST_Controller
                     $data['property_cep'] = $this->input->post('property_cep');
                     $data['property_cidade'] = $this->input->post('property_cidade');
                     $data['property_estado'] = $this->input->post('property_estado');
+
+                    $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+                    $data['property_address'] = $address_comp;
+
                     // localização
 
                     $data['is_deleted'] = 0;
