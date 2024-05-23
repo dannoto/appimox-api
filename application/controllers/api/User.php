@@ -1466,73 +1466,73 @@ class User extends REST_Controller
 
 		} else {
 
-			$headers = $this->input->request_headers();
+			// $headers = $this->input->request_headers();
 
-			if (isset($headers['Authorization'])) {
+			// if (isset($headers['Authorization'])) {
 
-				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+			// 	$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-				if ($decodedToken['status']) {
+			// 	if ($decodedToken['status']) {
 
-					$user_id = $this->input->post('user_id');
+			// 		$user_id = $this->input->post('user_id');
 
-					$user_data =  $this->user_model->get_user($user_id);
+			// 		$user_data =  $this->user_model->get_user($user_id);
 
-					if ($user_data) {
+			// 		if ($user_data) {
 
-						$property_estado = $this->property_model->suggest_property_by_estado($user_data['user_state']);
-						$property_cidade = $this->property_model->suggest_property_by_cidade($user_data['user_city']);
+			// 			$property_estado = $this->property_model->suggest_property_by_estado($user_data['user_state']);
+			// 			$property_cidade = $this->property_model->suggest_property_by_cidade($user_data['user_city']);
 
 
-						if (count($property_cidade) > 0) {
+			// 			if (count($property_cidade) > 0) {
 
-							$final['status'] = true;
-							$final['message'] = 'Sugestao por cidade encontrados com sucesso';
-							$final['response'] = $property_cidade;
-							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
-							$this->response($final, REST_Controller::HTTP_OK);
+			// 				$final['status'] = true;
+			// 				$final['message'] = 'Sugestao por cidade encontrados com sucesso';
+			// 				$final['response'] = $property_cidade;
+			// 				$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+			// 				$this->response($final, REST_Controller::HTTP_OK);
 
-						} else if (count($property_estado) > 0) {
+			// 			} else if (count($property_estado) > 0) {
 
-							$final['status'] = true;
-							$final['message'] = 'Sugestao por estado encontrados com sucesso';
-							$final['response'] = $property_estado;
-							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
-							$this->response($final, REST_Controller::HTTP_OK);
+			// 				$final['status'] = true;
+			// 				$final['message'] = 'Sugestao por estado encontrados com sucesso';
+			// 				$final['response'] = $property_estado;
+			// 				$final['note'] = 'Dados encontrados suggest_property_by_estado()';
+			// 				$this->response($final, REST_Controller::HTTP_OK);
 
-						} else {
+			// 			} else {
 
-							$final['status'] = false;
-							$final['message'] = 'Nenhuma sugestão encontrada';
-							$final['note'] = 'Nenhuma sugestão encontrada';
-							$this->response($final, REST_Controller::HTTP_OK);
-						}
+			// 				$final['status'] = false;
+			// 				$final['message'] = 'Nenhuma sugestão encontrada';
+			// 				$final['note'] = 'Nenhuma sugestão encontrada';
+			// 				$this->response($final, REST_Controller::HTTP_OK);
+			// 			}
 
 						
 
-					} else {
+			// 		} else {
 
-						$final['status'] = false;
-						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
-						$final['note'] = 'Erro em get_user()';
-						$this->response($final, REST_Controller::HTTP_OK);
-					}
+			// 			$final['status'] = false;
+			// 			$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+			// 			$final['note'] = 'Erro em get_user()';
+			// 			$this->response($final, REST_Controller::HTTP_OK);
+			// 		}
 
-				} else {
+			// 	} else {
 
 					$final['status'] = false;
 					$final['message'] = 'Sua sessão expirou.';
 					$final['note'] = 'Erro em $decodedToken["status"]';
 					$this->response($decodedToken);
-				}
-			} else {
+			// 	}
+			// } else {
 
-				$final['status'] = false;
-				$final['message'] = 'Falha na autenticação.';
-				$final['note'] = 'Erro em validateToken()';
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Falha na autenticação.';
+			// 	$final['note'] = 'Erro em validateToken()';
 
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// }
 		}
 	}
 
