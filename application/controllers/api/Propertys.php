@@ -864,7 +864,7 @@ class Propertys extends REST_Controller
                     $propertys_data = array();
 
 
-                    if (count($markers_data) > 0) {
+                    if ($markers_dat) {
 
                         foreach ($markers_data as $p) {
 
