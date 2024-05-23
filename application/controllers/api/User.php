@@ -1480,8 +1480,8 @@ class User extends REST_Controller
 
 					if ($user_data) {
 
-						$property_estado = $this->property_model->suggest_property_by_estado($user_data->user_state);
-						$property_cidade = $this->property_model->suggest_property_by_cidade($user_data->user_city);
+						// $property_estado = $this->property_model->suggest_property_by_estado($user_data->user_state);
+						// $property_cidade = $this->property_model->suggest_property_by_cidade($user_data->user_city);
 
 
 						// if (count($property_cidade) > 0) {
@@ -1503,7 +1503,7 @@ class User extends REST_Controller
 						// } else {
 
 							$final['status'] = false;
-							$final['message'] = 'Nenhuma sugestão encontrada';
+							$final['message'] = $user_data->user_state;
 							$final['note'] = 'Nenhuma sugestão encontrada';
 							$this->response($final, REST_Controller::HTTP_OK);
 						// }
