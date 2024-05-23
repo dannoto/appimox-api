@@ -22,7 +22,7 @@ class Broker_model extends CI_Model
         if ($limit != null) {
             $this->db->limit($limit);
         }
-        
+
         return $this->db->get('propertys')->result();
     }
 
@@ -224,7 +224,7 @@ class Broker_model extends CI_Model
      public function suggest_broker_by_estado($broker_state)
      {
 
-         $this->db->where('broker_state', $broker_state);
+         $this->db->where('user_state', $broker_state);
          $this->db->where('user_type', 'broker');
          $this->db->where('user_status', 0);
          $this->db->order_by('id', 'rand');
