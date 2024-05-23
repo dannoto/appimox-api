@@ -879,9 +879,11 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
+
                     } else {
 
                         $final['status'] = false;
+                        $final['response'] = [];
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
