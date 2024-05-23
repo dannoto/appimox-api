@@ -333,9 +333,9 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
         // location
-        $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'integer');
-        $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'integer');
-        $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'required');
         $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
         $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
         // location
