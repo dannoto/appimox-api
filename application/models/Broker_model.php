@@ -241,4 +241,14 @@ class Broker_model extends CI_Model
         $this->db->limit(20);
         return $this->db->get('users')->result();
      }
+
+
+     public function default_suggest_broker()
+     {
+        $this->db->where('user_type', 'broker');
+        $this->db->where('user_status', 0);
+        $this->db->order_by('id', 'rand');
+        $this->db->limit(20);
+        return $this->db->get('users')->result();
+     }
 }

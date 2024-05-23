@@ -1493,7 +1493,6 @@ class User extends REST_Controller
 							$final['response'] = $property_cidade;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-							
 						} else if (count($property_estado) > 0) {
 
 							$final['status'] = true;
@@ -1501,7 +1500,6 @@ class User extends REST_Controller
 							$final['response'] = $property_estado;
 							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else {
 
 							if (count($default_suggest_property) > 0) {
@@ -1511,8 +1509,7 @@ class User extends REST_Controller
 								$final['response'] = $default_suggest_property;
 								$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 								$this->response($final, REST_Controller::HTTP_OK);
-
-							}  else {
+							} else {
 
 								$final['status'] = false;
 								$final['message'] = 'Nenhum imovel default encontrdo.';
@@ -1577,6 +1574,8 @@ class User extends REST_Controller
 						$broker_estado = $this->broker_model->suggest_broker_by_estado($user_data->user_state);
 						$broker_cidade = $this->broker_model->suggest_broker_by_cidade($user_data->user_city);
 
+						$default_broker_cidade = $this->broker_model->default_suggest_broker();
+
 
 						if (count($broker_cidade) > 0) {
 
@@ -1594,10 +1593,22 @@ class User extends REST_Controller
 							$this->response($final, REST_Controller::HTTP_OK);
 						} else {
 
-							$final['status'] = false;
-							$final['message'] = 'Nenhuma sugestão encontrada';
-							$final['note'] = 'Nenhuma sugestão encontrada';
-							$this->response($final, REST_Controller::HTTP_OK);
+							if ($default_broker_cidade) {
+
+
+								$final['status'] = true;
+								$final['message'] = 'Sugestao por default encontrados com sucesso';
+								$final['response'] = $default_broker_cidade;
+								$final['note'] = 'Dados encontrados suggest_property_by_estado()';
+								$this->response($final, REST_Controller::HTTP_OK);
+								
+							} else {
+
+								$final['status'] = false;
+								$final['message'] = 'Nenhuma sugestão encontrada';
+								$final['note'] = 'Nenhuma sugestão encontrada';
+								$this->response($final, REST_Controller::HTTP_OK);
+							}
 						}
 					} else {
 
