@@ -17,7 +17,6 @@ class User extends REST_Controller
 		$this->load->model('broker_model');
 		$this->load->model('property_model');
 		$this->load->model('schedule_model');
-
 	}
 
 	public function register_post()
@@ -517,7 +516,7 @@ class User extends REST_Controller
 					$user_id = $this->input->post('user_id');
 					$data['user_state'] = $this->input->post('user_state');
 					$data['user_city'] = $this->input->post('user_city');
-				
+
 					if ($this->user_model->update_user($user_id, $data)) {
 
 						$final['status'] = true;
@@ -533,7 +532,6 @@ class User extends REST_Controller
 
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-
 				} else {
 
 					$final['status'] = false;
@@ -552,7 +550,7 @@ class User extends REST_Controller
 		}
 	}
 
-	
+
 	public function preferences_get()
 	{
 
@@ -1466,7 +1464,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
 			$headers = $this->input->request_headers();
@@ -1487,6 +1484,8 @@ class User extends REST_Controller
 						$property_cidade = $this->property_model->suggest_property_by_cidade($user_data->user_city);
 
 
+						$default_suggest_property = $this->property_model->default_suggest_property();
+
 						if (count($property_cidade) > 0) {
 
 							$final['status'] = true;
@@ -1494,7 +1493,7 @@ class User extends REST_Controller
 							$final['response'] = $property_cidade;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
+							
 						} else if (count($property_estado) > 0) {
 
 							$final['status'] = true;
@@ -1505,14 +1504,22 @@ class User extends REST_Controller
 
 						} else {
 
-							$final['status'] = false;
-							$final['message'] = $user_data->user_state;
-							$final['note'] = 'Nenhuma sugestão encontrada';
-							$this->response($final, REST_Controller::HTTP_OK);
+							if (count($default_suggest_property) > 0) {
+
+								$final['status'] = true;
+								$final['message'] = 'Sugestao por cidade default encontrados com sucesso';
+								$final['response'] = $default_suggest_property;
+								$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+								$this->response($final, REST_Controller::HTTP_OK);
+
+							}  else {
+
+								$final['status'] = false;
+								$final['message'] = 'Nenhum imovel default encontrdo.';
+								$final['note'] = 'Erro em get_user()';
+								$this->response($final, REST_Controller::HTTP_OK);
+							}
 						}
-
-						
-
 					} else {
 
 						$final['status'] = false;
@@ -1520,8 +1527,6 @@ class User extends REST_Controller
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-				
-
 				} else {
 
 					$final['status'] = false;
@@ -1529,7 +1534,6 @@ class User extends REST_Controller
 					$final['note'] = 'Erro em $decodedToken["status"]';
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
-
 			} else {
 
 				$final['status'] = false;
@@ -1554,7 +1558,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
 			$headers = $this->input->request_headers();
@@ -1582,7 +1585,6 @@ class User extends REST_Controller
 							$final['response'] = $broker_cidade;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else if (count($broker_estado) > 0) {
 
 							$final['status'] = true;
@@ -1590,7 +1592,6 @@ class User extends REST_Controller
 							$final['response'] = $broker_estado;
 							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else {
 
 							$final['status'] = false;
@@ -1598,9 +1599,6 @@ class User extends REST_Controller
 							$final['note'] = 'Nenhuma sugestão encontrada';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
-
-						
-
 					} else {
 
 						$final['status'] = false;
@@ -1608,7 +1606,6 @@ class User extends REST_Controller
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-
 				} else {
 
 					$final['status'] = false;
@@ -1640,7 +1637,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
 			$headers = $this->input->request_headers();
@@ -1666,13 +1662,12 @@ class User extends REST_Controller
 
 							foreach ($get_client_following as $p) {
 
-								$response_a = array() ;
+								$response_a = array();
 
 								$response_a['broker_data'] = $this->user_model->get_user($p->f_followed);
 								$response_a['broker_post'] = $this->user_model->get_broker_propertys($p->f_followed, 1);
 
 								$response[] = $response_a;
-
 							}
 
 							$final['status'] = true;
@@ -1680,17 +1675,13 @@ class User extends REST_Controller
 							$final['response'] = $response;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
-						}  else {
+						} else {
 
 							$final['status'] = false;
 							$final['message'] = 'Nenhuma postagem encontrada.';
 							$final['note'] = 'Nenhuma postagem encontrada.';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
-
-						
-
 					} else {
 
 						$final['status'] = false;
@@ -1698,7 +1689,6 @@ class User extends REST_Controller
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-
 				} else {
 
 					$final['status'] = false;

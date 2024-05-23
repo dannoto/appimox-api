@@ -178,6 +178,15 @@ class Property_model extends CI_Model
         return $this->db->get('propertys')->result();
     }
 
+    public function default_suggest_property()
+    {
+
+        $this->db->where('is_deleted', 0);
+        $this->db->order_by('id', 'rand');
+        $this->db->limit(20);
+        return $this->db->get('propertys')->result();
+    }
+
 
 
     public function get_cidade_label($cidade_id) {
