@@ -210,7 +210,7 @@ class Propertys extends REST_Controller
                     $data['property_cidade'] = $this->input->post('property_cidade');
                     $data['property_estado'] = $this->input->post('property_estado');
 
-                    $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] +""+ $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     // localização
@@ -249,7 +249,7 @@ class Propertys extends REST_Controller
                         $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
               
 
-                        $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+                        $address_comp = $data['property_logradouro'] +""+ $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
                         // Adding Location
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
                         $data_location['property_longitude'] = $this->input->post('location_longitude');
@@ -388,7 +388,7 @@ class Propertys extends REST_Controller
                     $data['property_estado'] = $this->input->post('property_estado');
                     // localização
 
-                    $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] +""+ $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     $data['is_deleted'] = 0;
@@ -420,7 +420,7 @@ class Propertys extends REST_Controller
                         $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
 
 
-                        $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+                        $address_comp = $data['property_logradouro'] +""+ $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
 
 
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
