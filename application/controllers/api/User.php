@@ -1365,55 +1365,21 @@ class User extends REST_Controller
 	public function get_estados_post()
 	{
 
-		if ($this->form_validation->run() == false) {
+		$estados_data = $this->user_model->get_estados();
 
-			$final['status'] = false;
-			$final['message'] = validation_errors();
-			$final['note'] = 'Erro no formulário.';
+		if ($estados_data) {
 
+			$final['status'] = true;
+			$final['response'] = $estados_data;
+			$final['message'] = 'Estados encontrados com sucesso.';
+			$final['note'] = 'Estados encontrados com sucesso.';
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
-			$headers = $this->input->request_headers();
-
-			if (isset($headers['Authorization'])) {
-
-				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-
-				if ($decodedToken['status']) {
-
-					$estados_data = $this->user_model->get_estados();
-
-					if ($estados_data) {
-
-						$final['status'] = true;
-						$final['response'] = $estados_data;
-						$final['message'] = 'Estados encontrados com sucesso.';
-						$final['note'] = 'Estados encontrados com sucesso.';
-						$this->response($final, REST_Controller::HTTP_OK);
-					} else {
-
-						$final['status'] = false;
-						$final['message'] = 'Nenhum estado encontrada.';
-						$final['note'] = 'Nenhum estado encontrada.';
-						$this->response($final, REST_Controller::HTTP_OK);
-					}
-				} else {
-
-					$final['status'] = false;
-					$final['message'] = 'Sua sessão expirou.';
-					$final['note'] = 'Erro em $decodedToken["status"]';
-					$this->response($decodedToken);
-				}
-			} else {
-
-				$final['status'] = false;
-				$final['message'] = 'Falha na autenticação.';
-				$final['note'] = 'Erro em validateToken()';
-
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
+			$final['status'] = false;
+			$final['message'] = 'Nenhum estado encontrada.';
+			$final['note'] = 'Nenhum estado encontrada.';
+			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
 }
