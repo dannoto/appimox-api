@@ -80,6 +80,19 @@ class Broker_model extends CI_Model
         return $this->db->update('propertys', $update_data);
     }
 
+    public function delete_property_image($property_id, $property_user_id, $imagem_url) {
+        
+        $this->db->where('property_id', $property_id);
+        $this->db->where('property_user_id', $property_user_id);
+        $this->db->where('property_image', $imagem_url);
+
+        $data = array(
+            'is_deleted' => 1
+        );
+
+        return $this->db->update('propertys_images', $data);
+    }
+
     public function add_broker_property_images($data)
     {
         return $this->db->insert('propertys_images', $data);

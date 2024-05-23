@@ -553,6 +553,75 @@ class Propertys extends REST_Controller
         }
     }
 
+    
+
+    public function delete_property_image_post()
+    {
+
+        $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'Imóvel ID', 'trim|required');
+        $this->form_validation->set_rules('imagem_url', 'Imagem URL', 'trim|required');
+
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $headers = $this->input->request_headers();
+
+            if (isset($headers['Authorization'])) {
+
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+                if ($decodedToken['status']) {
+
+                    $property_id = $this->input->post('property_id');
+                    $data['property_user_id'] = $this->input->post('property_user_id');
+                    $data['imagem_url'] = $this->input->post('imagem_url');
+               
+                   
+
+                    if ($this->broker_model->delete_property_image($property_id, $data['property_user_id'], $data['imagem_url'])) {
+
+                        $final['status'] = true;
+                        $final['message'] = 'Imagem excluida com sucesso.';
+                        $final['response'] = $data;
+                        $final['note'] = 'add_broker_property_images';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao excluir imagem.';
+                        $final['note'] = 'Erro em add_broker_property_images()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
     public function get_broker_property_data_post()
     {
 
