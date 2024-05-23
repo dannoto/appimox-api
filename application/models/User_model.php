@@ -290,4 +290,20 @@ class User_model extends CI_Model
 		return $this->db->get('users')->row();
 	}
 	// perfil
+
+
+	// cidades
+
+	public function get_cidades_by_estado($uf) {
+		$this->db->where('uf', $uf);
+		return $this->db->get('db_cidades')->result();
+	}
+
+	public function get_estados() {
+		$this->db->where('available', 1);
+		return $this->db->get('db_estados')->result();
+	}
+	// cidades
 }
+
+

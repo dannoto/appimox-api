@@ -1184,9 +1184,6 @@ class User extends REST_Controller
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
 					}
-
-
-					
 				} else {
 
 					$final['status'] = false;
@@ -1257,11 +1254,11 @@ class User extends REST_Controller
 						}
 					}
 
-					
+
 					if (!$this->user_model->check_email($data['user_email'], $user_id)) {
-						
+
 						$update_user =  $this->user_model->update_user_profile($user_id, $data);
-						
+
 						if ($update_user) {
 
 							$final['status'] = true;
@@ -1302,4 +1299,121 @@ class User extends REST_Controller
 
 	// profile
 
+
+
+	// cidades
+
+	public function get_cidades_by_estado()
+	{
+
+		$this->form_validation->set_rules('uf', 'User ID', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$uf = $this->input->post('uf');
+
+					$cidades_data = $this->user_model->get_cidades_by_estado($uf);
+
+					if ($cidades_data) {
+
+						$final['status'] = true;
+						$final['response'] = $cidades_data;
+						$final['message'] = 'Cidades encontradas com sucesso.';
+						$final['note'] = 'Cidades encontradas com sucesso.';
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Nenhuma cidade encontrada.';
+						$final['note'] = 'Nenhuma cidade encontrada.';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function get_estados()
+	{
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$estados_data = $this->user_model->get_estados();
+
+					if ($estados_data) {
+
+						$final['status'] = true;
+						$final['response'] = $estados_data;
+						$final['message'] = 'Estados encontrados com sucesso.';
+						$final['note'] = 'Estados encontrados com sucesso.';
+						$this->response($final, REST_Controller::HTTP_OK);
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Nenhum estado encontrada.';
+						$final['note'] = 'Nenhum estado encontrada.';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
 }

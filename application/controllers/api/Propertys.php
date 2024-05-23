@@ -157,6 +157,12 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
         $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
+        // location
+        $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
 
 
         if ($this->form_validation->run() == false) {
@@ -194,6 +200,17 @@ class Propertys extends REST_Controller
 
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
+
+
+                    // localizaçao
+                    $data['property_logradouro'] = $this->input->post('property_logradouro');
+                    $data['property_bairro'] = $this->input->post('property_bairro');
+                    $data['property_numero'] = $this->input->post('property_numero');
+                    $data['property_cep'] = $this->input->post('property_cep');
+                    $data['property_cidade'] = $this->input->post('property_cidade');
+                    $data['property_estado'] = $this->input->post('property_estado');
+                    // localização
+
                     $data['is_deleted'] = 0;
 
 
@@ -223,10 +240,17 @@ class Propertys extends REST_Controller
                     $porperty_id = $this->broker_model->add_broker_property($data);
                     if ($porperty_id) {
 
+
+    
+                        $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
+              
+
+                        $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
                         // Adding Location
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
                         $data_location['property_longitude'] = $this->input->post('location_longitude');
-                        $data_location['property_address'] = $this->input->post('location_address');
+                        // $data_location['property_address'] = $this->input->post('location_address');
+                        $data_location['property_address'] = $address_comp;
                         $data_location['property_id'] = $porperty_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
@@ -304,6 +328,15 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
         $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
+        // location
+        $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
+        $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
+        // location
+
+
         if ($this->form_validation->run() == false) {
 
             $final['status'] = false;
@@ -343,6 +376,15 @@ class Propertys extends REST_Controller
 
                     // $data['property_location_id'] = $this->input->post('property_location_id'); //*
 
+                    // localizaçao
+                    $data['property_logradouro'] = $this->input->post('property_logradouro');
+                    $data['property_bairro'] = $this->input->post('property_bairro');
+                    $data['property_numero'] = $this->input->post('property_numero');
+                    $data['property_cep'] = $this->input->post('property_cep');
+                    $data['property_cidade'] = $this->input->post('property_cidade');
+                    $data['property_estado'] = $this->input->post('property_estado');
+                    // localização
+
                     $data['is_deleted'] = 0;
                     // Images
 
@@ -369,9 +411,15 @@ class Propertys extends REST_Controller
                     if ($this->broker_model->update_broker_property($property_id, $data)) {
 
                         // Adding Location
+                        $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
+
+
+                        $address_comp = $data['property_logradouro'] + $data['property_numero'] + ", " + $data['property_bairro'] + " | " + $data['property_cidade'] + " - " + $data['property_estado'] + ", " + $data['property_cep'];
+
+
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
                         $data_location['property_longitude'] = $this->input->post('location_longitude');
-                        $data_location['property_address'] = $this->input->post('location_address');
+                        $data_location['property_address'] = $address_comp;
                         $data_location['property_id'] = $property_id;
                         $data_location['property_broker'] = $this->input->post('property_user_id');
                         $data_location['property_name'] = $this->input->post('property_title');
@@ -529,14 +577,14 @@ class Propertys extends REST_Controller
 
                     // if ($this->broker_model->check_edit_property_data($data['property_user_id'], $data['property_id'])) {
 
-                        $final['status'] = true;
-                        $final['message'] = 'Imovel recuperados com sucesso.';
-                        $final['property_data'] = $this->broker_model->get_broker_property($data['property_id']);
-                        $final['property_location_data'] = $this->broker_model->get_broker_property_location($data['property_id']);
-                        $final['property_imagens_data'] = $this->broker_model->get_broker_property_images($data['property_id']);
-                        $final['note'] = 'get_broker_property_data';
+                    $final['status'] = true;
+                    $final['message'] = 'Imovel recuperados com sucesso.';
+                    $final['property_data'] = $this->broker_model->get_broker_property($data['property_id']);
+                    $final['property_location_data'] = $this->broker_model->get_broker_property_location($data['property_id']);
+                    $final['property_imagens_data'] = $this->broker_model->get_broker_property_images($data['property_id']);
+                    $final['note'] = 'get_broker_property_data';
 
-                        $this->response($final, REST_Controller::HTTP_OK);
+                    $this->response($final, REST_Controller::HTTP_OK);
                     // } else {
 
                     //     $final['status'] = false;
@@ -907,16 +955,15 @@ class Propertys extends REST_Controller
                                             break;
                                         }
                                     }
-        
+
                                     // Se o ID não existe, adiciona o corretor a brokers_data
                                     if (!$id_exists) {
                                         $brokers_data[] = $broker_data;
                                     }
                                 }
-
                             }
 
-                          
+
 
                             // $brokers_data[] = $broker_data;
                         }
@@ -1025,16 +1072,15 @@ class Propertys extends REST_Controller
                                             break;
                                         }
                                     }
-        
+
                                     // Se o ID não existe, adiciona o corretor a brokers_data
                                     if (!$id_exists) {
                                         $brokers_data[] = $broker_data;
                                     }
-
                                 }
                             }
 
-                           
+
 
                             // $brokers_data[] = $broker_data;
                         }

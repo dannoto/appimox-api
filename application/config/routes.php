@@ -169,3 +169,10 @@ $route['search_client_chat'] = 'api/Chat/search_client_chat';
 
 
 // Chats
+
+
+// Cidades
+$route['get_cidades_by_estado'] = 'api/User/get_cidades_by_estado';
+$route['get_estados'] = 'api/User/get_estados';
+
+// Cidades
