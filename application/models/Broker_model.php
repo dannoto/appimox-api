@@ -234,7 +234,7 @@ class Broker_model extends CI_Model
  
      public function suggest_property_by_cidade($broker_city)
      {
-        $this->db->where('broker_city', $broker_city);
+        $this->db->where('user_city', $broker_city);
         $this->db->where('user_type', 'broker');
         $this->db->where('user_status', 0);
         $this->db->order_by('id', 'rand');
