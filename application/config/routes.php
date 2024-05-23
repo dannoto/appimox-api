@@ -182,3 +182,28 @@ $route['get_cidades_by_estado'] = 'api/User/get_cidades_by_estado';
 $route['get_estados'] = 'api/User/get_estados';
 
 // Cidades
+
+
+// avaliacoes
+$route['get_ratings'] = 'api/Rating/get_ratings';
+$route['add_rating'] = 'api/Rating/add_rating';
+// avaliacoes
+
+// seguidores
+$route['to_follow'] = 'api/Followers/to_follow';
+$route['to_unfollow'] = 'api/Followers/to_unfollow';
+
+$route['get_client_following'] = 'api/Followers/get_client_following';
+$route['search_client_following'] = 'api/Followers/search_client_following';
+
+$route['get_broker_followers'] = 'api/Followers/get_broker_followers';
+$route['search_broker_followers'] = 'api/Followers/search_broker_followers';
+// seguidores
+
+
+
+// Client dashboard
+$route['get_suggest_client_propertys'] = 'api/User/get_suggest_client_propertys';
+$route['get_suggest_client_brokers'] = 'api/User/get_suggest_client_brokers';
+$route['get_client_feed'] = 'api/User/get_client_feed';
+// Cliente Dashboard

@@ -1447,4 +1447,270 @@ class User extends REST_Controller
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}
+
+
+	// Cliente dashboard	
+	public function get_suggest_client_propertys_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$user_data =  $this->user_model->get_user($user_id);
+
+					if ($user_data) {
+
+						$property_estado = $this->property_model->suggest_property_by_estado($user_data['user_state']);
+						$property_cidade = $this->property_model->suggest_property_by_cidade($user_data['user_city']);
+
+
+						if (count($property_cidade) > 0) {
+
+							$final['status'] = true;
+							$final['message'] = 'Sugestao por cidade encontrados com sucesso';
+							$final['response'] = $property_cidade;
+							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else if (count($property_estado) > 0) {
+
+							$final['status'] = true;
+							$final['message'] = 'Sugestao por estado encontrados com sucesso';
+							$final['response'] = $property_estado;
+							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Nenhuma sugestão encontrada';
+							$final['note'] = 'Nenhuma sugestão encontrada';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+
+						
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+						$final['note'] = 'Erro em get_user()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function get_suggest_client_brokers_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$user_data =  $this->user_model->get_user($user_id);
+
+					if ($user_data) {
+
+						$broker_estado = $this->broker_model->suggest_broker_by_estado($user_data['user_state']);
+						$broker_cidade = $this->broker_model->suggest_broker_by_cidade($user_data['user_city']);
+
+
+						if (count($broker_cidade) > 0) {
+
+							$final['status'] = true;
+							$final['message'] = 'Sugestao por cidade encontrados com sucesso';
+							$final['response'] = $broker_cidade;
+							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else if (count($broker_estado) > 0) {
+
+							$final['status'] = true;
+							$final['message'] = 'Sugestao por estado encontrados com sucesso';
+							$final['response'] = $broker_estado;
+							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Nenhuma sugestão encontrada';
+							$final['note'] = 'Nenhuma sugestão encontrada';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+
+						
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+						$final['note'] = 'Erro em get_user()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	public function get_client_feed_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_id = $this->input->post('user_id');
+
+					$user_data =  $this->user_model->get_user($user_id);
+
+					if ($user_data) {
+
+						$get_client_following = $this->followers_model->get_following($user_id, 20);
+
+
+						if ($get_client_following) {
+
+							$response = array();
+
+							foreach ($get_client_following as $p) {
+
+								$response_a = array() ;
+
+								$response_a['broker_data'] = $this->user_model->get_user($p->f_followed);
+								$response_a['broker_post'] = $this->user_model->get_broker_propertys($p->f_followed, 1);
+
+								$response[] = $response_a;
+
+							}
+
+							$final['status'] = true;
+							$final['message'] = 'Posts encontrados com sucesso.';
+							$final['response'] = $response;
+							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						}  else {
+
+							$final['status'] = false;
+							$final['message'] = 'Nenhuma postagem encontrada.';
+							$final['note'] = 'Nenhuma postagem encontrada.';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+
+						
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+						$final['note'] = 'Erro em get_user()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+	// Cliente dashboard
 }

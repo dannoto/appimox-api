@@ -139,9 +139,8 @@ class Property_model extends CI_Model
         $this->db->where('user_status', 0);
 
         return $this->db->get('users')->row();
-
     }
-    
+
     // busca propriedades associadas.
     public function get_property_by_associate_broker_id($location_id, $broker_id)
     {
@@ -155,6 +154,27 @@ class Property_model extends CI_Model
         } else {
             return false;
         }
-        
+    }
+
+
+
+    //  suggest imoveis
+    public function suggest_property_by_estado($property_estado)
+    {
+
+        $this->db->where('property_estado', $property_estado);
+        $this->db->where('is_deleted', 0);
+        $this->db->order_by('id', 'rand');
+        $this->db->limit(20);
+        return $this->db->get('propertys')->result();
+    }
+
+    public function suggest_property_by_cidade($property_cidade)
+    {
+        $this->db->where('property_cidade', $property_cidade);
+        $this->db->where('is_deleted', 0);
+        $this->db->order_by('id', 'rand');
+        $this->db->limit(20);
+        return $this->db->get('propertys')->result();
     }
 }

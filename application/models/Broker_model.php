@@ -13,11 +13,16 @@ class Broker_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_broker_propertys($user_id)
+    public function get_broker_propertys($user_id, $limit = null)
     {
         $this->db->where('property_user_id', $user_id);
         $this->db->where('is_deleted', 0);
         $this->db->order_by('id', 'desc');
+
+        if ($limit != null) {
+            $this->db->limit($limit);
+        }
+        
         return $this->db->get('propertys')->result();
     }
 
@@ -212,4 +217,28 @@ class Broker_model extends CI_Model
         $data = json_decode($response);
         return $data;
     }
+
+
+
+     //  suggest imoveis
+     public function suggest_broker_by_estado($broker_state)
+     {
+
+         $this->db->where('broker_state', $broker_state);
+         $this->db->where('user_type', 'broker');
+         $this->db->where('user_status', 0);
+         $this->db->order_by('id', 'rand');
+         $this->db->limit(20);
+         return $this->db->get('users')->result();
+     }
+ 
+     public function suggest_property_by_cidade($broker_city)
+     {
+        $this->db->where('broker_city', $broker_city);
+        $this->db->where('user_type', 'broker');
+        $this->db->where('user_status', 0);
+        $this->db->order_by('id', 'rand');
+        $this->db->limit(20);
+        return $this->db->get('users')->result();
+     }
 }
