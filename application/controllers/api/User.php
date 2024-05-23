@@ -1503,7 +1503,7 @@ class User extends REST_Controller
 						// } else {
 
 							$final['status'] = false;
-							$final['message'] = $user_data->user_state;
+							$final['message'] = $this->property_model->suggest_property_by_estado($user_data->user_state);
 							$final['note'] = 'Nenhuma sugestão encontrada';
 							$this->response($final, REST_Controller::HTTP_OK);
 						// }
