@@ -195,6 +195,8 @@ class User extends REST_Controller
 		$this->form_validation->set_rules('user_creci', 'USER CRECI', 'trim|required');
 		$this->form_validation->set_rules('user_cpf', 'USER CPF', 'required');
 		$this->form_validation->set_rules('user_state', 'USER STATE', 'trim|required');
+		$this->form_validation->set_rules('user_city', 'USER STATE', 'trim|required');
+
 		$this->form_validation->set_rules('user_id', 'USER STATE', 'trim|required');
 
 		if ($this->form_validation->run() == false) {
@@ -210,15 +212,15 @@ class User extends REST_Controller
 			$user_creci = $this->input->post('user_creci');
 			$user_cpf = $this->input->post('user_cpf');
 			$user_state = $this->input->post('user_state');
+			$user_city = $this->input->post('user_city');
 
-
-			if ($user_state == "RN") {
+			if ($user_state == "20") {
 
 				$creci_data = $this->broker_model->check_creci_rn($user_creci, $user_cpf);
-			} else if ($user_state == "PB") {
+			} else if ($user_state == "15") {
 
 				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
-			} else if ($user_state == "PE") {
+			} else if ($user_state == "16") {
 
 				$creci_data = $this->broker_model->check_creci_pe($user_creci, $user_cpf);
 			}
@@ -243,6 +245,7 @@ class User extends REST_Controller
 							} else {
 
 								$user_data['user_state'] = $user_state;
+								$user_data['user_city'] = $user_city;
 								$user_data['user_verified_creci'] = 1;
 								$user_data['user_cpf'] = $c->cpf;
 								$user_data['user_creci'] = $c->creci;
