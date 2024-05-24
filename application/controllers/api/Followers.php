@@ -41,12 +41,12 @@ class Followers extends REST_Controller
 
             // set variables from the form
             $data['f_following'] = $this->input->post('f_following');
-            $data['f_follower']    = $this->input->post('f_follower');
-            $data['f_follower']    = date('Y-m-d H:i:s');
+            $data['f_followed']    = $this->input->post('f_followed');
+            $data['f_date']    = date('Y-m-d H:i:s');
             $data['is_deleted']    = 0;
 
 
-            if ($this->followers_model->check_follower($data['f_following'], $data['f_follower'])) {
+            if ($this->followers_model->check_follower($data['f_following'], $data['f_followed'])) {
 
                 $final['status'] = true;
                 $final['response'] = $data;
