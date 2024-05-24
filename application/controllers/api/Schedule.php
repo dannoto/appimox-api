@@ -53,6 +53,23 @@ class Schedule extends REST_Controller
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
             }
+            
+            $date_time = DateTime::createFromFormat('d-m-Y H:i:s', $schedule_date);
+            $formatted_date_time = $date_time->format('Y-m-d H:i:s');
+            // $schedule_date =  $formatted_date_time;
+            // formatando data para datetime
+
+            // validando data futura
+            $current_datetime = date('Y-m-d H:i:s');
+
+            if ($formatted_date_time <= $current_datetime) {
+
+                $final['status'] = false;
+                $final['message'] = 'Escolha uma data futura.';
+                $final['note'] = 'Escolha uma data futura.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
 
             if (!$this->schedule_model->check_schedule($client_id, $broker_id, $property_id, $schedule_date)) {
 
