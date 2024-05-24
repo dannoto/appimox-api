@@ -51,98 +51,55 @@ class Chat extends REST_Controller
 
             $check_chat = $this->chat_model->check_chat($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
 
-            // if (!$check_chat) {
-
-            //     $chat_id = $this->chat_model->add_chat($chat_datax);
-
-            //     if ($chat_id) {
-
-
-            //         $response = array();
-
-            //         $response['chat_data'] = $this->chat_model->get_chat($chat_id);
-            //         $response['broker_data'] = $broker_data;
-            //         $response['client_data'] = $client_data;
-
-
-            //         $final['status'] = true;
-            //         $final['response'] = $response;
-            //         $final['message'] = 'Chat criado com sucesso.';
-            //         $final['note'] = 'Chat criado com sucesso.';
-
-            //         // user creation failed, this should never happen
-            //         $this->response($final, REST_Controller::HTTP_OK);
-            //     } else {
-
-            //         $final['status'] = false;
-            //         $final['message'] = 'Erro ao adicionar chat.';
-            //         $final['note'] = 'Erro ao adicionar chat.';
-
-            //         // user creation failed, this should never happen
-            //         $this->response($final, REST_Controller::HTTP_OK);
-            //     }
-            // } else {
-
-
-            //     $response = array();
-
-            //     $response['chat_data'] = $check_chat;
-            //     $response['client_data'] = $client_data;
-            //     $response['broker_data'] = $broker_data;
-
-
-            //     $final['status'] = true;
-            //     $final['response'] = $response;
-            //     $final['message'] = 'Já existe o chat criado.';
-            //     $final['note'] = 'Já existe o chat criado.';
-
-            //     // user creation failed, this should never happen
-            //     $this->response($final, REST_Controller::HTTP_OK);
-            // }
             if (!$check_chat) {
+
                 $chat_id = $this->chat_model->add_chat($chat_datax);
-        
+
                 if ($chat_id) {
+
+
                     $response = array();
+
                     $response['chat_data'] = $this->chat_model->get_chat($chat_id);
                     $response['broker_data'] = $broker_data;
                     $response['client_data'] = $client_data;
-        
-                    $final['status'] = true;
-                    $final['response'] = $response;
-                    $final['message'] = 'Chat criado com sucesso.';
-                    $final['note'] = 'Chat criado com sucesso.';
-        
-                    // Log response for debugging
-                    log_message('debug', 'Add Chat Response: ' . json_encode($final));
-        
+
+
+                    $response['status'] = true;
+                    $response['response'] = $response;
+                    $response['message'] = 'Chat criado com sucesso.';
+                    $response['note'] = 'Chat criado com sucesso.';
+
+                    // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 } else {
+
                     $final['status'] = false;
                     $final['message'] = 'Erro ao adicionar chat.';
                     $final['note'] = 'Erro ao adicionar chat.';
-        
-                    // Log response for debugging
-                    log_message('debug', 'Add Chat Error: ' . json_encode($final));
-        
+
+                    // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
             } else {
+
+
                 $response = array();
+
                 $response['chat_data'] = $check_chat;
                 $response['client_data'] = $client_data;
                 $response['broker_data'] = $broker_data;
-        
-                $final['status'] = true;
-                $final['response'] = $response;
-                $final['message'] = 'Já existe o chat criado.';
-                $final['note'] = 'Já existe o chat criado.';
-        
-                // Log response for debugging
-                log_message('debug', 'Chat Already Exists Response: ' . json_encode($final));
-        
-                $this->response($final, REST_Controller::HTTP_OK);
+
+
+                $response['status'] = true;
+                $response['response'] = $response;
+                $response['message'] = 'Já existe o chat criado.';
+                $response['note'] = 'Já existe o chat criado.';
+
+                // user creation failed, this should never happen
+                $this->response($response, REST_Controller::HTTP_OK);
             }
+          
         }
     }
 
