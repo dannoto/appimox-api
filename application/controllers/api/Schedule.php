@@ -55,7 +55,7 @@ class Schedule extends REST_Controller
             }
 
 
-            $date_time = DateTime::createFromFormat('d-m-Y H:i:s', $schedule_date);
+            $date_time = DateTime::createFromFormat('Y-m-d H:i:s', $schedule_date);
             $formatted_date_time = $date_time->format('Y-m-d H:i:s');
             $current_datetime = date('Y-m-d H:i:s');
 
