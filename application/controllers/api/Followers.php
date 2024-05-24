@@ -91,7 +91,7 @@ class Followers extends REST_Controller
 
             // set variables from the form
             $data['f_following'] = $this->input->post('f_following');
-            $data['f_followed']    = $this->input->post('f_follower');
+            $data['f_followed']    = $this->input->post('f_followed');
             $data['f_date']    = date('Y-m-d H:i:s');
             $data['is_deleted']    = 0;
 
