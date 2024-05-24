@@ -88,8 +88,8 @@ class Followers extends REST_Controller
 
             // set variables from the form
             $data['f_following'] = $this->input->post('f_following');
-            $data['f_follower']    = $this->input->post('f_follower');
-            $data['f_follower']    = date('Y-m-d H:i:s');
+            $data['f_followed']    = $this->input->post('f_follower');
+            $data['f_date']    = date('Y-m-d H:i:s');
             $data['is_deleted']    = 0;
 
 
@@ -142,7 +142,7 @@ class Followers extends REST_Controller
 
             // set variables from the form
             $data['f_following'] = $this->input->post('f_following');
-            $data['f_follower']    = $this->input->post('f_follower');
+            $data['f_followed']    = $this->input->post('f_follower');
 
             if ($this->followers_model->to_unfollow($data['f_following'], $data['f_follower'])) {
 
