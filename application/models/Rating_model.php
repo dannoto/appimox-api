@@ -44,10 +44,10 @@ class Rating_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function get_broker_ratings($broker_id)
+    public function get_broker_ratings($user_id)
     {
 
-        $this->db->where('rating_rated_id', $broker_id);
+        $this->db->where('rating_rated_id', $user_id);
         $this->db->where('is_deleted', 0);
         return $this->db->get('user_ratings')->result();
     }

@@ -176,7 +176,7 @@ class Rating extends REST_Controller
                     $response_a =  array();
 
                     $response_a['rating_data'] = $f;
-                    $response_a['owner_data'] = $this->user_model->get_user($f->rating_rated_id);
+                    $response_a['owner_data'] = $this->user_model->get_user($f->rating_owner_id);
 
                     $response[] = $response_a;
                 }
