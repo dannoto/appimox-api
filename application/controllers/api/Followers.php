@@ -76,7 +76,7 @@ class Followers extends REST_Controller
 
         // set validation rules
         $this->form_validation->set_rules('f_following', 'ID do seguidor', 'trim|required');
-        $this->form_validation->set_rules('f_follower', 'ID do seguido', 'trim|required');
+        $this->form_validation->set_rules('f_followed', 'ID do seguido', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
@@ -96,7 +96,7 @@ class Followers extends REST_Controller
             $data['is_deleted']    = 0;
 
 
-            if ($this->followers_model->check_follower($data['f_following'], $data['f_follower'])) {
+            if ($this->followers_model->check_follower($data['f_following'], $data['f_followed'])) {
 
                 $final['status'] = false;
                 $final['message'] = 'Voce já segue este usuario';
