@@ -192,7 +192,7 @@ class Rating extends REST_Controller
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Nenhuma avaliação encontrada.';
+                $final['message'] = 'Nenhuma avaliação encontrada.'.$user_id;
                 $final['note'] = 'Nenhuma avaliação encontrada.';
 
                 // user creation failed, this should never happen
