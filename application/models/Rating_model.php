@@ -49,6 +49,8 @@ class Rating_model extends CI_Model
 
         $this->db->where('rating_rated_id', $user_id);
         $this->db->where('is_deleted', 0);
+        $this->db->order_by('id', 'desc');
+
         return $this->db->get('user_ratings')->result();
     }
 }
