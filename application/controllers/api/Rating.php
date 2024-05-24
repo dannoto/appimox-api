@@ -147,7 +147,7 @@ class Rating extends REST_Controller
         $this->rating_model->update_user_rating($rating_rated_id, $rating);
     }
 
-    public function get_rating_post()
+    public function get_ratings_post()
     {
 
         // set validation rules
