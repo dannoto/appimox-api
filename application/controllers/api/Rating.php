@@ -18,6 +18,7 @@ class Rating extends REST_Controller
         $this->load->model('location_model');
         $this->load->model('followers_model');
         $this->load->model('rating_model');
+        
     }
 
     public function add_rating_post()
@@ -89,7 +90,7 @@ class Rating extends REST_Controller
         }
     }
 
-    function update_main_user_rating_post($rating_rated_id)
+    function update_main_user_rating($rating_rated_id)
     {
 
         $rating_data = $this->rating_model->get_broker_ratings($rating_rated_id);
