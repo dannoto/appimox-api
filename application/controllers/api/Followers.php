@@ -25,7 +25,7 @@ class Followers extends REST_Controller
 
         // set validation rules
         $this->form_validation->set_rules('f_following', 'ID do seguidor', 'trim|required');
-        $this->form_validation->set_rules('f_follower', 'ID do seguido', 'trim|required');
+        $this->form_validation->set_rules('f_followed', 'ID do seguido', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
