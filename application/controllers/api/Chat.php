@@ -53,7 +53,7 @@ class Chat extends REST_Controller
 
             if (!$check_chat) {
 
-                $chat_id = $this->chat_model->add_chat($chat_data);
+                $chat_id = $this->chat_model->add_chat($chat_datax);
 
                 if ($chat_id) {
 
