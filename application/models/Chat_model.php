@@ -22,7 +22,7 @@ class Chat_model extends CI_Model
 
     public function add_chat($chat_data)
     {
-         $this->db->insert('user_chat', $chat_data);
+        $this->db->insert('user_chat', $chat_data);
         return $this->db->insert_id();
     }
 
@@ -290,33 +290,31 @@ class Chat_model extends CI_Model
 
         return $this->db->get('user_chat_messages')->result();
     }
-    public function unread_count($chat_id, $chat_user_broker) {
+    public function unread_count($chat_id, $chat_user_broker)
+    {
 
         $this->db->where('chat_id', $chat_id);
         $this->db->where('message_receiver_id', $chat_user_broker);
         $this->db->where('message_receiver_view', 0);
 
         $this->db->where('is_deleted', 0);
-        
+
         $data = $this->db->get('user_chat_messages')->result();
 
         return count($data);
-
     }
 
-    public function update_unread_count($chat_id, $user_id) {
+    public function update_unread_count($chat_id, $user_id)
+    {
 
         $this->db->where('chat_id', $chat_id);
         $this->db->where('message_receiver_id', $user_id);
-    
+
 
         $data = array(
             'message_receiver_view' => 1
         );
 
-       return $this->db->update('user_chat_messages', $data);
-
-       
-
+        return $this->db->update('user_chat_messages', $data);
     }
 }
