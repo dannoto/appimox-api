@@ -43,13 +43,13 @@ class Chat extends REST_Controller
                 $chat_type = 1;
             }
 
-            $chat_data['chat_user_broker']  = $this->input->post('chat_user_broker');
-            $chat_data['chat_user_client']  = $this->input->post('chat_user_client');
-            $chat_data['chat_type']  = $chat_type;
-            $chat_data['chat_date'] = date('Y-m-d H:i:s');
-            $chat_data['is_deleted'] = 0;
+            $chat_datax['chat_user_broker']  = $this->input->post('chat_user_broker');
+            $chat_datax['chat_user_client']  = $this->input->post('chat_user_client');
+            $chat_datax['chat_type']  = $chat_type;
+            $chat_datax['chat_date'] = date('Y-m-d H:i:s');
+            $chat_datax['is_deleted'] = 0;
 
-            $check_chat = $this->chat_model->check_chat($chat_data['chat_user_broker'], $chat_data['chat_user_client']);
+            $check_chat = $this->chat_model->check_chat($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
 
             if (!$check_chat) {
 
