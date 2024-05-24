@@ -65,10 +65,10 @@ class Chat extends REST_Controller
                     $response['client_data'] = $client_data;
 
 
-                    $response['status'] = true;
-                    $response['response'] = $response;
-                    $response['message'] = 'Chat criado com sucesso.';
-                    $response['note'] = 'Chat criado com sucesso.';
+                    $final['status'] = true;
+                    $final['response'] = $response;
+                    $final['message'] = 'Chat criado com sucesso.';
+                    $final['note'] = 'Chat criado com sucesso.';
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
@@ -91,13 +91,13 @@ class Chat extends REST_Controller
                 $response['broker_data'] = $broker_data;
 
 
-                $response['status'] = true;
-                $response['response'] = $response;
-                $response['message'] = 'Já existe o chat criado.';
-                $response['note'] = 'Já existe o chat criado.';
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Já existe o chat criado.';
+                $final['note'] = 'Já existe o chat criado.';
 
                 // user creation failed, this should never happen
-                $this->response($response, REST_Controller::HTTP_OK);
+                $this->response($final, REST_Controller::HTTP_OK);
             }
           
         }
