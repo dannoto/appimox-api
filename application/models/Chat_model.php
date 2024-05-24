@@ -22,7 +22,8 @@ class Chat_model extends CI_Model
 
     public function add_chat($chat_data)
     {
-        return $this->db->insert('user_chat', $chat_data);
+         $this->db->insert('user_chat', $chat_data);
+        return $this->db->insert_id();
     }
 
     public function get_chat($chat_id)
