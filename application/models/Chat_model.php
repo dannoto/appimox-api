@@ -30,7 +30,7 @@ class Chat_model extends CI_Model
     {
         $this->db->where('id', $chat_id);
         $this->db->where('is_deleted', 0);
-        return $this->db->insert('user_chat')->row();
+        return $this->db->get('user_chat')->row();
     }
 
     public function get_client_chats_with_messages($client_id)
