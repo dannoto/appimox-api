@@ -31,7 +31,7 @@ class Rating extends REST_Controller
         $this->form_validation->set_rules('rating_rated_id', 'ID do avaliado', 'trim|required');
 
         $this->form_validation->set_rules('rating_average_note', 'Nota Média', 'trim|required');
-        $this->form_validation->set_rules('rating_content', 'Conteúdo da Avaliação', 'trim|required');
+        // $this->form_validation->set_rules('rating_content', 'Conteúdo da Avaliação', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
