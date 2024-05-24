@@ -49,6 +49,7 @@ class Followers extends REST_Controller
             if ($this->followers_model->check_follower($data['f_following'], $data['f_follower'])) {
 
                 $final['status'] = true;
+                $final['response'] = $data;
                 $final['message'] = 'Voce já segue este usuario';
                 $final['note'] = 'Voce já segue este usuario';
 
@@ -57,6 +58,8 @@ class Followers extends REST_Controller
             } else {
 
                 $final['status'] = false;
+                $final['response'] = $data;
+
                 $final['message'] = 'Voce ainda não segue.';
                 $final['note'] = 'Voce ainda não segue.';
 
