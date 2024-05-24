@@ -18,7 +18,6 @@ class Rating extends REST_Controller
         $this->load->model('location_model');
         $this->load->model('followers_model');
         $this->load->model('rating_model');
-        
     }
 
     public function add_rating_post()
@@ -66,11 +65,28 @@ class Rating extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
 
+            $rating_id = $this->rating_model->add_rating($data);
 
-            if ($this->rating_model->add_rating($data)) {
+            if ($rating_id) {
 
                 // update main rating note
                 $this->update_main_user_rating($data['rating_rated_id']);
+
+                $schedule_data = array(
+                    'schedule_avaliation' => $rating_id,
+                    'schedule_status' => 4
+                );
+
+                if ($this->schedule_model->update_broker_schedule($data['rating_schedule_id'], $schedule_data)) {
+                    
+                    $schedule_data_action['schedule_id'] = $data['rating_schedule_id'];
+                    $schedule_data_action['schedule_action_id'] = 4;
+                    $schedule_data_action['schedule_action_description'] = 'Cliente avaliou o agendamento';
+                    $schedule_data_action['schedule_action_date'] = date('Y-m-d H:i:s');
+                    $schedule_data_action['is_deleted'] = 0;
+
+                    $this->schedule_model->add_schedule_action($schedule_data_action);
+                }
 
                 $final['status'] = true;
                 $final['message'] = 'Avaliação enviada com sucesso!';
@@ -141,7 +157,6 @@ class Rating extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             // set variables from the form
@@ -170,7 +185,6 @@ class Rating extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
