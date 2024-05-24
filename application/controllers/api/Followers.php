@@ -130,7 +130,7 @@ class Followers extends REST_Controller
     {
         // set validation rules
         $this->form_validation->set_rules('f_following', 'ID do seguidor', 'trim|required');
-        $this->form_validation->set_rules('f_follower', 'ID do seguido', 'trim|required');
+        $this->form_validation->set_rules('f_followed', 'ID do seguido', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
@@ -145,9 +145,9 @@ class Followers extends REST_Controller
 
             // set variables from the form
             $data['f_following'] = $this->input->post('f_following');
-            $data['f_followed']    = $this->input->post('f_follower');
+            $data['f_followed']    = $this->input->post('f_followed');
 
-            if ($this->followers_model->to_unfollow($data['f_following'], $data['f_follower'])) {
+            if ($this->followers_model->to_unfollow($data['f_following'], $data['f_followed'])) {
 
                 $final['status'] = true;
                 $final['message'] = 'Deseguindo com sucesso';
