@@ -18,6 +18,10 @@ class Rating extends REST_Controller
         $this->load->model('location_model');
         $this->load->model('followers_model');
         $this->load->model('rating_model');
+        $this->load->model('schedule_model');
+
+
+        
     }
 
     public function add_rating_post()
@@ -78,7 +82,7 @@ class Rating extends REST_Controller
                 );
 
                 if ($this->schedule_model->update_broker_schedule($data['rating_schedule_id'], $schedule_data)) {
-                    
+
                     $schedule_data_action['schedule_id'] = $data['rating_schedule_id'];
                     $schedule_data_action['schedule_action_id'] = 4;
                     $schedule_data_action['schedule_action_description'] = 'Cliente avaliou o agendamento';
