@@ -20,6 +20,54 @@ class Followers extends REST_Controller
         $this->load->model('rating_model');
     }
 
+    public function check_follow_post()
+    {
+
+        // set validation rules
+        $this->form_validation->set_rules('f_following', 'ID do seguidor', 'trim|required');
+        $this->form_validation->set_rules('f_follower', 'ID do seguido', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            // set variables from the form
+            $data['f_following'] = $this->input->post('f_following');
+            $data['f_follower']    = $this->input->post('f_follower');
+            $data['f_follower']    = date('Y-m-d H:i:s');
+            $data['is_deleted']    = 0;
+
+
+            if ($this->followers_model->check_follower($data['f_following'], $data['f_follower'])) {
+
+                $final['status'] = true;
+                $final['message'] = 'Voce já segue este usuario';
+                $final['note'] = 'Voce já segue este usuario';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Voce ainda não segue.';
+                $final['note'] = 'Voce ainda não segue.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+
+           
+        }
+    }
+
     public function to_follow_post()
     {
 

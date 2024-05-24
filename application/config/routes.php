@@ -190,6 +190,7 @@ $route['add_rating'] = 'api/Rating/add_rating';
 // avaliacoes
 
 // seguidores
+$route['check_follow'] = 'api/Followers/check_follow';
 $route['to_follow'] = 'api/Followers/to_follow';
 $route['to_unfollow'] = 'api/Followers/to_unfollow';
 
