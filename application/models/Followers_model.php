@@ -47,7 +47,7 @@ class Followers_model extends CI_Model
         return $this->db->get('users_followers')->result();
     }
 
-    public function search_followers($user_id) {
+    public function search_followers($user_id, $query) {
 
         $this->db->where('users_followers.f_followed', $user_id);
         $this->db->where('users_followers.is_deleted', 0);
