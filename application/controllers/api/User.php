@@ -1449,6 +1449,27 @@ class User extends REST_Controller
 		}
 	}
 
+	public function get_estados_client_post()
+	{
+
+		$estados_data = $this->user_model->get_estados_client();
+
+		if ($estados_data) {
+
+			$final['status'] = true;
+			$final['response'] = $estados_data;
+			$final['message'] = 'Estados encontrados com sucesso.';
+			$final['note'] = 'Estados encontrados com sucesso.';
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$final['status'] = false;
+			$final['message'] = 'Nenhum estado encontrada.';
+			$final['note'] = 'Nenhum estado encontrada.';
+			$this->response($final, REST_Controller::HTTP_OK);
+		}
+	}
+
 
 	// Cliente dashboard	
 	public function get_suggest_client_propertys_post()

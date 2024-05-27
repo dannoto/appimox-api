@@ -303,6 +303,12 @@ class User_model extends CI_Model
 		$this->db->where('available', 1);
 		return $this->db->get('db_estados')->result();
 	}
+
+
+	public function get_estados_client() {
+		// $this->db->where('available', 1);
+		return $this->db->get('db_estados')->result();
+	}
 	// cidades
 }
 
