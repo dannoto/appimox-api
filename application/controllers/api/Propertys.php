@@ -211,12 +211,12 @@ class Propertys extends REST_Controller
                     $data['property_estado'] = $this->input->post('property_estado');
 
                     if (strlen( $this->input->post('property_numero')) > 0) {
-                        $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
+                        $p_numero = ', nº ' . $this->input->post('property_numero');
                     }
 
 
 
-                    $address_comp = $data['property_logradouro'] ."". $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] ."". $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     // localização
@@ -396,10 +396,10 @@ class Propertys extends REST_Controller
                     // localização
 
                     if (strlen( $this->input->post('property_numero')) > 0) {
-                        $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
+                        $p_numero = ', nº ' . $this->input->post('property_numero');
                     }
 
-                    $address_comp = $data['property_logradouro'] ."". $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] ."". $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     $data['is_deleted'] = 0;
