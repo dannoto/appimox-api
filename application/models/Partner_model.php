@@ -20,7 +20,7 @@ class Partner_model extends CI_Model
         
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);
-        return $this->db->get('user_partners_propertys')->result();
+        return $this->db->get('user_partners_propertys')->result_array();
     }
 
    
@@ -35,7 +35,7 @@ class Partner_model extends CI_Model
 
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);
-        return $this->db->get('user_partners_actions')->result();
+        return $this->db->get('user_partners_actions')->result_array();
 
     }
     
