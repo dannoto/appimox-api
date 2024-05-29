@@ -209,3 +209,13 @@ $route['get_suggest_client_propertys'] = 'api/User/get_suggest_client_propertys'
 $route['get_suggest_client_brokers'] = 'api/User/get_suggest_client_brokers';
 $route['get_client_feed'] = 'api/User/get_client_feed';
 // Cliente Dashboard
+
+
+// Partner
+$route['add_partner_portfolio'] = 'api/Partner/add_partner_portfolio';
+$route['add_partner_property'] = 'api/Partner/add_partner_property';
+$route['update_partner_status'] = 'api/Partner/update_partner_status';
+$route['add_partner_propertys'] = 'api/Partner/add_partner_propertys';
+
+
+// Parnet
