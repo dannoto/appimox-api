@@ -271,13 +271,19 @@ class Partner extends REST_Controller
 
             }
 
+            
+
+           
+
+
             if ($partner_data) {
 
                 $response = array(
                     'partner_data' => $partner_data,
                     'owner_data' => $this->user_model->get_user($partner_data->partner_property_owner),
                     'offer_data' => $this->user_model->get_user($partner_data->partner_property_broker),
-                    'property_data' => $propertys_data
+                    'property_data' => $propertys_data,
+                    'partner_actions' => $this->partner_model->get_partner_actions($partner_id)
                 );
 
                 $final['status'] = true;
@@ -324,7 +330,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-                
+
             } else {
 
                 $final['status'] = false;

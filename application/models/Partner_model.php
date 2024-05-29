@@ -30,6 +30,13 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners')->row();
     }
 
+    public function get_partner_actions($partner_id) {
+
+        $this->db->where('partner_id', $partner_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('user_partners_actions')->result();
+
+    }
 
     public function update_partner($partner_id, $data)
     {
