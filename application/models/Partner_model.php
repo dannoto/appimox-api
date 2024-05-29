@@ -27,4 +27,10 @@ class Partner_model extends CI_Model
         return $this->db->insert('user_partners_propertys', $data);
     }
 
+    public function add_partner_action($data)
+    {
+        $this->db->insert('user_partners_actions', $data);
+        return $this->db->insert_id();
+    }
+    
 }

@@ -162,7 +162,7 @@ class Partner extends REST_Controller
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
-        $this->form_validation->set_rules('partner_status', 'status da Parceria', 'trim|required');
+        $this->form_validation->set_rules('partner_publish', 'status da Parceria', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
@@ -178,7 +178,7 @@ class Partner extends REST_Controller
             // 2 -> ativo
             // 3 -> finalizado  
             $partner_id = $this->input->post('partner_id');
-            $data['partner_status'] = $this->input->post('partner_status');
+            $data['partner_publish'] = $this->input->post('partner_publish');
 
 
             $partner_id = $this->partner_model->update_partner($partner_id, $data);
@@ -238,6 +238,64 @@ class Partner extends REST_Controller
                 $final['status'] = false;
                 $final['message'] = 'Erro ao adicionar Imovel Associado';
                 $final['note'] = 'Erro ao adicionar Imovel Associado';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
+    // action
+
+    public function add_partner_action_post()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID do Proprietário', 'trim|required');
+        $this->form_validation->set_rules('partner_offer', 'ID do Broker', 'trim|required');
+        $this->form_validation->set_rules('partner_receiver', 'ID do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('partner_porcentage', 'ID do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('partner_duration', 'ID do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('partnet_duration_type', 'ID do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('partner_status', 'ID do Imóvel', 'trim|required');
+        $this->form_validation->set_rules('is_deleted', 'ID do Imóvel', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $data['partner_id'] = $this->input->post('partner_id');
+            $data['partner_offer'] = $this->input->post('partner_offer');
+            $data['partner_receiver']  = $this->input->post('partner_receiver');
+            $data['partner_porcentage'] = $this->input->post('partner_porcentage');
+            $data['partner_duration']    = $this->input->post('partner_duration');
+            $data['partnet_duration_type']    = $this->input->post('partnet_duration_type');
+            $data['partner_created']   = date('Y-m-d H:i:s');
+            $data['partner_status']    = $this->input->post('partner_status');
+            $data['is_deleted']    = 0;
+
+            $partner_data = $this->partner_model->add_partner_action($data);
+
+            if ($partner_data) {
+
+                    $final['status'] = true;
+                    $final['response'] = $partner_data;
+                    $final['message'] = 'Ação criada com sucesso.';
+                    $final['note'] = 'Ação criada com sucesso.';
+
+                    $this->response($final, REST_Controller::HTTP_OK);
+               
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar ação';
+                $final['note'] = 'Erro ao adicionar ação';
 
                 $this->response($final, REST_Controller::HTTP_OK);
             }

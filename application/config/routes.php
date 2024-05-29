@@ -216,6 +216,6 @@ $route['add_partner_portfolio'] = 'api/Partner/add_partner_portfolio';
 $route['add_partner_property'] = 'api/Partner/add_partner_property';
 $route['update_partner_status'] = 'api/Partner/update_partner_status';
 $route['add_partner_propertys'] = 'api/Partner/add_partner_propertys';
-
+$route['add_partner_action'] = 'api/Partner/add_partner_action';
 
 // Parnet
