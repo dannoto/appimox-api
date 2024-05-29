@@ -266,21 +266,20 @@ class Partner extends REST_Controller
 
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
-                $p_data =$this->broker_model->get_broker_property($p->partner_property_id);
+                $p_data = $this->broker_model->get_broker_property($p->partner_property_id);
                 $propertys_data[] = $p_data;
-
             }
 
-        
+
             if ($partner_data) {
 
-                $response = array(
-                    'partner_data' => $partner_data,
-                    'owner_data' => $this->user_model->get_user($partner_data->partner_property_owner),
-                    'offer_data' => $this->user_model->get_user($partner_data->partner_property_broker),
-                    'property_data' => $propertys_data,
-                    'partner_actions' => $this->partner_model->get_partner_actions($partner_id)
-                );
+                $response = array();
+                $response['partner_data'] = $partner_data;
+                $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
+                $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
+                $response['property_data'] = $propertys_data;
+                $response['partner_actions'] = $this->partner_model->get_partner_actions($partner_id);
+
 
                 $final['status'] = true;
                 $final['response'] = $response;
@@ -288,7 +287,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -313,21 +311,19 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $user_id = $this->input->post('user_id');
 
             if ($partner_data) {
 
-             
+
                 $final['status'] = true;
                 $final['response'] = $response;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
