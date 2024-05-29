@@ -262,6 +262,8 @@ class Partner extends REST_Controller
 
             $partner_data = $this->partner_model->get_partner($partner_id);
 
+
+
             $propertys_data = array();
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
@@ -273,16 +275,16 @@ class Partner extends REST_Controller
 
             if ($partner_data) {
 
-                $response = array();
-                $response['partner_data'] = $partner_data;
-                $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
-                $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
-                $response['property_data'] = $this->partner_model->get_partner_associated($partner_id);
+                // $response = array();
+                // $response['partner_data'] = $partner_data;
+                // $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
+                // $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
+                // $response['property_data'] = $propertys_data;
                 // $response['partner_actions'] = $this->partner_model->get_partner_actions($partner_id);
 
 
                 $final['status'] = true;
-                $final['response'] = $response;
+                $final['response'] = $this->partner_model->get_partner_associated($partner_id) ;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
