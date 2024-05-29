@@ -284,7 +284,7 @@ class Partner extends REST_Controller
 
 
                 $final['status'] = true;
-                $final['response'] = $this->partner_model->get_partner_associated($partner_id) ;
+                $final['response'] = $this->partner_model->get_partner_actions($partner_id) ;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
