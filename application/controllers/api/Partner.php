@@ -286,8 +286,8 @@ class Partner extends REST_Controller
                 $response['partner_data'] = $partner_data;
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
-                // $response['property_data'] = $propertys_data;
-                // $response['partner_actions'] = $actions_data;
+                $response['property_data'] = $propertys_data;
+                $response['partner_actions'] = $actions_data;
 
 
                 $final['status'] = true;
@@ -296,6 +296,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
+                
             } else {
 
                 $final['status'] = false;
