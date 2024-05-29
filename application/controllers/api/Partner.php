@@ -266,7 +266,7 @@ class Partner extends REST_Controller
 
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
-                $p_data = $this->broker_model->get_broker_property($p->partner_property_id);
+                $p_data = $this->partner_model->get_broker_property($p->partner_property_id);
                 $propertys_data[] = $p_data;
             }
 
