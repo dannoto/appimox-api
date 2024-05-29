@@ -271,11 +271,7 @@ class Partner extends REST_Controller
 
             }
 
-            
-
-           
-
-
+        
             if ($partner_data) {
 
                 $response = array(
@@ -292,6 +288,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
+
             } else {
 
                 $final['status'] = false;
