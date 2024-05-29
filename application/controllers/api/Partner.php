@@ -264,20 +264,20 @@ class Partner extends REST_Controller
 
 
 
-            $propertys_data = array();
-            foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
+            // $propertys_data = array();
+            // foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
-                $p_data = $this->partner_model->get_property($p->partner_property_id);
-                array_push($property_data,  $p_data);
+            //     $p_data = $this->partner_model->get_property($p->partner_property_id);
+            //     array_push($property_data,  $p_data);
 
                 
-            }
+            // }
 
 
-            $actions_data = array();
-            foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
-                array_push($actions_data,  $p);
-            }
+            // $actions_data = array();
+            // foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
+            //     array_push($actions_data,  $p);
+            // }
 
 
             if ($partner_data) {
@@ -286,8 +286,8 @@ class Partner extends REST_Controller
                 $response['partner_data'] = $partner_data;
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
-                $response['property_data'] = $propertys_data;
-                $response['partner_actions'] = $actions_data;
+                // $response['property_data'] = $propertys_data;
+                // $response['partner_actions'] = $actions_data;
 
 
                 $final['status'] = true;
@@ -296,7 +296,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-                
+
             } else {
 
                 $final['status'] = false;
