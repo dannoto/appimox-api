@@ -280,9 +280,11 @@ class Partner extends REST_Controller
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
 
-                $response['property_data'] = array();
+
                 $response['property_data'] = $propertys_data;
-                $response['partner_actions'] = $this->partner_model->get_partner_actions($partner_id);
+
+                $response['partner_actions'] = array();
+                $response['partner_actions'][] = $this->partner_model->get_partner_actions($partner_id);
 
 
                 $final['status'] = true;
