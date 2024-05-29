@@ -268,19 +268,15 @@ class Partner extends REST_Controller
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
-
                 array_push($property_data,  $p_data);
-                // $propertys_data[] = $p_data;
+
                 
             }
 
 
             $actions_data = array();
             foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
-
-                // $actions_data[] = $p;
                 array_push($actions_data,  $p);
-
             }
 
 
@@ -295,7 +291,7 @@ class Partner extends REST_Controller
 
 
                 $final['status'] = true;
-                $final['response'] = $response;
+                $final['response'] =  $propertys_data;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
