@@ -165,6 +165,10 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
 
 
+        $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
+
+
+        
         if ($this->form_validation->run() == false) {
 
             $final['status'] = false;
@@ -192,6 +196,8 @@ class Propertys extends REST_Controller
                     $data['property_disponibility'] = $this->input->post('property_disponibility');
                     $data['property_exclusive'] = $this->input->post('property_exclusive');
 
+                    
+                    $data['property_age'] = $this->input->post('property_age');
 
 
                     $data['property_condominio'] = $this->input->post('property_condominio');
@@ -347,6 +353,9 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
         // location
 
+        $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
+
+        
 
         if ($this->form_validation->run() == false) {
 
@@ -383,9 +392,11 @@ class Propertys extends REST_Controller
 
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
+                    
+                    $data['property_age'] = $this->input->post('property_age');
 
                     // $data['property_location_id'] = $this->input->post('property_location_id'); //*
-
+                    
                     // localizaçao
                     $data['property_logradouro'] = $this->input->post('property_logradouro');
                     $data['property_bairro'] = $this->input->post('property_bairro');
