@@ -244,7 +244,7 @@ class Partner extends REST_Controller
     }
 
 
-    public function get_partner()
+    public function get_partner_post()
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
@@ -301,7 +301,7 @@ class Partner extends REST_Controller
     }
 
 
-    public function get_partners()
+    public function get_partners_post()
     {
 
         $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
