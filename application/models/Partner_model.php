@@ -27,7 +27,4 @@ class Partner_model extends CI_Model
         return $this->db->insert('user_partners_propertys', $data);
     }
 
-
-
-
 }
