@@ -291,7 +291,7 @@ class Partner extends REST_Controller
 
 
                 $final['status'] = true;
-                $final['response'] =  $propertys_data;
+                $final['response'] =  $response;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
