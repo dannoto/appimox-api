@@ -267,6 +267,15 @@ class Partner extends REST_Controller
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
 
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
+                // $propertys_data[] = $p_data;
+                // Debug: Log the type and structure of $p_data
+                log_message('debug', 'Broker Property Data: ' . print_r($p_data, true));
+
+                // Ensure $p_data is an array
+                if (is_object($p_data)) {
+                    $p_data = (array) $p_data;
+                }
+
                 $propertys_data[] = $p_data;
             }
 
@@ -279,6 +288,14 @@ class Partner extends REST_Controller
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
                 $response['property_data'] = $propertys_data;
                 $response['partner_actions'] = $this->partner_model->get_partner_actions($partner_id);
+
+                 // Convert partner_actions to array if necessary
+            if (is_object($response['partner_actions'])) {
+                $response['partner_actions'] = (array) $response['partner_actions'];
+            }
+
+            // Debug: Log the type and structure of $response
+            log_message('debug', 'Response Data: ' . print_r($response, true));
 
 
                 $final['status'] = true;
