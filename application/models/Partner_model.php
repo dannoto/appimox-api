@@ -16,6 +16,21 @@ class Partner_model extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function get_partner_associated($partner_id) {
+        
+        $this->db->where('partner_id', $partner_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('user_partners_propertys')->result();
+    }
+
+    
+    public function get_partner($partner_id)
+    {
+        $this->db->where('id', $partner_id);
+        return $this->db->get('user_partners')->row();
+    }
+
+
     public function update_partner($partner_id, $data)
     {
         $this->db->where('id', $partner_id);

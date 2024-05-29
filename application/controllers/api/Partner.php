@@ -244,6 +244,99 @@ class Partner extends REST_Controller
     }
 
 
+    public function get_partner()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+
+            $partner_data = $this->partner_model->get_partner($partner_id);
+
+            $propertys_data = array();
+
+            foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
+
+                $p_data =$this->broker_model->get_broker_property($p->partner_property_id);
+                $propertys_data[] = $p_data;
+
+            }
+
+            if ($partner_data) {
+
+                $response = array(
+                    'partner_data' => $partner_data,
+                    'owner_data' => $this->user_model->get_user($partner_data->partner_property_owner),
+                    'offer_data' => $this->user_model->get_user($partner_data->partner_property_broker),
+                    'property_data' => $propertys_data
+                );
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
+    public function get_partners()
+    {
+
+        $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $user_id = $this->input->post('user_id');
+
+            if ($partner_data) {
+
+             
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+                
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
     // action
 
     public function add_partner_action_post()
@@ -266,7 +359,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $data['partner_id'] = $this->input->post('partner_id');
@@ -283,13 +375,12 @@ class Partner extends REST_Controller
 
             if ($partner_data) {
 
-                    $final['status'] = true;
-                    $final['response'] = $partner_data;
-                    $final['message'] = 'Ação criada com sucesso.';
-                    $final['note'] = 'Ação criada com sucesso.';
+                $final['status'] = true;
+                $final['response'] = $partner_data;
+                $final['message'] = 'Ação criada com sucesso.';
+                $final['note'] = 'Ação criada com sucesso.';
 
-                    $this->response($final, REST_Controller::HTTP_OK);
-               
+                $this->response($final, REST_Controller::HTTP_OK);
             } else {
 
                 $final['status'] = false;
