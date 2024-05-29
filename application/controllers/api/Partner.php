@@ -186,7 +186,6 @@ class Partner extends REST_Controller
             if ($partner_id) {
 
                 $final['status'] = true;
-                $final['response'] = $partner_id;
                 $final['message'] = 'Parceria atualizada com sucesso.';
                 $final['note'] = 'Parceria atualizada com sucesso.';
 
