@@ -262,19 +262,17 @@ class Partner extends REST_Controller
 
             $partner_data = $this->partner_model->get_partner($partner_id);
 
+            // $propertys_data = array();
+            // foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
+            //     $p_data = $this->partner_model->get_property($p->partner_property_id);
+            //     $property_data[] = $p_data;
+            // }
 
 
-            $propertys_data = array();
-            foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
-                $p_data = $this->partner_model->get_property($p->partner_property_id);
-                $property_data[] = $p_data;
-            }
-
-
-            $actions_data = array();
-            foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
-                $actions_data[] = $p;
-            }
+            // $actions_data = array();
+            // foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
+            //     $actions_data[] = $p;
+            // }
 
 
             if ($partner_data) {
@@ -283,8 +281,8 @@ class Partner extends REST_Controller
                 $response['partner_data'] = $partner_data;
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
-                $response['property_data'] = (array) $this->partner_model->get_partner_associated($partner_id);
-                $response['partner_actions'] = (array) $this->partner_model->get_partner_actions($partner_id);
+                // $response['property_data'] = (array) $this->partner_model->get_partner_associated($partner_id);
+                // $response['partner_actions'] = (array) $this->partner_model->get_partner_actions($partner_id);
 
 
                 $final['status'] = true;
@@ -359,7 +357,7 @@ class Partner extends REST_Controller
             $partner_data = $this->partner_model->get_partner($partner_id);
 
             $propertys_data = array();
-            
+
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
                 $property_data[] = $p_data;
