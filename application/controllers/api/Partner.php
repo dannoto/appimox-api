@@ -305,6 +305,87 @@ class Partner extends REST_Controller
         }
     }
 
+    public function get_partner_actions_post()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+
+            if ($partner_data) {
+
+                $final['status'] = true;
+                $final['response'] = $this->partner_model->get_partner_actions($partner_id);
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+                
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function get_partner_propertys_post()
+    {
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+
+            $partner_data = $this->partner_model->get_partner($partner_id);
+
+            $propertys_data = array();
+            
+            foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
+                $p_data = $this->partner_model->get_property($p->partner_property_id);
+                $property_data[] = $p_data;
+            }
+
+            if ($partner_data) {
+
+              
+                $final['status'] = true;
+                $final['response'] = $propertys_data;
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+                
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
 
     public function get_partners_post()
     {

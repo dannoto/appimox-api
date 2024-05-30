@@ -220,6 +220,9 @@ $route['add_partner_action'] = 'api/Partner/add_partner_action';
 
 
 $route['get_partner'] = 'api/Partner/get_partner';
+$route['get_partner_actions'] = 'api/Partner/get_partner_actions';
+$route['get_partner_propertys'] = 'api/Partner/get_partner_propertys';
+
 $route['get_partners'] = 'api/Partner/get_partners';
 
 // Parnet
