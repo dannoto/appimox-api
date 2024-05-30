@@ -16,14 +16,15 @@ class Partner_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function get_partner_associated($partner_id) {
-        
+    public function get_partner_associated($partner_id)
+    {
+
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);
         return $this->db->get('user_partners_propertys')->result();
     }
 
-   
+
     public function get_property($property_id)
     {
         $this->db->where('id', $property_id);
@@ -31,14 +32,14 @@ class Partner_model extends CI_Model
         return $this->db->get('propertys')->row();
     }
 
-    public function get_partner_actions($partner_id) {
+    public function get_partner_actions($partner_id)
+    {
 
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);
         return $this->db->get('user_partners_actions')->result();
-
     }
-    
+
     public function get_partner($partner_id)
     {
         $this->db->where('id', $partner_id);
@@ -63,5 +64,22 @@ class Partner_model extends CI_Model
         $this->db->insert('user_partners_actions', $data);
         return $this->db->insert_id();
     }
-    
+
+
+    public function get_partners_by_user($user_id)
+    {
+        $this->db->select('*');
+        $this->db->from('user_partners');
+        $this->db->where('partner_publish', 1);
+        $this->db->where('is_deleted', 0);
+        $this->db->group_start();
+        $this->db->where('partner_property_owner', $user_id);
+        $this->db->or_where('partner_property_broker', $user_id);
+        $this->db->group_end();
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+
+        return $query->result_array(); 
+
+    }
 }

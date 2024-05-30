@@ -359,8 +359,10 @@ class Partner extends REST_Controller
             $propertys_data = array();
 
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
+
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
                 $property_data[] = $p_data;
+
             }
 
             if ($partner_data) {
@@ -421,7 +423,45 @@ class Partner extends REST_Controller
         }
     }
 
+    public function get_partners_by_user_post()
+    {
 
+        $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $user_id = $this->input->post('user_id');
+
+            $partner_data = $this->partner_model->get_partners_by_user($user_id);
+
+            if ($partner_data) {
+
+
+                $final['status'] = true;
+                $final['response'] = $partner_data;
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+    
     // action
 
     public function add_partner_action_post()
