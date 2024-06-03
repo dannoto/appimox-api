@@ -443,9 +443,13 @@ class Partner extends REST_Controller
 
                 foreach ($partner_data as $p) {
 
-                    $response['partner_data'] = $p;
-                    $response['partner_owner'] = $this->user_model->get_user($p['partner_property_owner']);
-                    $response['partner_broker'] = $this->user_model->get_user($p['partner_property_owner']);
+                    $response_partner = array();
+
+                    $response_partner['partner_data'] = $p;
+                    $response_partner['partner_owner'] = $this->user_model->get_user($p['partner_property_owner']);
+                    $response_partner['partner_broker'] = $this->user_model->get_user($p['partner_property_owner']);
+
+                    $response[] = $response_partner;
                 }
 
 
