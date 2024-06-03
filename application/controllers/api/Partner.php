@@ -445,7 +445,7 @@ class Partner extends REST_Controller
 
                     $response['partner_data'] = $p;
                     $response['partner_owner'] = $this->user_model->get_user($p['partner_property_owner']);
-                    $response['partner_broker'] = $this->user_model->get_user($p->partner_property_broker);
+                    $response['partner_broker'] = $this->user_model->get_user($p['partner_property_owner']);
                 }
 
 
