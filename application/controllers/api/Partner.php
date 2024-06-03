@@ -444,7 +444,7 @@ class Partner extends REST_Controller
                 foreach ($partner_data as $p) {
 
                     $response['partner_data'] = $p;
-                    $response['partner_owner'] = $this->user_model->get_user($p->partner_property_owner);
+                    $response['partner_owner'] = $this->user_model->get_user($p['partner_property_owner']);
                     $response['partner_broker'] = $this->user_model->get_user($p->partner_property_broker);
                 }
 
@@ -455,6 +455,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
+
             } else {
 
                 $final['status'] = false;
