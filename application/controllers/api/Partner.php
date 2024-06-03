@@ -291,7 +291,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-                
             } else {
 
                 $final['status'] = false;
@@ -327,7 +326,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-                
             } else {
 
                 $final['status'] = false;
@@ -362,19 +360,17 @@ class Partner extends REST_Controller
 
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
                 $property_data[] = $p_data;
-
             }
 
             if ($partner_data) {
 
-              
+
                 $final['status'] = true;
                 $final['response'] = $propertys_data;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-                
             } else {
 
                 $final['status'] = false;
@@ -435,7 +431,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $user_id = $this->input->post('user_id');
@@ -444,9 +439,18 @@ class Partner extends REST_Controller
 
             if ($partner_data) {
 
+                $response = array();
+
+                foreach ($partner_data as $p) {
+
+                    $response['partner_data'] = $p;
+                    $response['partner_owner'] = $this->user_model->get_user($partner_data->partner_property_owner);
+                    $response['partner_broker'] = $this->user_model->get_user($partner_data->partner_property_broker);
+                }
+
 
                 $final['status'] = true;
-                $final['response'] = $partner_data;
+                $final['response'] = $response;
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
@@ -461,7 +465,7 @@ class Partner extends REST_Controller
             }
         }
     }
-    
+
     // action
 
     public function add_partner_action_post()
