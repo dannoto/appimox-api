@@ -97,7 +97,7 @@ class Partner extends REST_Controller
         }
     }
 
-    public function add_partner_property_portfolio_post()
+    public function add_partner_portfolio_post()
     {
 
         $this->form_validation->set_rules('partner_property_owner', 'ID do Proprietário', 'trim|required');

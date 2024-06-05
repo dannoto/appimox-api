@@ -214,7 +214,7 @@ $route['get_client_feed'] = 'api/User/get_client_feed';
 // Partner
 $route['add_partner_portfolio'] = 'api/Partner/add_partner_portfolio';
 $route['add_partner_property'] = 'api/Partner/add_partner_property';
-$route['add_partner_property_portfolio'] = 'api/Partner/add_partner_property_portfolio';
+$route['add_partner_portfolio'] = 'api/Partner/add_partner_portfolio';
 
 $route['update_partner_status'] = 'api/Partner/update_partner_status';
 $route['add_partner_propertys'] = 'api/Partner/add_partner_propertys';
