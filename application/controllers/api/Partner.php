@@ -97,6 +97,54 @@ class Partner extends REST_Controller
         }
     }
 
+    public function add_partner_property_portfolio_post()
+    {
+
+        $this->form_validation->set_rules('partner_property_owner', 'ID do Proprietário', 'trim|required');
+        $this->form_validation->set_rules('partner_property_broker', 'ID do Broker', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $data['partner_status'] = 1;
+            $data['partner_publish'] = 0;
+            $data['partner_type']    = 'portfolio';
+            $data['partner_property_owner'] = $this->input->post('partner_property_owner');
+            $data['partner_property_broker']    = $this->input->post('partner_property_broker');
+            $data['partner_date']    = date('Y-m-d H:i:s');
+            $data['is_deleted']    = 0;
+
+
+            $partner_id = $this->partner_model->add_partner($data);
+
+            if ($partner_id) {
+
+               
+                $final['status'] = true;
+                $final['response'] = $partner_id;
+                $final['message'] = 'Parceria criada com sucesso.';
+                $final['note'] = 'Parceria criada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar Parceria';
+                $final['note'] = 'Erro ao adicionar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
     public function add_partner_portfolio_post()
     {
 
