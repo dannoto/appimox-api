@@ -245,7 +245,49 @@ class Partner extends REST_Controller
         }
     }
 
+// adicionar varios imoveis selecionados via portfolio
+    public function add_partner_property_portfolio()
+    {
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('partner_propertys', 'ID do Imóvel', 'trim|required');
 
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+     
+
+            $partner_propertys = explode(",",  $this->input->post('partner_property_id'));
+
+            foreach ($partner_propertys as $p) {
+
+                echo "== ".$p." |";
+                // $property_data['partner_id'] = $this->input->post('partner_id');
+                // $property_data['partner_property_id'] = $p;
+                // $property_data['is_deleted'] = 0;
+
+                // $this->partner_model->add_partner_property($property_data);
+
+                
+            }
+
+            // $final['status'] = true;
+            // $final['message'] = 'Imóveis adicionados com sucesso.';
+            // $final['note'] = 'Imóveis adicionados com sucesso.';
+
+            // $this->response($final, REST_Controller::HTTP_OK);
+
+           
+        }
+    }
+
+
+    
     public function get_partner_post()
     {
 
