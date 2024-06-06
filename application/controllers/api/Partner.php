@@ -272,7 +272,7 @@ class Partner extends REST_Controller
 
                 // echo "PROPRIEDADE: " . $x . " ";
                 $property_data['partner_id'] = $this->input->post('partner_id');
-                $property_data['partner_property_id'] = $p;
+                $property_data['partner_property_id'] = $x;
                 $property_data['is_deleted'] = 0;
 
                 $this->partner_model->add_partner_property($property_data);
