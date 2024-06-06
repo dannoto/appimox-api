@@ -266,7 +266,11 @@ class Partner extends REST_Controller
 
             foreach ($partner_propertys as $p) {
 
-                echo "== ".(int)$p." |";
+                $p = str_replace($p, '"', '');
+                $p = str_replace($p, ']', '');
+                $p = str_replace($p, '[', '');
+
+                echo "PROPRIEDADE: ".$p." ";
                 // $property_data['partner_id'] = $this->input->post('partner_id');
                 // $property_data['partner_property_id'] = $p;
                 // $property_data['is_deleted'] = 0;
