@@ -262,7 +262,7 @@ class Partner extends REST_Controller
 
      
 
-            $partner_propertys = explode(",",  $this->input->post('partner_property_id'));
+            $partner_propertys = explode(",",  $this->input->post('partner_propertys'));
 
             foreach ($partner_propertys as $p) {
 
