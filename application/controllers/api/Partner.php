@@ -245,7 +245,7 @@ class Partner extends REST_Controller
         }
     }
 
-// adicionar varios imoveis selecionados via portfolio
+    // adicionar varios imoveis selecionados via portfolio
     public function add_partner_property_portfolio_post()
     {
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
@@ -260,24 +260,24 @@ class Partner extends REST_Controller
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
 
-     
+
 
             $partner_propertys = explode(",",  $this->input->post('partner_propertys'));
 
             foreach ($partner_propertys as $p) {
 
-                $x = str_replace($p, '"', '');
-                $x = str_replace($x, ']', '');
-                $x = str_replace($x, '[', '');
+                $x = str_replace('"', '', $p);
+                $x = str_replace(']', '', $x);
+                $x = str_replace('[', '', $x);
 
-                echo "PROPRIEDADE: ".$x." ";
+                echo "PROPRIEDADE: " . $x . " ";
                 // $property_data['partner_id'] = $this->input->post('partner_id');
                 // $property_data['partner_property_id'] = $p;
                 // $property_data['is_deleted'] = 0;
 
                 // $this->partner_model->add_partner_property($property_data);
 
-                
+
             }
 
             // $final['status'] = true;
@@ -286,12 +286,12 @@ class Partner extends REST_Controller
 
             // $this->response($final, REST_Controller::HTTP_OK);
 
-           
+
         }
     }
 
 
-    
+
     public function get_partner_post()
     {
 
@@ -508,7 +508,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
