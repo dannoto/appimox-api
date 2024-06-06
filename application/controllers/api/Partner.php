@@ -270,21 +270,21 @@ class Partner extends REST_Controller
                 $x = str_replace(']', '', $x);
                 $x = str_replace('[', '', $x);
 
-                echo "PROPRIEDADE: " . $x . " ";
-                // $property_data['partner_id'] = $this->input->post('partner_id');
-                // $property_data['partner_property_id'] = $p;
-                // $property_data['is_deleted'] = 0;
+                // echo "PROPRIEDADE: " . $x . " ";
+                $property_data['partner_id'] = $this->input->post('partner_id');
+                $property_data['partner_property_id'] = $p;
+                $property_data['is_deleted'] = 0;
 
-                // $this->partner_model->add_partner_property($property_data);
+                $this->partner_model->add_partner_property($property_data);
 
 
             }
 
-            // $final['status'] = true;
-            // $final['message'] = 'Imóveis adicionados com sucesso.';
-            // $final['note'] = 'Imóveis adicionados com sucesso.';
+            $final['status'] = true;
+            $final['message'] = 'Imóveis adicionados com sucesso.';
+            $final['note'] = 'Imóveis adicionados com sucesso.';
 
-            // $this->response($final, REST_Controller::HTTP_OK);
+            $this->response($final, REST_Controller::HTTP_OK);
 
 
         }
