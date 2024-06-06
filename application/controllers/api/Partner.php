@@ -246,7 +246,7 @@ class Partner extends REST_Controller
     }
 
 // adicionar varios imoveis selecionados via portfolio
-    public function add_partner_property_portfolio()
+    public function add_partner_property_portfolio_post()
     {
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
         $this->form_validation->set_rules('partner_propertys', 'ID do Imóvel', 'trim|required');
