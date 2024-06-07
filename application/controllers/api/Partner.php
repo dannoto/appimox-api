@@ -296,6 +296,7 @@ class Partner extends REST_Controller
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'ID da Parceria', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -331,6 +332,7 @@ class Partner extends REST_Controller
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
                 // $response['property_data'] = (array) $this->partner_model->get_partner_associated($partner_id);
                 // $response['partner_actions'] = (array) $this->partner_model->get_partner_actions($partner_id);
+                $response['user_id'] = $this->input->post('partner_id');
 
 
                 $final['status'] = true;
