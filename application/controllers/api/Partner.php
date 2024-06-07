@@ -318,10 +318,10 @@ class Partner extends REST_Controller
             }
 
 
-            // $actions_data = array();
-            // foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
-            //     $actions_data[] = $p;
-            // }
+            $actions_data = array();
+            foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
+                $actions_data[] = $p;
+            }
 
 
             if ($partner_data) {
@@ -331,7 +331,7 @@ class Partner extends REST_Controller
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
                 $response['property_data'] = $propertys_data;
-                // $response['partner_actions'] = (array) $this->partner_model->get_partner_actions($partner_id);
+                $response['partner_actions'] = $actions_data;
                 $response['user_id'] = $this->input->post('partner_id');
 
 
