@@ -527,6 +527,8 @@ class Partner extends REST_Controller
     {
 
         $this->form_validation->set_rules('partner_id', 'partner_id', 'trim|required');
+        $this->form_validation->set_rules('partner_user', 'partner_user', 'trim|required');
+
         $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
         $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
         $this->form_validation->set_rules('partner_porcentage', 'partner_porcentage', 'trim|required');
@@ -547,6 +549,7 @@ class Partner extends REST_Controller
 
             $data['partner_id'] = $this->input->post('partner_id');
             $data['partner_offer'] = $this->input->post('partner_offer');
+            $data['partner_user'] = $this->input->post('partner_user');
             $data['partner_receiver']  = $this->input->post('partner_receiver');
             $data['partner_porcentage'] = $this->input->post('partner_porcentage');
             $data['partner_duration']    = $this->input->post('partner_duration');
