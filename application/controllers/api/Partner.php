@@ -356,6 +356,7 @@ class Partner extends REST_Controller
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'ID da Parceria', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -367,10 +368,12 @@ class Partner extends REST_Controller
         } else {
 
             $partner_id = $this->input->post('partner_id');
+            $user_id = $this->input->post('user_id');
 
             if ($partner_data) {
 
                 $final['status'] = true;
+                $final['user_id'] = $user_id;
                 $final['response'] = $this->partner_model->get_partner_actions($partner_id);
                 $final['message'] = 'Parceria encontrada com sucesso.';
                 $final['note'] = 'Parceria encontrada com sucesso.';
