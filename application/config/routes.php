@@ -224,6 +224,12 @@ $route['add_partner_property_portfolio'] = 'api/Partner/add_partner_property_por
 
 $route['add_partner_action'] = 'api/Partner/add_partner_action';
 
+$route['accept_action'] = 'api/Partner/accept_action';
+$route['reject_action'] = 'api/Partner/reject_action';
+$route['contra_action'] = 'api/Partner/contra_action';
+
+
+
 
 $route['get_partner'] = 'api/Partner/get_partner';
 $route['get_partner_actions'] = 'api/Partner/get_partner_actions';
