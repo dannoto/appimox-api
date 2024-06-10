@@ -54,6 +54,12 @@ class Partner_model extends CI_Model
         return $this->db->update('user_partners', $data);
     }
 
+    public function update_partner_action($action_id, $data)
+    {
+        $this->db->where('id', $action_id);
+        return $this->db->update('user_partners_actions', $data);
+    }
+
     public function add_partner_property($data)
     {
         return $this->db->insert('user_partners_propertys', $data);
