@@ -705,8 +705,7 @@ class Partner extends REST_Controller
     {
 
         $this->form_validation->set_rules('action_id', 'action_id', 'trim|required');
-
-
+        
         $this->form_validation->set_rules('partner_id', 'partner_id', 'trim|required');
         $this->form_validation->set_rules('partner_user', 'partner_user', 'trim|required');
 
