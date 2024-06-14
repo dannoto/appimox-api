@@ -1054,6 +1054,7 @@ class User extends REST_Controller
 						$final['status'] = true;
 						$final['message'] = 'Encontrado com sucesso.';
 						$final['response'] = $user_data;
+						$final['user_id'] = $this->input->post('request_id');
 						$final['note'] = 'Dados encontrados get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					} else {
