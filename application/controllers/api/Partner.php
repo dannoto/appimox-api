@@ -559,6 +559,7 @@ class Partner extends REST_Controller
             $data['partnet_duration_type']    = $this->input->post('partnet_duration_type');
             $data['partner_created']   = date('Y-m-d H:i:s');
             $data['partner_status']    = $this->input->post('partner_status');
+            $data['partner_action_type']    = 0;
             $data['is_deleted']    = 0;
 
             $partner_data = $this->partner_model->add_partner_action($data);
@@ -731,7 +732,6 @@ class Partner extends REST_Controller
             $partner_action_data = $this->partner_model->update_partner_action( $this->input->post('action_id'), $partner_action_data);
 
 
-
             $data['partner_id'] = $this->input->post('partner_id');
             $data['partner_offer'] = $this->input->post('partner_offer');
             $data['partner_user'] = $this->input->post('partner_user');
@@ -741,6 +741,8 @@ class Partner extends REST_Controller
             $data['partnet_duration_type']    = $this->input->post('partnet_duration_type');
             $data['partner_created']   = date('Y-m-d H:i:s');
             $data['partner_status']    = $this->input->post('partner_status');
+            $data['partner_action_type']    = 1;
+
             $data['is_deleted']    = 0;
 
             $partner_data = $this->partner_model->add_partner_action($data);
