@@ -617,12 +617,16 @@ class Partner extends REST_Controller
             // 3 -finalizada
 
             $partner_action_data['partner_status'] = 2;
-            $partner_data['partner_status'] = 2;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
 
             
             if ($partner_action_data) {
+
+                $partner_data['partner_status'] = 2;
+                $partner_data['partner_date'] = date('Y-m-d H:i:s');
+                $partner_data['partner_expiration'] = $this->calculatePartnerExpiration($action_id, $partner_id);
+
 
                 $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
 
@@ -765,4 +769,39 @@ class Partner extends REST_Controller
             }
         }
     }
+
+
+    function calculatePartnerExpiration($action_id, $partner_id) {
+
+        // Obtenha os dados da ação e do parceiro
+        $action_data = $this->partner_model->get_partner_action($action_id);
+        $partner_data = $this->partner_model->get_partner($partner_id);
+    
+        // Data inicial do parceiro
+        $initial_date = $partner_data->partner_date;
+    
+        // Duração da ação e tipo de duração (meses ou dias)
+        $action_duration = $action_data->partnet_duration;
+        $action_duration_type = $action_data->partnet_duration_type;
+    
+        // Converter a data inicial para um objeto DateTime
+        $initialDateObj = new DateTime($initial_date);
+        
+        // Calcular a data de expiração com base na duração
+        if ($action_duration_type == "meses") {
+            // Adicionar meses à data inicial
+            $interval = new DateInterval('P' . $action_duration . 'M');
+            $initialDateObj->add($interval);
+        } else if ($action_duration_type == "dias") {
+            // Adicionar dias à data inicial
+            $interval = new DateInterval('P' . $action_duration . 'D');
+            $initialDateObj->add($interval);
+        }
+    
+        // Obter a data de expiração no formato desejado (por exemplo, 'Y-m-d')
+        $action_expiration = $initialDateObj->format('Y-m-d H:i:s');
+    
+        return $action_expiration;
+    }
+    
 }

@@ -24,6 +24,8 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
+    
+
 
     public function get_property($property_id)
     {
@@ -31,6 +33,14 @@ class Partner_model extends CI_Model
         $this->db->where('is_deleted', 0);
         return $this->db->get('propertys')->row();
     }
+
+    
+    public function get_partner_action($action_id)
+    {
+        $this->db->where('id', $action_id);
+        return $this->db->get('user_partners_actions')->row();
+    }
+
 
     public function get_partner_actions($partner_id)
     {
