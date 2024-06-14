@@ -615,7 +615,7 @@ class Partner extends REST_Controller
             // 2 - ativa
             // 3 -finalizada
 
-            $partner_action_data['partner_status'] = 3;
+            $partner_action_data['partner_status'] = 2;
             $partner_data['partner_status'] = 2;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
@@ -672,7 +672,7 @@ class Partner extends REST_Controller
             // 2 - ativa
             // 3 -finalizada
 
-            $partner_action_data['partner_status'] = 2;
+            $partner_action_data['partner_status'] = 1;
             $partner_data['partner_status'] = 3;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
