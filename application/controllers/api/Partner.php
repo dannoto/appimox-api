@@ -727,7 +727,7 @@ class Partner extends REST_Controller
         } else {
 
             // antiga açao rejeitada
-            $partner_action_data['partner_status'] = 2;
+            $partner_action_data['partner_status'] = 1;
             $partner_action_data = $this->partner_model->update_partner_action( $this->input->post('action_id'), $partner_action_data);
 
 
