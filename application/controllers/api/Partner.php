@@ -780,14 +780,6 @@ class Partner extends REST_Controller
         // Data inicial do parceiro
         $initial_date = $partner_data->partner_date;
     
-        // Verifique se a data inicial está no formato correto
-        if (!DateTime::createFromFormat('Y-m-d', $initial_date)) {
-            throw new Exception("Unknown or bad format (PM)");
-        }
-    
-        // Converta a data inicial para um objeto DateTime
-        $initialDateObj = new DateTime($initial_date);
-    
         // Duração da ação e tipo de duração (meses ou dias)
         $action_duration = $action_data->partnet_duration;
         $action_duration_type = $action_data->partnet_duration_type;
@@ -795,16 +787,14 @@ class Partner extends REST_Controller
         // Calcular a data de expiração com base na duração
         if ($action_duration_type == "meses") {
             // Adicionar meses à data inicial
-            $interval = new DateInterval('P' . $action_duration . 'M');
-            $initialDateObj->add($interval);
+            $action_expiration = date('Y-m-d H:i:s', strtotime("+$action_duration months", strtotime($initial_date)));
         } else if ($action_duration_type == "dias") {
             // Adicionar dias à data inicial
-            $interval = new DateInterval('P' . $action_duration . 'D');
-            $initialDateObj->add($interval);
+            $action_expiration = date('Y-m-d H:i:s', strtotime("+$action_duration days", strtotime($initial_date)));
+        } else {
+            // Tipo de duração desconhecido
+            throw new Exception("Unknown duration type");
         }
-    
-        // Obter a data de expiração no formato desejado (por exemplo, 'Y-m-d')
-        $action_expiration = $initialDateObj->format('Y-m-d');
     
         return $action_expiration;
     }
