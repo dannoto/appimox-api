@@ -781,7 +781,7 @@ class Partner extends REST_Controller
         $initial_date = $partner_data->partner_date;
     
         // Duração da ação e tipo de duração (meses ou dias)
-        $action_duration = $action_data->partnet_duration;
+        $action_duration = $action_data->partner_duration;
         $action_duration_type = $action_data->partnet_duration_type;
     
         // Calcular a data de expiração com base na duração
