@@ -773,7 +773,6 @@ class Partner extends REST_Controller
 
 
     function calculatePartnerExpiration($action_id, $partner_id) {
-
         // Obtenha os dados da ação e do parceiro
         $action_data = $this->partner_model->get_partner_action($action_id);
         $partner_data = $this->partner_model->get_partner($partner_id);
@@ -781,13 +780,18 @@ class Partner extends REST_Controller
         // Data inicial do parceiro
         $initial_date = $partner_data->partner_date;
     
+        // Verifique se a data inicial está no formato correto
+        if (!DateTime::createFromFormat('Y-m-d', $initial_date)) {
+            throw new Exception("Unknown or bad format (PM)");
+        }
+    
+        // Converta a data inicial para um objeto DateTime
+        $initialDateObj = new DateTime($initial_date);
+    
         // Duração da ação e tipo de duração (meses ou dias)
         $action_duration = $action_data->partnet_duration;
         $action_duration_type = $action_data->partnet_duration_type;
     
-        // Converter a data inicial para um objeto DateTime
-        $initialDateObj = new DateTime($initial_date);
-        
         // Calcular a data de expiração com base na duração
         if ($action_duration_type == "meses") {
             // Adicionar meses à data inicial
@@ -800,9 +804,10 @@ class Partner extends REST_Controller
         }
     
         // Obter a data de expiração no formato desejado (por exemplo, 'Y-m-d')
-        $action_expiration = $initialDateObj->format('Y-m-d H:i:s');
+        $action_expiration = $initialDateObj->format('Y-m-d');
     
         return $action_expiration;
     }
+    
     
 }
