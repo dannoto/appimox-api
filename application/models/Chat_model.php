@@ -89,6 +89,8 @@ class Chat_model extends CI_Model
         // Obter todos os chats do corretor que não foram deletados
         $this->db->where('chat_user_broker', $broker_id);
         $this->db->where('is_deleted', 0);
+        $this->db->where('chat_type', 1);
+
         $this->db->where('broker_is_deleted', 0);
 
         // Se uma consulta de pesquisa for fornecida, buscar o ID do cliente pelo nome
@@ -129,6 +131,8 @@ class Chat_model extends CI_Model
         // Obter todos os chats do corretor que não foram deletados
         $this->db->where('chat_user_client', $client_id);
         $this->db->where('is_deleted', 0);
+        $this->db->where('chat_type', 1);
+
         $this->db->where('client_is_deleted', 0);
 
         // Se uma consulta de pesquisa for fornecida, buscar o ID do cliente pelo nome
@@ -170,6 +174,8 @@ class Chat_model extends CI_Model
         // Obter todos os chats do corretor que não foram deletados
         $this->db->where('chat_user_broker', $broker_id);
         $this->db->where('is_deleted', 0);
+        $this->db->where('chat_type', 1);
+
         $this->db->where('broker_is_deleted', 0);
 
         // Se uma consulta de pesquisa for fornecida, buscar o ID do cliente pelo nome
