@@ -231,28 +231,20 @@ class Rating extends REST_Controller
             if ($rating_id) {
 
 
-                if ($this->partner_model->check_able_to_rating($data['rating_partner_id'])) {
-
                     $final['status'] = true;
                     $final['message'] = 'Avaliação encontrada com sucesso!';
                     $final['note'] = 'Avaliação encontrada com sucesso!';
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
-                } else {
-
-
-                    $final['status'] = false;
-                    $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
-                    $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
-
-                    // user creation failed, this should never happen
-                    $this->response($final, REST_Controller::HTTP_OK);
-                }
+            
 
             } else {
 
-                if ($this->partner_model->check_able_to_rating($data['rating_partner_id'])) {
+                $check_able = $this->partner_model->check_able_to_rating($data['rating_partner_id']);
+
+
+                if (strlen($check_able['partner_expiration']) == 0) {
 
                     $final['status'] = true;
                     $final['message'] = 'Avaliação encontrada com sucesso!';
@@ -260,6 +252,7 @@ class Rating extends REST_Controller
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
+
                 } else {
 
 
@@ -270,6 +263,9 @@ class Rating extends REST_Controller
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
+
+
+               
             }
         }
     }
