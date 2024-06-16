@@ -1150,9 +1150,9 @@ class Propertys extends REST_Controller
                         }
 
                         // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
-                        usort($brokers_data, function ($a, $b) {
-                            return $b->match_percentage - $a->match_percentage;
-                        });
+                        // usort($brokers_data, function ($a, $b) {
+                        //     return $b->match_percentage - $a->match_percentage;
+                        // });
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
