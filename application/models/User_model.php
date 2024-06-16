@@ -126,9 +126,9 @@ class User_model extends CI_Model
 	// Preferences
 
 	public function get_user_preferences($user_id) {
-		
+
 		$this->db->where('user_id', $user_id);
-		return $this->db->insert('user_preferences')->result();
+		return $this->db->get('user_preferences')->result();
 
 	}
 
