@@ -168,7 +168,7 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
 
 
-        
+
         if ($this->form_validation->run() == false) {
 
             $final['status'] = false;
@@ -196,7 +196,7 @@ class Propertys extends REST_Controller
                     $data['property_disponibility'] = $this->input->post('property_disponibility');
                     $data['property_exclusive'] = $this->input->post('property_exclusive');
 
-                    
+
                     $data['property_age'] = $this->input->post('property_age');
 
 
@@ -216,13 +216,13 @@ class Propertys extends REST_Controller
                     $data['property_cidade'] = $this->input->post('property_cidade');
                     $data['property_estado'] = $this->input->post('property_estado');
 
-                    if (strlen( $this->input->post('property_numero')) > 0) {
+                    if (strlen($this->input->post('property_numero')) > 0) {
                         $p_numero = ', nº ' . $this->input->post('property_numero');
                     }
 
 
 
-                    $address_comp = $data['property_logradouro'] ."". $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] . "" . $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     // localização
@@ -257,12 +257,12 @@ class Propertys extends REST_Controller
                     if ($porperty_id) {
 
 
-    
-                        if (strlen( $this->input->post('property_numero')) > 0) {
-                            $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
-                        }              
 
-                        $address_comp = $data['property_logradouro'] ."". $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                        if (strlen($this->input->post('property_numero')) > 0) {
+                            $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
+                        }
+
+                        $address_comp = $data['property_logradouro'] . "" . $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                         // Adding Location
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
                         $data_location['property_longitude'] = $this->input->post('location_longitude');
@@ -355,7 +355,7 @@ class Propertys extends REST_Controller
 
         $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
 
-        
+
 
         if ($this->form_validation->run() == false) {
 
@@ -392,11 +392,11 @@ class Propertys extends REST_Controller
 
                     $data['property_bathroom'] = $this->input->post('property_bathroom');
                     $data['property_places'] = $this->input->post('property_places');
-                    
+
                     $data['property_age'] = $this->input->post('property_age');
 
                     // $data['property_location_id'] = $this->input->post('property_location_id'); //*
-                    
+
                     // localizaçao
                     $data['property_logradouro'] = $this->input->post('property_logradouro');
                     $data['property_bairro'] = $this->input->post('property_bairro');
@@ -406,11 +406,11 @@ class Propertys extends REST_Controller
                     $data['property_estado'] = $this->input->post('property_estado');
                     // localização
 
-                    if (strlen( $this->input->post('property_numero')) > 0) {
+                    if (strlen($this->input->post('property_numero')) > 0) {
                         $p_numero = ', nº ' . $this->input->post('property_numero');
                     }
 
-                    $address_comp = $data['property_logradouro'] ."". $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                    $address_comp = $data['property_logradouro'] . "" . $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     $data['is_deleted'] = 0;
@@ -439,11 +439,11 @@ class Propertys extends REST_Controller
                     if ($this->broker_model->update_broker_property($property_id, $data)) {
 
                         // Adding Location
-                        if (strlen( $this->input->post('property_numero')) > 0) {
+                        if (strlen($this->input->post('property_numero')) > 0) {
                             $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
                         }
 
-                        $address_comp = $data['property_logradouro'] ."". $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
+                        $address_comp = $data['property_logradouro'] . "" . $data['property_numero'] . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
 
 
                         $data_location['property_latitude'] = $this->input->post('location_latitude');
@@ -576,8 +576,6 @@ class Propertys extends REST_Controller
         }
     }
 
-    
-
     public function delete_property_image_post()
     {
 
@@ -606,8 +604,8 @@ class Propertys extends REST_Controller
                     $property_id = $this->input->post('property_id');
                     $data['property_user_id'] = $this->input->post('property_user_id');
                     $data['imagem_url'] = $this->input->post('imagem_url');
-               
-                   
+
+
 
                     if ($this->broker_model->delete_property_image($property_id, $data['property_user_id'], $data['imagem_url'])) {
 
@@ -617,7 +615,6 @@ class Propertys extends REST_Controller
                         $final['note'] = 'add_broker_property_images';
 
                         $this->response($final, REST_Controller::HTTP_OK);
-
                     } else {
 
                         $final['status'] = false;
@@ -643,7 +640,6 @@ class Propertys extends REST_Controller
             }
         }
     }
-
 
     public function get_broker_property_data_post()
     {
@@ -774,7 +770,6 @@ class Propertys extends REST_Controller
         }
     }
 
-
     // ===
     public function get_broker_property_home_post()
     {
@@ -840,8 +835,6 @@ class Propertys extends REST_Controller
         }
     }
 
-
-    // 
     // search proprtyes 
 
     public function get_propertys_by_range_post()
@@ -890,11 +883,10 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     } else {
 
                         $final['status'] = false;
-                      
+
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
@@ -1004,50 +996,136 @@ class Propertys extends REST_Controller
 
     // ====================
 
+    // public function get_broker_by_range_post()
+    // {
+
+    //     $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+    //     if ($this->form_validation->run() == false) {
+
+    //         $final['status'] = false;
+    //         $final['message'] = validation_errors();
+    //         $final['note'] = 'Erro no formulárioi.';
+
+    //         $this->response($final, REST_Controller::HTTP_OK);
+    //     } else {
+
+    //         $headers = $this->input->request_headers();
+
+    //         if (isset($headers['Authorization'])) {
+
+    //             $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+    //             if ($decodedToken['status']) {
+
+    //                 $markers_data = str_replace('"', '', $this->input->post('markers_data'));
+    //                 $markers_data = str_replace(']', '', $markers_data);
+    //                 $markers_data = str_replace('[', '', $markers_data);
+
+    //                 $markers_data = explode(",", $markers_data);
+
+    //                 $brokers_data = array();
+
+
+    //                 if (count($markers_data) > 0) {
+
+    //                     foreach ($markers_data as $p) {
+
+    //                         $broker_id =  $this->property_model->get_broker_by_location_id($p);
+    //                         $broker_data = $this->property_model->get_broker($broker_id);
+
+
+    //                         if ($broker_id) {
+
+    //                             if ($broker_data) {
+
+
+    //                                 $id_exists = false;
+    //                                 foreach ($brokers_data as $existing_broker) {
+    //                                     if ($existing_broker->id == $broker_data->id) {
+    //                                         $id_exists = true;
+    //                                         break;
+    //                                     }
+    //                                 }
+
+    //                                 // Se o ID não existe, adiciona o corretor a brokers_data
+    //                                 if (!$id_exists) {
+    //                                     $brokers_data[] = $broker_data;
+    //                                 }
+    //                             }
+    //                         }
+
+
+
+    //                         // $brokers_data[] = $broker_data;
+    //                     }
+
+
+    //                     $final['status'] = true;
+    //                     $final['message'] = 'Propriedades encontrados';
+    //                     $final['response'] =  $brokers_data;
+    //                     $final['note'] = 'Erro em $decodedToken["status"]';
+    //                     $this->response($final);
+
+    //                 } else {
+
+    //                     $final['status'] = false;
+    //                     $final['message'] = 'Nenhuma propriedade encontrada';
+    //                     $final['note'] = 'Erro em $decodedToken["status"]';
+    //                     $this->response($final);
+    //                 }
+    //             } else {
+
+    //                 $final['status'] = false;
+    //                 $final['message'] = 'Sua sessão expiroux.';
+    //                 $final['note'] = 'Erro em $decodedToken["status"]';
+    //                 $this->response($decodedToken);
+    //             }
+    //         } else {
+
+    //             $final['status'] = false;
+    //             $final['message'] = 'Falha na autenticaçãoy.';
+    //             $final['note'] = 'Erro em validateToken()';
+
+    //             $this->response($final, REST_Controller::HTTP_OK);
+    //         }
+    //     }
+    // }
+
     public function get_broker_by_range_post()
     {
-
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
         if ($this->form_validation->run() == false) {
-
             $final['status'] = false;
             $final['message'] = validation_errors();
-            $final['note'] = 'Erro no formulárioi.';
+            $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
-
             $headers = $this->input->request_headers();
 
             if (isset($headers['Authorization'])) {
-
                 $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
                 if ($decodedToken['status']) {
-
                     $markers_data = str_replace('"', '', $this->input->post('markers_data'));
                     $markers_data = str_replace(']', '', $markers_data);
                     $markers_data = str_replace('[', '', $markers_data);
-
                     $markers_data = explode(",", $markers_data);
 
                     $brokers_data = array();
 
-
                     if (count($markers_data) > 0) {
+                        $user_id = $this->input->post('user_id');
+                        $user_preferences = $this->user_model->get_user_preferences($user_id);
 
                         foreach ($markers_data as $p) {
-
-                            $broker_id =  $this->property_model->get_broker_by_location_id($p);
+                            $broker_id = $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
-
                             if ($broker_id) {
-
                                 if ($broker_data) {
-
-
                                     $id_exists = false;
                                     foreach ($brokers_data as $existing_broker) {
                                         if ($existing_broker->id == $broker_data->id) {
@@ -1056,48 +1134,59 @@ class Propertys extends REST_Controller
                                         }
                                     }
 
-                                    // Se o ID não existe, adiciona o corretor a brokers_data
                                     if (!$id_exists) {
+                                        // Obter preferências do corretor
+                                        $broker_preferences = $this->user_model->get_user_preferences($broker_id);
+
+                                        // Calcular a porcentagem de correspondência
+                                        $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
+                                        $broker_data->match_percentage = $match_percentage;
+                                        $broker_data->recommended = false; // Definir como false inicialmente
                                         $brokers_data[] = $broker_data;
                                     }
                                 }
                             }
-
-
-
-                            // $brokers_data[] = $broker_data;
                         }
 
+                        // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
+                        usort($brokers_data, function ($a, $b) {
+                            return $b->match_percentage - $a->match_percentage;
+                        });
+
+                        // Definir os três melhores corretores como recomendados
+                        for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
+                            $brokers_data[$i]->recommended = true;
+                        }
 
                         $final['status'] = true;
-                        $final['message'] = 'Propriedades encontrados';
+                        $final['message'] = 'Propriedades encontradas';
                         $final['response'] =  $brokers_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     } else {
-
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
                 } else {
-
                     $final['status'] = false;
-                    $final['message'] = 'Sua sessão expiroux.';
+                    $final['message'] = 'Sua sessão expirou.';
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
             } else {
-
                 $final['status'] = false;
-                $final['message'] = 'Falha na autenticaçãoy.';
+                $final['message'] = 'Falha na autenticação.';
                 $final['note'] = 'Erro em validateToken()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
     }
+
+
+
 
     public function get_broker_by_range_filter_post()
     {
@@ -1112,7 +1201,7 @@ class Propertys extends REST_Controller
 
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
-            
+
 
             $headers = $this->input->request_headers();
 
@@ -1298,5 +1387,23 @@ class Propertys extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
+    }
+
+
+    private function calculate_match_percentage($user_preferences, $broker_preferences)
+    {
+        if (empty($user_preferences) || empty($broker_preferences)) {
+            return 0;
+        }
+
+        $matches = 0;
+        foreach ($user_preferences as $preference) {
+            if (in_array($preference, $broker_preferences)) {
+                $matches++;
+            }
+        }
+
+        $total_preferences = count($user_preferences);
+        return ($total_preferences > 0) ? ($matches / $total_preferences) * 100 : 0;
     }
 }
