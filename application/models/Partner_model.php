@@ -27,7 +27,7 @@ class Partner_model extends CI_Model
     public function check_able_to_rating($partner_id)
     {
         $this->db->where('partner_id', $partner_id);
-        $this->db->where('partner_duration !=', null);
+        $this->db->where('partner_expiration !=', null);
         return $this->db->get('user_partners')->row();
     }
 
