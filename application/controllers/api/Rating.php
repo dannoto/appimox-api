@@ -240,8 +240,8 @@ class Rating extends REST_Controller
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Erro encontyrar avaliação. Tente novamente.';
-                $final['note'] = 'Erro encontyrar avaliação. Tente novamente.';
+                $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
+                $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
