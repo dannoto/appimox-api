@@ -628,7 +628,7 @@ class Partner extends REST_Controller
                 $partner_data['partner_expiration'] = $this->calculatePartnerExpiration($action_id, $partner_id);
 
 
-                // $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
+                $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
 
                 $final['status'] = true;
                 $final['response'] = $partner_data;
