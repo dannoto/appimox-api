@@ -276,8 +276,6 @@ class Partner extends REST_Controller
                 $property_data['is_deleted'] = 0;
 
                 $this->partner_model->add_partner_property($property_data);
-
-
             }
 
             $final['status'] = true;
@@ -285,8 +283,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Imóveis adicionados com sucesso.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
-
         }
     }
 
@@ -319,7 +315,7 @@ class Partner extends REST_Controller
 
 
             $actions_data = array();
-            foreach ( $this->partner_model->get_partner_actions($partner_id) as $p) {
+            foreach ($this->partner_model->get_partner_actions($partner_id) as $p) {
                 $actions_data[] = $p;
             }
 
@@ -583,6 +579,64 @@ class Partner extends REST_Controller
         }
     }
 
+    public function add_partner_finish_action_post()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'partner_id', 'trim|required');
+        $this->form_validation->set_rules('partner_user', 'partner_user', 'trim|required');
+
+        $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
+        $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
+        $this->form_validation->set_rules('partner_porcentage', 'partner_porcentage', 'trim|required');
+        $this->form_validation->set_rules('partner_duration', 'partner_duration', 'trim|required');
+        $this->form_validation->set_rules('partnet_duration_type', 'partnet_duration_type', 'trim|required');
+        $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
+        // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+            
+        } else {
+
+            $data['partner_id'] = $this->input->post('partner_id');
+            $data['partner_offer'] = $this->input->post('partner_offer');
+            $data['partner_user'] = $this->input->post('partner_user');
+            $data['partner_receiver']  = $this->input->post('partner_receiver');
+            $data['partner_porcentage'] = "";
+            $data['partner_duration']    = "";
+            $data['partnet_duration_type']    = "";
+            $data['partner_created']   = date('Y-m-d H:i:s');
+            $data['partner_status']    = $this->input->post('partner_status');
+            $data['partner_action_type']  = 2;
+            $data['is_deleted']    = 0;
+
+            $partner_data = $this->partner_model->add_partner_action($data);
+
+            if ($partner_data) {
+
+                $final['status'] = true;
+                $final['response'] = $partner_data;
+                $final['message'] = 'Ação criada com sucesso.';
+                $final['note'] = 'Ação criada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar ação';
+                $final['note'] = 'Erro ao adicionar ação';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
 
 
     // aceitar / recusar / partner
@@ -616,11 +670,16 @@ class Partner extends REST_Controller
             // 2 - ativa
             // 3 -finalizada
 
+            // action_type
+            // 0 - proposta
+            // 1 - contra proposta
+            // 2 - pedido de finalização
+
             $partner_action_data['partner_status'] = 2;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
 
-            
+
             if ($partner_action_data) {
 
                 $partner_data['partner_status'] = 2;
@@ -636,7 +695,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria aceita com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -661,7 +719,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -683,7 +740,7 @@ class Partner extends REST_Controller
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
 
-            
+
             if ($partner_action_data) {
 
                 $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
@@ -694,7 +751,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria aceita com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -706,6 +762,62 @@ class Partner extends REST_Controller
         }
     }
 
+    public function finish_action_post()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('action_id', 'ID da Ação', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+            $action_id = $this->input->post('action_id');
+
+
+            // partner action status
+            // 1 - pendente
+            // 2 - recusada
+            // 3 - aceita
+
+            // partner 
+            // 1 - negociação
+            // 2 - ativa
+            // 3 -finalizada
+
+            $partner_action_data['partner_status'] = 1;
+            $partner_data['partner_status'] = 3;
+
+            $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
+
+
+            if ($partner_action_data) {
+
+                $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
+
+                $final['status'] = true;
+                $final['response'] =  $response;
+                $final['message'] = 'Parceria aceita com sucesso.';
+                $final['note'] = 'Parceria aceita com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao aceitar Parceria';
+                $final['note'] = 'Erro ao aceitar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+ 
     public function contra_action_post()
     {
 
@@ -734,7 +846,7 @@ class Partner extends REST_Controller
 
             // antiga açao rejeitada
             $partner_action_data['partner_status'] = 1;
-            $partner_action_data = $this->partner_model->update_partner_action( $this->input->post('action_id'), $partner_action_data);
+            $partner_action_data = $this->partner_model->update_partner_action($this->input->post('action_id'), $partner_action_data);
 
 
             $data['partner_id'] = $this->input->post('partner_id');
@@ -772,18 +884,19 @@ class Partner extends REST_Controller
     }
 
 
-    function calculatePartnerExpiration($action_id, $partner_id) {
+    function calculatePartnerExpiration($action_id, $partner_id)
+    {
         // Obtenha os dados da ação e do parceiro
         $action_data = $this->partner_model->get_partner_action($action_id);
         $partner_data = $this->partner_model->get_partner($partner_id);
-    
+
         // Data inicial do parceiro
         $initial_date = $partner_data->partner_date;
-    
+
         // Duração da ação e tipo de duração (meses ou dias)
         $action_duration = $action_data->partner_duration;
         $action_duration_type = $action_data->partnet_duration_type;
-    
+
         // Calcular a data de expiração com base na duração
         if ($action_duration_type == "meses") {
             // Adicionar meses à data inicial
@@ -795,9 +908,7 @@ class Partner extends REST_Controller
             // Tipo de duração desconhecido
             throw new Exception("Unknown duration type");
         }
-    
+
         return $action_expiration;
     }
-    
-    
 }
