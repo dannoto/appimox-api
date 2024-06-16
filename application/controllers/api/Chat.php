@@ -104,7 +104,114 @@ class Chat extends REST_Controller
     }
 
 
+    public function add_chat_partner_post()
+    {
 
+        $this->form_validation->set_rules('chat_user_client', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('chat_user_broker', 'ID da Imóvel', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $broker_data =   $this->user_model->get_user($this->input->post('chat_user_broker'));
+            $client_data =   $this->user_model->get_user($this->input->post('chat_user_client'));
+
+            if ($broker_data->user_type == "broker" && $client_data->user_type == "broker") {
+                $chat_type = 2;
+            } else {
+                $chat_type = 1;
+            }
+
+            $chat_datax['chat_user_broker']  = $this->input->post('chat_user_broker');
+            $chat_datax['chat_user_client']  = $this->input->post('chat_user_client');
+            $chat_datax['chat_type']  = $chat_type;
+            $chat_datax['chat_date'] = date('Y-m-d H:i:s');
+            $chat_datax['is_deleted'] = 0;
+
+            // $check_chat = $this->chat_model->check_chat_partner($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
+
+
+            if ($this->chat_model->check_chat_partner($chat_datax['chat_user_broker'], $chat_datax['chat_user_client'])) {
+
+                $check_chat = $this->chat_model->check_chat_partner($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
+
+                $response = array();
+
+                $response['chat_data'] = $check_chat;
+                $response['client_data'] = $client_data;
+                $response['broker_data'] = $broker_data;
+
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Já existe o chat criado.';
+                $final['note'] = 'Já existe o chat criado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else if ($this->chat_model->check_chat_partner($chat_datax['chat_user_client'], $chat_datax['chat_user_broker'])) {
+
+                $check_chat = $this->chat_model->check_chat_partner($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
+
+
+                $response = array();
+
+                $response['chat_data'] = $check_chat;
+                $response['client_data'] = $client_data;
+                $response['broker_data'] = $broker_data;
+
+
+                $final['status'] = true;
+                $final['response'] = $response;
+                $final['message'] = 'Já existe o chat criado.';
+                $final['note'] = 'Já existe o chat criado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $chat_id = $this->chat_model->add_chat($chat_datax);
+
+                if ($chat_id) {
+
+
+                    $response = array();
+
+                    $response['chat_data'] = $this->chat_model->get_chat($chat_id);
+                    $response['broker_data'] = $broker_data;
+                    $response['client_data'] = $client_data;
+
+
+                    $final['status'] = true;
+                    $final['response'] = $response;
+                    $final['message'] = 'Chat criado com sucesso.';
+                    $final['note'] = 'Chat criado com sucesso.';
+
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Erro ao adicionar chat.';
+                    $final['note'] = 'Erro ao adicionar chat.';
+
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
+                }
+
+            }
+
+          
+        }
+    }
 
     public function add_chat_message_post()
     {

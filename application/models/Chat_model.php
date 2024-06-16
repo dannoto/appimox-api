@@ -20,6 +20,16 @@ class Chat_model extends CI_Model
         return $this->db->get('user_chat')->row();
     }
 
+    public function check_chat_partner($chat_user_broker, $chat_user_client)
+    {
+
+        $this->db->where('chat_user_broker', $chat_user_broker);
+        $this->db->where('chat_user_client', $chat_user_client);
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get('user_chat')->row();
+    }
+
     public function add_chat($chat_data)
     {
         $this->db->insert('user_chat', $chat_data);
