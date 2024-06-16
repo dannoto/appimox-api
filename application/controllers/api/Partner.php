@@ -588,7 +588,7 @@ class Partner extends REST_Controller
         $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
         $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
        
-        
+
         $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
         // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
 
@@ -781,16 +781,16 @@ class Partner extends REST_Controller
 
 
             // partner action status
-            // 1 - pendente
-            // 2 - recusada
-            // 3 - aceita
+            // 0 - pendente
+            // 1 - recusada
+            // 2 - aceita
 
             // partner 
             // 1 - negociação
             // 2 - ativa
             // 3 -finalizada
 
-            $partner_action_data['partner_status'] = 1;
+            $partner_action_data['partner_status'] = 3;
             $partner_data['partner_status'] = 3;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
