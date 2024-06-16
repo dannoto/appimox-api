@@ -9,6 +9,7 @@ class Partner extends REST_Controller
 
     public function __construct()
     {
+        
 
         parent::__construct();
         $this->load->library('Authorization_Token');
@@ -21,6 +22,7 @@ class Partner extends REST_Controller
         $this->load->model('schedule_model');
         $this->load->model('partner_model');
     }
+
 
     public function add_partner_property_post()
     {

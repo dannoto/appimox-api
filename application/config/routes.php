@@ -184,10 +184,15 @@ $route['get_estados_client'] = 'api/User/get_estados_client';
 
 // Cidades
 
-
 // avaliacoes
 $route['get_ratings'] = 'api/Rating/get_ratings';
 $route['add_rating'] = 'api/Rating/add_rating';
+
+
+$route['check_rating_partner'] = 'api/Rating/check_rating_partner';
+$route['add_rating_partner'] = 'api/Rating/add_rating_partner';
+
+
 // avaliacoes
 
 // seguidores

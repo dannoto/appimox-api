@@ -32,10 +32,25 @@ class Rating_model extends CI_Model
         $this->db->where('rating_property_id', $rating_property_id);
         $this->db->where('rating_owner_id', $rating_owner_id);
         $this->db->where('rating_rated_id', $rating_rated_id);
+        $this->db->where('rating_type', 'schedule');
+
         $this->db->where('is_deleted', 0);
 
         return $this->db->get('user_ratings')->row();
     }
+
+    public function check_rating_partner($rating_partner_id, $rating_owner_id, $rating_rated_id)
+    {
+
+        $this->db->where('rating_partner_id', $rating_partner_id);
+        $this->db->where('rating_owner_id', $rating_owner_id);
+        $this->db->where('rating_rated_id', $rating_rated_id);
+        $this->db->where('rating_type', 'partner');
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get('user_ratings')->row();
+    }
+
 
 
     public function add_rating($data)

@@ -24,7 +24,7 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
-    
+
 
 
     public function get_property($property_id)
