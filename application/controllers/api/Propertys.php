@@ -880,12 +880,12 @@ class Propertys extends REST_Controller
                             // =========== ÓTIMO ============ 
                             $user_id = $this->input->post('user_id');
                             $user_preferences = $this->user_model->get_user_preferences($user_id);
-                            $broker_id = $this->property_model->get_broker_by_location_id($property_data->property_user_id);
+                            // $broker_id = $this->property_model->get_broker_by_location_id($property_data->property_user_id);
                             // $broker_data = $this->property_model->get_broker($broker_id);
 
-                            if ($broker_id) {
+                            if ($user_preferences) {
 
-                                $broker_preferences = $this->user_model->get_user_preferences($broker_id);
+                                $broker_preferences = $this->user_model->get_user_preferences($user_id);
 
                                 $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
                                 $property_data->match_percentage = $match_percentage;
