@@ -244,7 +244,7 @@ class Rating extends REST_Controller
                 $check_able = $this->partner_model->check_able_to_rating($data['rating_partner_id']);
 
 
-                if (strlen($check_able['partner_expiration']) == 0) {
+                if (strlen($check_able->partner_expiration) == 0) {
 
                     $final['status'] = true;
                     $final['message'] = 'Avaliação encontrada com sucesso!';
