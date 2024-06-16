@@ -885,7 +885,7 @@ class Propertys extends REST_Controller
 
                             if ($user_preferences) {
 
-                                $broker_preferences = $this->user_model->get_user_preferences($user_id);
+                                $broker_preferences = $this->user_model->get_user_preferences($property_data->property_user_id);
 
                                 $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
                                 $property_data->match_percentage = $match_percentage;
@@ -998,7 +998,7 @@ class Propertys extends REST_Controller
 
                             if ($user_preferences) {
 
-                                $broker_preferences = $this->user_model->get_user_preferences($user_id);
+                                $broker_preferences = $this->user_model->get_user_preferences($property_data->property_user_id);
 
                                 $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
                                 $property_data->match_percentage = $match_percentage;
