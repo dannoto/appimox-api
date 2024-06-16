@@ -587,9 +587,8 @@ class Partner extends REST_Controller
 
         $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
         $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
-        $this->form_validation->set_rules('partner_porcentage', 'partner_porcentage', 'trim|required');
-        $this->form_validation->set_rules('partner_duration', 'partner_duration', 'trim|required');
-        $this->form_validation->set_rules('partnet_duration_type', 'partnet_duration_type', 'trim|required');
+       
+        
         $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
         // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
 
