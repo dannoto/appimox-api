@@ -1142,6 +1142,8 @@ class Propertys extends REST_Controller
                                         $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
                                         $broker_data->match_percentage = $match_percentage;
                                         $broker_data->recommended = false; // Definir como false inicialmente
+                                        $broker_data->porcentage = $match_percentage; // Definir como false inicialmente
+
                                         $brokers_data[] = $broker_data;
                                     }
                                 }
