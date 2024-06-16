@@ -21,8 +21,6 @@ class Rating extends REST_Controller
         $this->load->model('schedule_model');
 
         $this->load->model('partner_model');
-
-        
     }
 
     public function add_rating_post()
@@ -111,8 +109,8 @@ class Rating extends REST_Controller
         }
     }
 
-    
-   
+
+
     function update_main_user_rating($rating_rated_id)
     {
 
@@ -195,7 +193,7 @@ class Rating extends REST_Controller
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Nenhuma avaliação encontrada.'.$user_id;
+                $final['message'] = 'Nenhuma avaliação encontrada.' . $user_id;
                 $final['note'] = 'Nenhuma avaliação encontrada.';
 
                 // user creation failed, this should never happen
@@ -204,9 +202,10 @@ class Rating extends REST_Controller
         }
     }
 
-    
 
-    public function check_rating_partner_post() {
+
+    public function check_rating_partner_post()
+    {
 
         $this->form_validation->set_rules('rating_partner_id', 'ID da parceria', 'trim|required');
         $this->form_validation->set_rules('rating_owner_id', 'ID do avaliador', 'trim|required');
@@ -220,51 +219,45 @@ class Rating extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             // set variables from the form
             $data['rating_partner_id'] = $this->input->post('rating_partner_id');
             $data['rating_owner_id']    = $this->input->post('rating_owner_id');
             $data['rating_rated_id'] = $this->input->post('rating_rated_id');
-      
-            $rating_id = $this->rating_model->check_rating_partner( $data['rating_partner_id'], $data['rating_owner_id'], $data['rating_rated_id']);
+
+            $rating_id = $this->rating_model->check_rating_partner($data['rating_partner_id'], $data['rating_owner_id'], $data['rating_rated_id']);
 
             if ($rating_id) {
 
-               
 
-                        
-                    $final['status'] = false;
-                    $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
-                    $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
 
-                    // user creation failed, this should never happen
-                    $this->response($final, REST_Controller::HTTP_OK);
+                $final['status'] = true;
+                $final['message'] = 'Avaliação encontrada com sucesso!';
+                $final['note'] = 'Avaliação encontrada com sucesso!';
 
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
                 
-
             } else {
 
                 if ($this->partner_model->check_able_to_rating($data['rating_partner_id'])) {
-                    
+
                     $final['status'] = true;
                     $final['message'] = 'Avaliação encontrada com sucesso!';
                     $final['note'] = 'Avaliação encontrada com sucesso!';
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
-
                 } else {
 
-                        
+
                     $final['status'] = false;
                     $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
                     $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
-
                 }
             }
         }
@@ -317,14 +310,13 @@ class Rating extends REST_Controller
             $rating_id = $this->rating_model->add_rating($data);
 
             if ($rating_id) {
-              
+
                 $final['status'] = true;
                 $final['message'] = 'Avaliação enviada com sucesso!';
                 $final['note'] = 'Avaliação enviada com sucesso!';
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -336,5 +328,4 @@ class Rating extends REST_Controller
             }
         }
     }
-
 }
