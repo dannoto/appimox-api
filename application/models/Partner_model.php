@@ -24,7 +24,12 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
-
+    public function check_able_to_rating($partner_id)
+    {
+        $this->db->where('partner_id', $partner_id);
+        $this->db->where('partner_duration !=', null);
+        return $this->db->get('user_partners')->row();
+    }
 
 
     public function get_property($property_id)
@@ -34,7 +39,7 @@ class Partner_model extends CI_Model
         return $this->db->get('propertys')->row();
     }
 
-    
+
     public function get_partner_action($action_id)
     {
         $this->db->where('id', $action_id);
@@ -95,7 +100,6 @@ class Partner_model extends CI_Model
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
 
-        return $query->result_array(); 
-
+        return $query->result_array();
     }
 }
