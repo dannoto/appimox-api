@@ -1018,7 +1018,7 @@ class Propertys extends REST_Controller
                             }
                         }
 
-                        Ordenar corretores pela porcentagem de correspondência em ordem decrescente
+                        // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
                         usort($propertys_data, function ($a, $b) {
                             return $b->match_percentage - $a->match_percentage;
                         });
