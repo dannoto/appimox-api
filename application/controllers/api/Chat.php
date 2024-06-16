@@ -158,7 +158,7 @@ class Chat extends REST_Controller
 
             } else if ($this->chat_model->check_chat_partner($chat_datax['chat_user_client'], $chat_datax['chat_user_broker'])) {
 
-                $check_chat = $this->chat_model->check_chat_partner($chat_datax['chat_user_broker'], $chat_datax['chat_user_client']);
+                $check_chat = $this->chat_model->check_chat_partner($chat_datax['chat_user_client'], $chat_datax['chat_user_broker']);
 
 
                 $response = array();
