@@ -1193,69 +1193,37 @@ class Propertys extends REST_Controller
     {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-
+        
         if ($this->form_validation->run() == false) {
-
             $final['status'] = false;
             $final['message'] = validation_errors();
-            $final['note'] = 'Erro no formulárioi.';
+            $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
-
-
             $headers = $this->input->request_headers();
 
             if (isset($headers['Authorization'])) {
-
                 $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
                 if ($decodedToken['status']) {
-
                     $markers_data = str_replace('"', '', $this->input->post('markers_data'));
                     $markers_data = str_replace(']', '', $markers_data);
                     $markers_data = str_replace('[', '', $markers_data);
-
                     $markers_data = explode(",", $markers_data);
 
                     $brokers_data = array();
 
-                    // filters
-                    $f_data['selected_preferences'] =  htmlspecialchars($this->input->post('selected_preferences'));
-
-                    // filters
-
                     if (count($markers_data) > 0) {
-
-                        // foreach ($markers_data as $p) {
-
-                        //     $broker_id =  $this->property_model->get_broker_by_location_id($p);
-                        //     $broker_data = $this->property_model->filter_broker_by_preferences($broker_id,  $f_data['selected_preferences']);
-
-
-                        //     $id_exists = false;
-                        //     foreach ($brokers_data as $existing_broker) {
-                        //         if ($existing_broker->id == $broker_data->id) {
-                        //             $id_exists = true;
-                        //             break;
-                        //         }
-                        //     }
-
-                        //     // Se o ID não existe, adiciona o corretor a brokers_data
-                        //     if (!$id_exists) {
-                        //         $brokers_data[] = $broker_data;
-                        //     }
-                        // }
+                        $user_id = $this->input->post('user_id');
+                        $user_preferences = $this->user_model->get_user_preferences($user_id);
 
                         foreach ($markers_data as $p) {
-
-                            $broker_id =  $this->property_model->get_broker_by_location_id($p);
+                            $broker_id = $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
                             if ($broker_id) {
-
                                 if ($broker_data) {
-
                                     $id_exists = false;
                                     foreach ($brokers_data as $existing_broker) {
                                         if ($existing_broker->id == $broker_data->id) {
@@ -1264,42 +1232,51 @@ class Propertys extends REST_Controller
                                         }
                                     }
 
-                                    // Se o ID não existe, adiciona o corretor a brokers_data
                                     if (!$id_exists) {
+                                        // Obter preferências do corretor
+                                        $broker_preferences = $this->user_model->get_user_preferences($broker_id);
+
+                                        // Calcular a porcentagem de correspondência
+                                        $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
+                                        $broker_data->match_percentage = $match_percentage;
+                                        $broker_data->recommended = false; // Definir como false inicialmente
+
                                         $brokers_data[] = $broker_data;
                                     }
                                 }
                             }
+                        }
 
+                        // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
+                        usort($brokers_data, function ($a, $b) {
+                            return $b->match_percentage - $a->match_percentage;
+                        });
 
-
-                            // $brokers_data[] = $broker_data;
+                        // Definir os três melhores corretores como recomendados
+                        for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
+                            $brokers_data[$i]->recommended = true;
                         }
 
                         $final['status'] = true;
-                        $final['message'] = 'Propriedades encontrados';
+                        $final['message'] = 'Propriedades encontradas';
                         $final['response'] =  $brokers_data;
-                        $final['como ta chegando'] =  $f_data['selected_preferences'];
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     } else {
-
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
                 } else {
-
                     $final['status'] = false;
-                    $final['message'] = 'Sua sessão expiroux.';
+                    $final['message'] = 'Sua sessão expirou.';
                     $final['note'] = 'Erro em $decodedToken["status"]';
                     $this->response($decodedToken);
                 }
             } else {
-
                 $final['status'] = false;
-                $final['message'] = 'Falha na autenticaçãoy.';
+                $final['message'] = 'Falha na autenticação.';
                 $final['note'] = 'Erro em validateToken()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
