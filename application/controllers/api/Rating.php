@@ -20,6 +20,7 @@ class Rating extends REST_Controller
         $this->load->model('rating_model');
         $this->load->model('schedule_model');
 
+        $this->load->model('partner_model');
 
         
     }
@@ -242,13 +243,13 @@ class Rating extends REST_Controller
 
                 } else {
 
-                    
-                $final['status'] = false;
-                $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
-                $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
+                        
+                    $final['status'] = false;
+                    $final['message'] = 'Erro encontrar avaliação. Tente novamente.';
+                    $final['note'] = 'Erro encontrar avaliação. Tente novamente.';
 
-                // user creation failed, this should never happen
-                $this->response($final, REST_Controller::HTTP_OK);
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
 
                 }
 
