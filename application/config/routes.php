@@ -163,6 +163,7 @@ $route['client_cancel_schedule'] = 'api/Schedule/client_cancel_schedule';
 
 // Chats
 $route['add_chat'] = 'api/Chat/add_chat';
+$route['add_chat_partner'] = 'api/Chat/add_chat_partner';
 
 $route['get_broker_chat'] = 'api/Chat/get_broker_chat';
 $route['search_broker_chat'] = 'api/Chat/search_broker_chat';
