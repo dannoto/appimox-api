@@ -874,8 +874,37 @@ class Propertys extends REST_Controller
 
                             $property_id =  $this->property_model->get_property_by_location_id($p);
                             $property_data = $this->property_model->get_property($property_id);
-                            $propertys_data[] = $property_data;
+
+                            // $propertys_data[] = $property_data;
+
+                            // =========== ÓTIMO ============ 
+                            $user_id = $this->input->post('user_id');
+                            $user_preferences = $this->user_model->get_user_preferences($user_id);
+                            $broker_id = $this->property_model->get_broker_by_location_id($property_data->property_user_id);
+                            // $broker_data = $this->property_model->get_broker($broker_id);
+
+                            if ($broker_id) {
+
+                                $broker_preferences = $this->user_model->get_user_preferences($broker_id);
+
+                                $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
+                                $property_data->match_percentage = $match_percentage;
+                                $property_data->recommended = false;
+
+                                $propertys_data[] = $property_data;
+                            }
                         }
+
+                        // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
+                        usort($propertys_data, function ($a, $b) {
+                            return $b->match_percentage - $a->match_percentage;
+                        });
+
+                        // Definir os três melhores corretores como recomendados
+                        for ($i = 0; $i < min(3, count($propertys_data)); $i++) {
+                            $propertys_data[$i]->recommended = true;
+                        }
+
 
 
                         $final['status'] = true;
@@ -1193,7 +1222,7 @@ class Propertys extends REST_Controller
     {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-        
+
         if ($this->form_validation->run() == false) {
             $final['status'] = false;
             $final['message'] = validation_errors();
