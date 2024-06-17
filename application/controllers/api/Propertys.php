@@ -1383,15 +1383,18 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
         if ($this->form_validation->run() == false) {
+
             $final['status'] = false;
             $final['message'] = validation_errors();
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
             $headers = $this->input->request_headers();
 
             if (isset($headers['Authorization'])) {
+
                 $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
                 if ($decodedToken['status']) {
@@ -1407,6 +1410,7 @@ class Propertys extends REST_Controller
                     $brokers_data = [];
 
                     if (count($markers_data) > 0) {
+
                         $user_id = $this->input->post('user_id');
                         $user_preferences = $this->user_model->get_user_preferences($user_id);
 
@@ -1418,6 +1422,7 @@ class Propertys extends REST_Controller
                             if ($broker_id && $broker_data) {
 
                                 $id_exists = false;
+
                                 foreach ($brokers_data as $existing_broker) {
                                     if ($existing_broker->id == $broker_data->id) {
                                         $id_exists = true;
@@ -1645,43 +1650,43 @@ class Propertys extends REST_Controller
     private function filter_broker_proprietys($bp, $f_data)
     {
 
-        // print_r($bp);
+        print_r($bp);
         // foreach ($broker_proprietys as $b) {
-        $passes_filter = true;
+        // $passes_filter = true;
 
         // Verificar tipo de propriedade
-        if (strlen($f_data['property_type']) > 0) {
-            if ($bp['property_type'] != $f_data['property_type']) {
-                $passes_filter = false;
-            }
-        }
-
-        // Verificar tipo de oferta
-        if (strlen($f_data['property_type_offer']) > 0) {
-            if ($bp['property_type_offer']  != $f_data['property_type_offer']) {
-                $passes_filter = false;
-            }
-        }
-
-        // Verificar preço mínimo
-        if (strlen($f_data['filter_price_min']) > 0) {
-            if ($bp['property_price']  < $f_data['filter_price_min']) {
-                $passes_filter = false;
-            }
-        }
-
-        // Verificar preço máximo
-        if (strlen($f_data['filter_price_max']) > 0) {
-            if ($bp['property_price']  > $f_data['filter_price_max']) {
-                $passes_filter = false;
-            }
-        }
-
-        if ($passes_filter) {
-            return true;
-        }
+        // if (strlen($f_data['property_type']) > 0) {
+        //     if ($bp['property_type'] != $f_data['property_type']) {
+        //         $passes_filter = false;
+        //     }
         // }
 
-        return false;
+        // // Verificar tipo de oferta
+        // if (strlen($f_data['property_type_offer']) > 0) {
+        //     if ($bp['property_type_offer']  != $f_data['property_type_offer']) {
+        //         $passes_filter = false;
+        //     }
+        // }
+
+        // // Verificar preço mínimo
+        // if (strlen($f_data['filter_price_min']) > 0) {
+        //     if ($bp['property_price']  < $f_data['filter_price_min']) {
+        //         $passes_filter = false;
+        //     }
+        // }
+
+        // // Verificar preço máximo
+        // if (strlen($f_data['filter_price_max']) > 0) {
+        //     if ($bp['property_price']  > $f_data['filter_price_max']) {
+        //         $passes_filter = false;
+        //     }
+        // }
+
+        // if ($passes_filter) {
+        //     return true;
+        // }
+        // // }
+
+        // return false;
     }
 }
