@@ -1703,6 +1703,8 @@ class User extends REST_Controller
 								$response[] = $response_a;
 							}
 
+							print_r($response); 
+							
 							$final['status'] = true;
 							$final['message'] = 'Posts encontrados com sucesso.';
 							$final['response'] = $response;
