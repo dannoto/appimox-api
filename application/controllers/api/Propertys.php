@@ -1464,25 +1464,45 @@ class Propertys extends REST_Controller
                         }
 
                         // Ordenar corretores pelo rating 1-5 
+                        // if (strlen($f_data['filter_avaliation']) > 0) {
+
+                        //     if ($f_data['filter_avaliation'] == "melhores") {
+
+                        //         usort($brokers_data, function ($a, $b) {
+                        //             return $b->user_rating - $a->user_rating;
+                        //         });
+
+                        //     } else if ($f_data['filter_avaliation'] == "piores") {
+
+
+                        //         usort($brokers_data, function ($a, $b) {
+                        //             return $a->user_rating - $b->user_rating;
+                        //         });
+
+                        //     } else if ($f_data['filter_avaliation'] == "aleatórios") {
+                        //         //  pass
+                        //     }
+                        // }
                         if (strlen($f_data['filter_avaliation']) > 0) {
-
                             if ($f_data['filter_avaliation'] == "melhores") {
-
                                 usort($brokers_data, function ($a, $b) {
-                                    return $b->user_rating - $a->user_rating;
+                                    if ($a->user_rating == $b->user_rating) {
+                                        return 0;
+                                    }
+                                    return ($a->user_rating < $b->user_rating) ? 1 : -1;
                                 });
                             } else if ($f_data['filter_avaliation'] == "piores") {
-
-
-                                // usort($brokers_data, function ($a, $b) {
-                                //     return $a->user_rating - $b->user_rating;
-                                // });
-                                array_multisort($user_ratings, SORT_ASC, $brokers_data);
-
+                                usort($brokers_data, function ($a, $b) {
+                                    if ($a->user_rating == $b->user_rating) {
+                                        return 0;
+                                    }
+                                    return ($a->user_rating > $b->user_rating) ? 1 : -1;
+                                });
                             } else if ($f_data['filter_avaliation'] == "aleatórios") {
-                                //  pass
+                                // Não faz nada, mantém a ordem atual
                             }
                         }
+                        
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
