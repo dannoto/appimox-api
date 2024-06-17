@@ -1680,8 +1680,8 @@ class Propertys extends REST_Controller
         if ($passes_filter) {
             return true;
         }
-        }
+        // }
 
         return false;
-    // }
+    }
 }
