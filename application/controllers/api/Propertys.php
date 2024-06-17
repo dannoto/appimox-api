@@ -1442,6 +1442,8 @@ class Propertys extends REST_Controller
                                         $broker_proprietys[] = $property_data;
                                     }
 
+                                    print_r($broker_proprietys);
+
                                     foreach ($broker_proprietys as $b) {
 
                                         if ($this->filter_broker_proprietys($b, $f_data)) {
