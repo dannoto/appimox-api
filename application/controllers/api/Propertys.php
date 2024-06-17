@@ -1440,8 +1440,11 @@ class Propertys extends REST_Controller
                                         $broker_proprietys[] = $property_data;
                                     }
 
-                                    if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
-                                        $brokers_data[] = $broker_data;
+                                    foreach ($broker_proprietys as $b) {
+
+                                        if ($this->filter_broker_proprietys($b, $f_data)) {
+                                            $brokers_data[] = $broker_data;
+                                        }
                                     }
                                 }
                             }
@@ -1630,35 +1633,35 @@ class Propertys extends REST_Controller
 
     //     return false;
     // }
-    private function filter_broker_proprietys($broker_proprietys, $f_data)
+    private function filter_broker_proprietys($bp, $f_data)
     {
-        foreach ($broker_proprietys as $b) {
+        // foreach ($broker_proprietys as $b) {
             $passes_filter = true;
 
             // Verificar tipo de propriedade
             if (strlen($f_data['property_type']) > 0) {
-                if ($b->property_type != $f_data['property_type']) {
+                if ($bp->property_type != $f_data['property_type']) {
                     $passes_filter = false;
                 }
             }
 
             // Verificar tipo de oferta
             if (strlen($f_data['property_type_offer']) > 0) {
-                if ($b->property_type_offer != $f_data['property_type_offer']) {
+                if ($bp->property_type_offer != $f_data['property_type_offer']) {
                     $passes_filter = false;
                 }
             }
 
             // Verificar preço mínimo
             if (strlen($f_data['filter_price_min']) > 0) {
-                if ($b->property_price < $f_data['filter_price_min']) {
+                if ($bp->property_price < $f_data['filter_price_min']) {
                     $passes_filter = false;
                 }
             }
 
             // Verificar preço máximo
             if (strlen($f_data['filter_price_max']) > 0) {
-                if ($b->property_price > $f_data['filter_price_max']) {
+                if ($bp->property_price > $f_data['filter_price_max']) {
                     $passes_filter = false;
                 }
             }
@@ -1666,8 +1669,8 @@ class Propertys extends REST_Controller
             if ($passes_filter) {
                 return true;
             }
-        }
+        // }
 
-        return false;
+        // return false;
     }
 }
