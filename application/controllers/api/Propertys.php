@@ -1442,7 +1442,7 @@ class Propertys extends REST_Controller
                                         $broker_proprietys[] = $property_data;
                                     }
 
-                                    print_r($broker_proprietys);
+                                    print_r($broker_proprietys_location);
 
                                     foreach ($broker_proprietys as $b) {
 
