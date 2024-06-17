@@ -1439,22 +1439,22 @@ class Propertys extends REST_Controller
 
                                     $broker_proprietys_location = $this->property_model->get_property_by_associate_broker_id($location_id, $broker_id);
 
-                                    echo "==".$broker_proprietys_location."<br>\n";
+                                    // echo "==".$broker_proprietys_location."<br>\n";
 
-                                    foreach ($broker_proprietys_location as $property) {
+                                    // foreach ($broker_proprietys_location as $property) {
 
-                                        $property_data = $this->property_model->get_property($property);
-                                        $broker_proprietys[] = $property_data;
-                                    }
+                                    $property_data = $this->property_model->get_property($broker_proprietys_location);
+                                    // $broker_proprietys[] = $property_data;
+                                    // }
 
                                     // print_r($broker_proprietys_location);
 
-                                    foreach ($broker_proprietys as $b) {
+                                    // foreach ($broker_proprietys as $b) {
 
-                                        if ($this->filter_broker_proprietys($b, $f_data)) {
-                                            $brokers_data[] = $broker_data;
-                                        }
+                                    if ($this->filter_broker_proprietys($property_data, $f_data)) {
+                                        $brokers_data[] = $broker_data;
                                     }
+                                    // }
                                 }
                             }
                         }
@@ -1647,39 +1647,39 @@ class Propertys extends REST_Controller
 
         print_r($bp);
         // foreach ($broker_proprietys as $b) {
-            // $passes_filter = true;
+        // $passes_filter = true;
 
-            // // Verificar tipo de propriedade
-            // if (strlen($f_data['property_type']) > 0) {
-            //     if ($bp->property_type != $f_data['property_type']) {
-            //         $passes_filter = false;
-            //     }
-            // }
+        // // Verificar tipo de propriedade
+        // if (strlen($f_data['property_type']) > 0) {
+        //     if ($bp->property_type != $f_data['property_type']) {
+        //         $passes_filter = false;
+        //     }
+        // }
 
-            // // Verificar tipo de oferta
-            // if (strlen($f_data['property_type_offer']) > 0) {
-            //     if ($bp->property_type_offer != $f_data['property_type_offer']) {
-            //         $passes_filter = false;
-            //     }
-            // }
+        // // Verificar tipo de oferta
+        // if (strlen($f_data['property_type_offer']) > 0) {
+        //     if ($bp->property_type_offer != $f_data['property_type_offer']) {
+        //         $passes_filter = false;
+        //     }
+        // }
 
-            // // Verificar preço mínimo
-            // if (strlen($f_data['filter_price_min']) > 0) {
-            //     if ($bp->property_price < $f_data['filter_price_min']) {
-            //         $passes_filter = false;
-            //     }
-            // }
+        // // Verificar preço mínimo
+        // if (strlen($f_data['filter_price_min']) > 0) {
+        //     if ($bp->property_price < $f_data['filter_price_min']) {
+        //         $passes_filter = false;
+        //     }
+        // }
 
-            // // Verificar preço máximo
-            // if (strlen($f_data['filter_price_max']) > 0) {
-            //     if ($bp->property_price > $f_data['filter_price_max']) {
-            //         $passes_filter = false;
-            //     }
-            // }
+        // // Verificar preço máximo
+        // if (strlen($f_data['filter_price_max']) > 0) {
+        //     if ($bp->property_price > $f_data['filter_price_max']) {
+        //         $passes_filter = false;
+        //     }
+        // }
 
-            // if ($passes_filter) {
-            //     return true;
-            // }
+        // if ($passes_filter) {
+        //     return true;
+        // }
         // }
 
         // return false;
