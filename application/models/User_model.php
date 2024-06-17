@@ -197,6 +197,11 @@ class User_model extends CI_Model
 
 	public function get_broker_propertys($broker_id)
 	{
+
+		$this->db->where('property_user_id', $broker_id);
+		$this->db->order_by('id', 'desc');
+
+		return $this->db->get('propertys')->row();
 	}
 
 	public function add_property($property_id, $property_data)
