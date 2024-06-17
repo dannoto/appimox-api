@@ -1465,23 +1465,23 @@ class Propertys extends REST_Controller
                         }
 
                         // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
-                        // if (strlen($f_data['filter_avaliation']) > 0) {
-                        //     usort($brokers_data, function ($a, $b) {
-                        //         return $b->user_rating - $a->user_rating;
-                        //     });
-                        // }
+                        if (strlen($f_data['filter_avaliation']) > 0) {
+                            usort($brokers_data, function ($a, $b) {
+                                return $b->user_rating - $a->user_rating;
+                            });
+                        }
 
-                        // // Definir os três melhores corretores como recomendados
-                        // for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
-                        //     $brokers_data[$i]->recommended = true;
-                        // }
+                        // Definir os três melhores corretores como recomendados
+                        for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
+                            $brokers_data[$i]->recommended = true;
+                        }
 
-                        // $final['status'] = true;
-                        // $final['message'] = 'Propriedades encontradas';
-                        // $final['response'] = $brokers_data;
-                        // $final['note'] = 'Erro em $decodedToken["status"]';
+                        $final['status'] = true;
+                        $final['message'] = 'Propriedades encontradas';
+                        $final['response'] = $brokers_data;
+                        $final['note'] = 'Erro em $decodedToken["status"]';
 
-                        // $this->response($final);
+                        $this->response($final);
                     } else {
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
