@@ -1273,8 +1273,6 @@ class Propertys extends REST_Controller
                     $markers_data = explode(",", $markers_data);
 
                     $f_data['filter_avaliation'] =  htmlspecialchars($this->input->post('filter_avaliation'));
-
-
                     $f_data['property_type'] =  htmlspecialchars($this->input->post('filter_type'));
                     $f_data['property_type_offer'] =  htmlspecialchars($this->input->post('filter_type_offer'));
                     $f_data['filter_price_min'] =  htmlspecialchars($this->input->post('filter_price_min'));
@@ -1317,10 +1315,10 @@ class Propertys extends REST_Controller
 
                                         $broker_proprietys = $this->property_model->get_property_by_associate_broker_id($p, $broker_id);
 
-                                        if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
+                                        // if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
 
                                             $brokers_data[] = $broker_data;
-                                        }
+                                        // }
                                     }
                                 }
                             }
