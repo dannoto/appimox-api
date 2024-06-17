@@ -1272,6 +1272,9 @@ class Propertys extends REST_Controller
                     $markers_data = str_replace('[', '', $markers_data);
                     $markers_data = explode(",", $markers_data);
 
+                    $f_data['filter_avaliation'] =  htmlspecialchars($this->input->post('filter_avaliation'));
+
+
                     $f_data['property_type'] =  htmlspecialchars($this->input->post('filter_type'));
                     $f_data['property_type_offer'] =  htmlspecialchars($this->input->post('filter_type_offer'));
                     $f_data['filter_price_min'] =  htmlspecialchars($this->input->post('filter_price_min'));
