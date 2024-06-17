@@ -1389,7 +1389,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
             $headers = $this->input->request_headers();
 
@@ -1464,11 +1463,23 @@ class Propertys extends REST_Controller
                             }
                         }
 
-                        // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
+                        // Ordenar corretores pelo rating 1-5 
                         if (strlen($f_data['filter_avaliation']) > 0) {
-                            usort($brokers_data, function ($a, $b) {
-                                return $b->user_rating - $a->user_rating;
-                            });
+
+                            if ($f_data['filter_avaliation'] == "melhores") {
+
+                                usort($brokers_data, function ($a, $b) {
+                                    return $b->user_rating - $a->user_rating;
+                                });
+                            } else if ($f_data['filter_avaliation'] == "piores") {
+
+
+                                usort($brokers_data, function ($a, $b) {
+                                    return $a->user_rating - $b->user_rating;
+                                });
+                            } else if ($f_data['filter_avaliation'] == "aleatórios") {
+                                //  pass
+                            }
                         }
 
                         // Definir os três melhores corretores como recomendados
