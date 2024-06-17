@@ -1653,40 +1653,39 @@ class Propertys extends REST_Controller
         // foreach ($broker_proprietys as $b) {
         $passes_filter = true;
 
-        echo $bp->property_type;
         // Verificar tipo de propriedade
-        // if (strlen($f_data['property_type']) > 0) {
-        //     if ($bp->property_type != $f_data['property_type']) {
-        //         $passes_filter = false;
-        //     }
+        if (strlen($f_data['property_type']) > 0) {
+            if ($bp->property_type != $f_data['property_type']) {
+                $passes_filter = false;
+            }
+        }
+
+        // Verificar tipo de oferta
+        if (strlen($f_data['property_type_offer']) > 0) {
+            if ($bp->property_type_offer  != $f_data['property_type_offer']) {
+                $passes_filter = false;
+            }
+        }
+
+        // Verificar preço mínimo
+        if (strlen($f_data['filter_price_min']) > 0) {
+            if ($bp->property_price  < $f_data['filter_price_min']) {
+                $passes_filter = false;
+            }
+        }
+
+        // Verificar preço máximo
+        if (strlen($f_data['filter_price_max']) > 0) {
+            if ($bp->property_price > $f_data['filter_price_max']) {
+                $passes_filter = false;
+            }
+        }
+
+        if ($passes_filter) {
+            return true;
+        }
         // }
 
-        // // Verificar tipo de oferta
-        // if (strlen($f_data['property_type_offer']) > 0) {
-        //     if ($bp->property_type_offer  != $f_data['property_type_offer']) {
-        //         $passes_filter = false;
-        //     }
-        // }
-
-        // // Verificar preço mínimo
-        // if (strlen($f_data['filter_price_min']) > 0) {
-        //     if ($bp->property_price  < $f_data['filter_price_min']) {
-        //         $passes_filter = false;
-        //     }
-        // }
-
-        // // Verificar preço máximo
-        // if (strlen($f_data['filter_price_max']) > 0) {
-        //     if ($bp->property_price > $f_data['filter_price_max']) {
-        //         $passes_filter = false;
-        //     }
-        // }
-
-        // if ($passes_filter) {
-        //     return true;
-        // }
-        // // }
-
-        // return false;
+        return false;
     }
 }
