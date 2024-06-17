@@ -17,6 +17,10 @@ class User extends REST_Controller
 		$this->load->model('broker_model');
 		$this->load->model('property_model');
 		$this->load->model('schedule_model');
+
+		$this->load->model('followers_model');
+
+		
 	}
 
 	public function register_post()
