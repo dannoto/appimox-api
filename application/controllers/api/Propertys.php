@@ -1315,10 +1315,9 @@ class Propertys extends REST_Controller
                                         $broker_proprietys = array();
                                         $broker_proprietys_location = $this->property_model->get_property_by_associate_broker_id($p, $broker_id);
 
-                                        foreach ($broker_proprietys_location as $p ){
-
+                                        foreach ($broker_proprietys_location as $p )
+                                        {
                                             $property_data = $this->property_model->get_property($p->property_id);
-
                                             $broker_proprietys[] =  $property_data;
                                         } 
 
@@ -1481,6 +1480,10 @@ class Propertys extends REST_Controller
     private function filter_broker_proprietys($broker_proprietys, $f_data)
     {
         foreach ($broker_proprietys as $b) {
+
+            echo "broker";
+
+            print_r($b);
             $passes_filter = true;
 
             // Verificar tipo de propriedade
