@@ -1474,9 +1474,11 @@ class Propertys extends REST_Controller
                             } else if ($f_data['filter_avaliation'] == "piores") {
 
 
-                                usort($brokers_data, function ($a, $b) {
-                                    return $a->user_rating - $b->user_rating;
-                                });
+                                // usort($brokers_data, function ($a, $b) {
+                                //     return $a->user_rating - $b->user_rating;
+                                // });
+                                array_multisort($user_ratings, SORT_ASC, $brokers_data);
+
                             } else if ($f_data['filter_avaliation'] == "aleatórios") {
                                 //  pass
                             }
