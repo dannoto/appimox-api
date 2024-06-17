@@ -1312,13 +1312,20 @@ class Propertys extends REST_Controller
                                         $broker_data->match_percentage = $match_percentage;
                                         $broker_data->recommended = false; // Definir como false inicialmente
 
+                                        $broker_proprietys = array();
+                                        $broker_proprietys_location = $this->property_model->get_property_by_associate_broker_id($p, $broker_id);
 
-                                        $broker_proprietys = $this->property_model->get_property_by_associate_broker_id($p, $broker_id);
+                                        foreach ($broker_proprietys_location as $p ){
 
-                                        // if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
+                                            $property_data = $this->property_model->get_property($p->property_id);
+
+                                            $broker_proprietys[] =  $property_data;
+                                        } 
+
+                                        if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
 
                                             $brokers_data[] = $broker_data;
-                                        // }
+                                        }
                                     }
                                 }
                             }
