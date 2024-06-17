@@ -1483,7 +1483,8 @@ class Propertys extends REST_Controller
 
             echo "broker";
 
-            print_r($b);
+      return $b;
+      
             $passes_filter = true;
 
             // Verificar tipo de propriedade
