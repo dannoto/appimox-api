@@ -1411,10 +1411,12 @@ class Propertys extends REST_Controller
                         $user_preferences = $this->user_model->get_user_preferences($user_id);
 
                         foreach ($markers_data as $location_id) {
+
                             $broker_id = $this->property_model->get_broker_by_location_id($location_id);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
                             if ($broker_id && $broker_data) {
+
                                 $id_exists = false;
                                 foreach ($brokers_data as $existing_broker) {
                                     if ($existing_broker->id == $broker_data->id) {
@@ -1451,23 +1453,23 @@ class Propertys extends REST_Controller
                         }
 
                         // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
-                        if (strlen($f_data['filter_avaliation']) > 0) {
-                            usort($brokers_data, function ($a, $b) {
-                                return $b->user_rating - $a->user_rating;
-                            });
-                        }
+                        // if (strlen($f_data['filter_avaliation']) > 0) {
+                        //     usort($brokers_data, function ($a, $b) {
+                        //         return $b->user_rating - $a->user_rating;
+                        //     });
+                        // }
 
-                        // Definir os três melhores corretores como recomendados
-                        for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
-                            $brokers_data[$i]->recommended = true;
-                        }
+                        // // Definir os três melhores corretores como recomendados
+                        // for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
+                        //     $brokers_data[$i]->recommended = true;
+                        // }
 
-                        $final['status'] = true;
-                        $final['message'] = 'Propriedades encontradas';
-                        $final['response'] = $brokers_data;
-                        $final['note'] = 'Erro em $decodedToken["status"]';
+                        // $final['status'] = true;
+                        // $final['message'] = 'Propriedades encontradas';
+                        // $final['response'] = $brokers_data;
+                        // $final['note'] = 'Erro em $decodedToken["status"]';
 
-                        $this->response($final);
+                        // $this->response($final);
                     } else {
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
@@ -1635,40 +1637,42 @@ class Propertys extends REST_Controller
     // }
     private function filter_broker_proprietys($bp, $f_data)
     {
+
+        print_r($bp);
         // foreach ($broker_proprietys as $b) {
-            $passes_filter = true;
+            // $passes_filter = true;
 
-            // Verificar tipo de propriedade
-            if (strlen($f_data['property_type']) > 0) {
-                if ($bp->property_type != $f_data['property_type']) {
-                    $passes_filter = false;
-                }
-            }
+            // // Verificar tipo de propriedade
+            // if (strlen($f_data['property_type']) > 0) {
+            //     if ($bp->property_type != $f_data['property_type']) {
+            //         $passes_filter = false;
+            //     }
+            // }
 
-            // Verificar tipo de oferta
-            if (strlen($f_data['property_type_offer']) > 0) {
-                if ($bp->property_type_offer != $f_data['property_type_offer']) {
-                    $passes_filter = false;
-                }
-            }
+            // // Verificar tipo de oferta
+            // if (strlen($f_data['property_type_offer']) > 0) {
+            //     if ($bp->property_type_offer != $f_data['property_type_offer']) {
+            //         $passes_filter = false;
+            //     }
+            // }
 
-            // Verificar preço mínimo
-            if (strlen($f_data['filter_price_min']) > 0) {
-                if ($bp->property_price < $f_data['filter_price_min']) {
-                    $passes_filter = false;
-                }
-            }
+            // // Verificar preço mínimo
+            // if (strlen($f_data['filter_price_min']) > 0) {
+            //     if ($bp->property_price < $f_data['filter_price_min']) {
+            //         $passes_filter = false;
+            //     }
+            // }
 
-            // Verificar preço máximo
-            if (strlen($f_data['filter_price_max']) > 0) {
-                if ($bp->property_price > $f_data['filter_price_max']) {
-                    $passes_filter = false;
-                }
-            }
+            // // Verificar preço máximo
+            // if (strlen($f_data['filter_price_max']) > 0) {
+            //     if ($bp->property_price > $f_data['filter_price_max']) {
+            //         $passes_filter = false;
+            //     }
+            // }
 
-            if ($passes_filter) {
-                return true;
-            }
+            // if ($passes_filter) {
+            //     return true;
+            // }
         // }
 
         // return false;
