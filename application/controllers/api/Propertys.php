@@ -950,7 +950,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulárioi.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $headers = $this->input->request_headers();
@@ -1007,14 +1006,12 @@ class Propertys extends REST_Controller
                                     $match_percentage = $this->calculate_match_percentage($user_preferences, $broker_preferences);
                                     $property_data->match_percentage = $match_percentage;
                                     $property_data->recommended = false;
-    
-    
+
+
                                     if ($property_data) {
                                         $propertys_data[] = $property_data;
                                     }
-
                                 }
-                               
                             }
                         }
 
@@ -1034,16 +1031,13 @@ class Propertys extends REST_Controller
                         $final['response'] =  $propertys_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     } else {
 
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
-
                     }
-
                 } else {
 
                     $final['status'] = false;
@@ -1254,15 +1248,13 @@ class Propertys extends REST_Controller
         }
     }
 
-
-
-
     public function get_broker_by_range_filter_post()
     {
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
         if ($this->form_validation->run() == false) {
+
             $final['status'] = false;
             $final['message'] = validation_errors();
             $final['note'] = 'Erro no formulário.';
@@ -1280,18 +1272,27 @@ class Propertys extends REST_Controller
                     $markers_data = str_replace('[', '', $markers_data);
                     $markers_data = explode(",", $markers_data);
 
+                    $f_data['property_type'] =  htmlspecialchars($this->input->post('filter_type'));
+                    $f_data['property_type_offer'] =  htmlspecialchars($this->input->post('filter_type_offer'));
+                    $f_data['filter_price_min'] =  htmlspecialchars($this->input->post('filter_price_min'));
+                    $f_data['filter_price_max'] =  htmlspecialchars($this->input->post('filter_price_max'));
+
                     $brokers_data = array();
 
                     if (count($markers_data) > 0) {
+
                         $user_id = $this->input->post('user_id');
                         $user_preferences = $this->user_model->get_user_preferences($user_id);
 
                         foreach ($markers_data as $p) {
+
                             $broker_id = $this->property_model->get_broker_by_location_id($p);
                             $broker_data = $this->property_model->get_broker($broker_id);
 
                             if ($broker_id) {
+
                                 if ($broker_data) {
+
                                     $id_exists = false;
                                     foreach ($brokers_data as $existing_broker) {
                                         if ($existing_broker->id == $broker_data->id) {
@@ -1299,6 +1300,7 @@ class Propertys extends REST_Controller
                                             break;
                                         }
                                     }
+
 
                                     if (!$id_exists) {
                                         // Obter preferências do corretor
@@ -1309,19 +1311,31 @@ class Propertys extends REST_Controller
                                         $broker_data->match_percentage = $match_percentage;
                                         $broker_data->recommended = false; // Definir como false inicialmente
 
-                                        $brokers_data[] = $broker_data;
+
+                                        $broker_proprietys = $this->property_model->get_property_by_associate_broker_id($p, $broker_id);
+
+                                        if ($this->filter_broker_proprietys($broker_proprietys, $f_data)) {
+
+                                            $brokers_data[] = $broker_data;
+                                        }
                                     }
                                 }
                             }
                         }
 
                         // Ordenar corretores pela porcentagem de correspondência em ordem decrescente
-                        usort($brokers_data, function ($a, $b) {
-                            return $b->match_percentage - $a->match_percentage;
-                        });
+
+                        if (strlen($f_data['filter_avaliation']) > 0) {
+
+                            usort($brokers_data, function ($a, $b) {
+                                return $b->user_rating - $a->user_rating;
+                            });
+                        }
+
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
+
                             $brokers_data[$i]->recommended = true;
                         }
 
@@ -1329,14 +1343,17 @@ class Propertys extends REST_Controller
                         $final['message'] = 'Propriedades encontradas';
                         $final['response'] =  $brokers_data;
                         $final['note'] = 'Erro em $decodedToken["status"]';
+
                         $this->response($final);
                     } else {
+
                         $final['status'] = false;
                         $final['message'] = 'Nenhuma propriedade encontrada';
                         $final['note'] = 'Erro em $decodedToken["status"]';
                         $this->response($final);
                     }
                 } else {
+
                     $final['status'] = false;
                     $final['message'] = 'Sua sessão expirou.';
                     $final['note'] = 'Erro em $decodedToken["status"]';
@@ -1451,5 +1468,46 @@ class Propertys extends REST_Controller
 
         $total_preferences = count($user_preferences);
         return ($total_preferences > 0) ? ($matches / $total_preferences) * 100 : 0;
+    }
+
+    private function filter_broker_proprietys($broker_proprietys, $f_data)
+    {
+        foreach ($broker_proprietys as $b) {
+            $passes_filter = true;
+
+            // Verificar tipo de propriedade
+            if (strlen($f_data['property_type']) > 0) {
+                if ($b->property_type != $f_data['property_type']) {
+                    $passes_filter = false;
+                }
+            }
+
+            // Verificar tipo de oferta
+            if (strlen($f_data['property_type_offer']) > 0) {
+                if ($b->property_type_offer != $f_data['property_type_offer']) {
+                    $passes_filter = false;
+                }
+            }
+
+            // Verificar preço mínimo
+            if (strlen($f_data['filter_price_min']) > 0) {
+                if ($b->property_price <= $f_data['filter_price_min']) {
+                    $passes_filter = false;
+                }
+            }
+
+            // Verificar preço máximo
+            if (strlen($f_data['filter_price_max']) > 0) {
+                if ($b->property_price >= $f_data['filter_price_max']) {
+                    $passes_filter = false;
+                }
+            }
+
+            if ($passes_filter) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
