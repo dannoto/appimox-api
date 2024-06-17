@@ -1438,11 +1438,11 @@ class Propertys extends REST_Controller
                                     $broker_proprietys_location = $this->property_model->get_property_by_associate_broker_id($location_id, $broker_id);
 
                                     foreach ($broker_proprietys_location as $property) {
-                                        $property_data = $this->property_model->get_property($property->property_id);
+                                        $property_data = $this->property_model->get_property($property);
                                         $broker_proprietys[] = $property_data;
                                     }
 
-                                    print_r($broker_proprietys_location);
+                                    // print_r($broker_proprietys_location);
 
                                     foreach ($broker_proprietys as $b) {
 
