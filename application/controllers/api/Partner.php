@@ -324,11 +324,14 @@ class Partner extends REST_Controller
 
             if ($partner_data) {
 
+
+                
                 $response = array();
                 $response['partner_data'] = $partner_data;
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
                 $response['offer_data'] = $this->user_model->get_user($partner_data->partner_property_broker);
                 $response['property_data'] = $propertys_data;
+                $response['partner_rest'] = $this->calculateExpirationDaysDiff($partner_data->partner_expiration);
                 $response['partner_actions'] = $actions_data;
                 $response['user_id'] = $this->input->post('user_id');
 
@@ -912,4 +915,23 @@ class Partner extends REST_Controller
 
         return $action_expiration;
     }
+
+    function calculateExpirationDaysDiff($partner_expiration) {
+        // Converte a data de expiração para um objeto DateTime
+        $expirationDate = new DateTime($partner_expiration);
+        // Obtém a data e hora atual
+        $currentDate = new DateTime();
+        // Calcula a diferença entre as duas datas
+        $interval = $currentDate->diff($expirationDate);
+        // Obtém a diferença em dias
+        $daysDiff = (int)$interval->format('%r%a');
+        
+        // Verifica se a diferença é menor que 2 dias
+        if ($daysDiff < 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
