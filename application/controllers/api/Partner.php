@@ -927,11 +927,12 @@ class Partner extends REST_Controller
         $daysDiff = (int)$interval->format('%r%a');
         
         // Verifica se a diferença é menor que 2 dias
-        if ($daysDiff < 2) {
-            return true;
-        } else {
-            return false;
-        }
+        // if ($daysDiff < 2) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+        return $daysDiff;
     }
     
 }
