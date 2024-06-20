@@ -234,6 +234,8 @@ $route['add_partner_finish_action'] = 'api/Partner/add_partner_finish_action';
 $route['accept_action'] = 'api/Partner/accept_action';
 $route['reject_action'] = 'api/Partner/reject_action';
 $route['contra_action'] = 'api/Partner/contra_action';
+$route['restart_action'] = 'api/Partner/restart_action';
+
 $route['finish_action'] = 'api/Partner/finish_action';
 
 

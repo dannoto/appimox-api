@@ -887,6 +887,71 @@ class Partner extends REST_Controller
         }
     }
 
+    public function restart_action_post()
+    {
+
+        $this->form_validation->set_rules('action_id', 'action_id', 'trim|required');
+
+        $this->form_validation->set_rules('partner_id', 'partner_id', 'trim|required');
+        $this->form_validation->set_rules('partner_user', 'partner_user', 'trim|required');
+
+        $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
+        $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
+        $this->form_validation->set_rules('partner_porcentage', 'partner_porcentage', 'trim|required');
+        $this->form_validation->set_rules('partner_duration', 'partner_duration', 'trim|required');
+        $this->form_validation->set_rules('partnet_duration_type', 'partnet_duration_type', 'trim|required');
+        $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
+        // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
+
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            // antiga açao rejeitada
+            $partner_action_data['partner_status'] = 1;
+            $partner_action_data = $this->partner_model->update_partner_action($this->input->post('action_id'), $partner_action_data);
+
+
+            $data['partner_id'] = $this->input->post('partner_id');
+            $data['partner_offer'] = $this->input->post('partner_offer');
+            $data['partner_user'] = $this->input->post('partner_user');
+            $data['partner_receiver']  = $this->input->post('partner_receiver');
+            $data['partner_porcentage'] = $this->input->post('partner_porcentage');
+            $data['partner_duration']    = $this->input->post('partner_duration');
+            $data['partnet_duration_type']    = $this->input->post('partnet_duration_type');
+            $data['partner_created']   = date('Y-m-d H:i:s');
+            $data['partner_status']    = $this->input->post('partner_status');
+            $data['partner_action_type']    = 3;
+
+            $data['is_deleted']    = 0;
+
+            $partner_data = $this->partner_model->add_partner_action($data);
+
+            if ($partner_data) {
+
+                $final['status'] = true;
+                $final['response'] = $partner_data;
+                $final['message'] = 'Ação criada com sucesso.';
+                $final['note'] = 'Ação criada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao adicionar ação';
+                $final['note'] = 'Erro ao adicionar ação';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
 
     function calculatePartnerExpiration($action_id, $partner_id)
     {
