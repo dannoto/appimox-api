@@ -642,7 +642,7 @@ class Partner extends REST_Controller
     }
     // aceitar / recusar / partner
 
-    public function add_accept_restart()
+    public function add_accept_restart_post()
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
@@ -706,7 +706,7 @@ class Partner extends REST_Controller
         }
     }
 
-    public function add_reject_restart()
+    public function add_reject_restart_post()
     {
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
