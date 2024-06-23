@@ -640,10 +640,129 @@ class Partner extends REST_Controller
             }
         }
     }
-
-
-
     // aceitar / recusar / partner
+
+    public function add_accept_restart()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('action_id', 'ID da Ação', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+            $action_id = $this->input->post('action_id');
+
+
+            // partner action status
+            // 1 - pendente
+            // 2 - recusada
+            // 3 - aceita
+
+            // partner 
+            // 1 - negociação
+            // 2 - ativa
+            // 3 -finalizada
+
+            // action_type
+            // 0 - proposta
+            // 1 - contra proposta
+            // 2 - pedido de finalização
+
+            $partner_action_data['partner_status'] = 3;
+
+            $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
+
+            if ($partner_action_data) {
+
+                $partner_data['partner_status'] = 2;
+                // $partner_data['partner_date'] = date('Y-m-d H:i:s');
+                $partner_data['partner_expiration'] = $this->calculatePartnerExpirationRestart($action_id, $partner_id);
+
+                $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
+
+                $final['status'] = true;
+                $final['response'] = $partner_data;
+                $final['message'] = 'Parceria aceita com sucesso.';
+                $final['note'] = 'Parceria aceita com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao aceitar Parceria';
+                $final['note'] = 'Erro ao aceitar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function add_reject_restart()
+    {
+
+        $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
+        $this->form_validation->set_rules('action_id', 'ID da Ação', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $partner_id = $this->input->post('partner_id');
+            $action_id = $this->input->post('action_id');
+
+
+            // partner action status
+            // 1 - pendente
+            // 2 - recusada
+            // 3 - aceita
+
+            // partner 
+            // 1 - negociação
+            // 2 - ativa
+            // 3 -finalizada
+
+            $partner_action_data['partner_status'] = 2;
+            // $partner_data['partner_status'] = 3;
+
+            $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
+
+
+            if ($partner_action_data) {
+
+                // $partner_data = $this->partner_model->update_partner($partner_id, $partner_data);
+
+                $final['status'] = true;
+                // $final['response'] =  $response;
+                $final['message'] = 'Parceria aceita com sucesso.';
+                $final['note'] = 'Parceria aceita com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao aceitar Parceria';
+                $final['note'] = 'Erro ao aceitar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+    // -------------
 
     public function accept_action_post()
     {
@@ -961,6 +1080,34 @@ class Partner extends REST_Controller
 
         // Data inicial do parceiro
         $initial_date = $partner_data->partner_date;
+
+        // Duração da ação e tipo de duração (meses ou dias)
+        $action_duration = $action_data->partner_duration;
+        $action_duration_type = $action_data->partnet_duration_type;
+
+        // Calcular a data de expiração com base na duração
+        if ($action_duration_type == "meses") {
+            // Adicionar meses à data inicial
+            $action_expiration = date('Y-m-d H:i:s', strtotime("+$action_duration months", strtotime($initial_date)));
+        } else if ($action_duration_type == "dias") {
+            // Adicionar dias à data inicial
+            $action_expiration = date('Y-m-d H:i:s', strtotime("+$action_duration days", strtotime($initial_date)));
+        } else {
+            // Tipo de duração desconhecido
+            throw new Exception("Unknown duration type");
+        }
+
+        return $action_expiration;
+    }
+
+    function calculatePartnerExpirationRestart($action_id, $partner_id)
+    {
+        // Obtenha os dados da ação e do parceiro
+        $action_data = $this->partner_model->get_partner_action($action_id);
+        $partner_data = $this->partner_model->get_partner($partner_id);
+
+        // Data inicial do parceiro
+        $initial_date = $partner_data->partner_expiration;
 
         // Duração da ação e tipo de duração (meses ou dias)
         $action_duration = $action_data->partner_duration;
