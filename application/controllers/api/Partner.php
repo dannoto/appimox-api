@@ -457,6 +457,9 @@ class Partner extends REST_Controller
 
             $partners_found = $this->partner_data->get_partners_by_property($property_id);
 
+
+            echo "oi";
+
             if ($partners_found) {
 
                 $final['status'] = true;
@@ -465,6 +468,7 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceiros encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
+
             } else {
 
                 $final['status'] = false;
