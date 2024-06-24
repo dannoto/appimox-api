@@ -677,7 +677,7 @@ class Partner extends REST_Controller
             // 1 - contra proposta
             // 2 - pedido de finalização
 
-            $partner_action_data['partner_status'] = 3;
+            $partner_action_data['partner_status'] = 2;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
 
