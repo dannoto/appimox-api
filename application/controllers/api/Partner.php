@@ -466,7 +466,7 @@ class Partner extends REST_Controller
                 // print_r($partners_found);
                 // $p_data = $this->partner_data->get_partner($p->partner_id);
 
-                print_r($p);
+                print_r($p->partner_property_broker);
 
             }
 
