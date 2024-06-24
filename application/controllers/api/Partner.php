@@ -483,7 +483,7 @@ class Partner extends REST_Controller
             //     $final['note'] = 'Nao existem parceriso';
 
             //     $this->response($final, REST_Controller::HTTP_OK);
-            }
+            // }
         }
 
         
