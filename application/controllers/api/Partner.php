@@ -460,7 +460,7 @@ class Partner extends REST_Controller
             if ($partners_found) {
 
                 $final['status'] = true;
-                $final['response'] =  $partners_found;
+                $final['response'] = '';
                 $final['message'] = 'Parceiros encontrada com sucesso.';
                 $final['note'] = 'Parceiros encontrada com sucesso.';
 
