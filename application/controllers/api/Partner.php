@@ -452,7 +452,6 @@ class Partner extends REST_Controller
 
         } else {
 
-            $user_id = $this->input->post('user_id');
             $property_id = $this->input->post('property_id');
 
             $partners_found = $this->partner_data->get_partners_by_property($property_id);
