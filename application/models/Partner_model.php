@@ -24,6 +24,31 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
+
+    public function get_partners_by_property($property_id) {
+        // get brokers tha have active partner on the property
+        $this->db->select('up.partner_property_broker');
+        $this->db->from('user_partners_propertys upp');
+        $this->db->join('user_partners up', 'upp.partner_id = up.partner_id', 'inner');
+        $this->db->where('upp.partner_property_id', $property_id);
+        $this->db->where('upp.is_deleted', 0);
+        $this->db->where('up.partner_status', 2);
+        $this->db->where('up.is_deleted', 0);
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            $result = $query->result_array();
+            // Process the result as needed
+            foreach ($result as $row) {
+                echo 'Broker ID: ' . $row['partner_property_broker'] . '<br>';
+            }
+        } else {
+            echo 'No active partnerships found for the given property.';
+        }
+        
+
+    }
+
     public function check_able_to_rating($partner_id)
     {
         $this->db->where('id', $partner_id);

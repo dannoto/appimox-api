@@ -436,6 +436,45 @@ class Partner extends REST_Controller
         }
     }
 
+    public function get_partners_by_property_post() {
+        
+
+        $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'ID do imóvel', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $user_id = $this->input->post('user_id');
+            $property_id = $this->input->post('property_id');
+
+            $partners_found = $this->partner_data->get_partners_by_property($property_id);
+
+            if (  $partners_found) {
+
+                $final['status'] = true;
+                $final['response'] =  $partners_found;
+                $final['message'] = 'Parceiros encontrada com sucesso.';
+                $final['note'] = 'Parceiros encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nao existem parceriso';
+                $final['note'] = 'Nao existem parceriso';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
 
     public function get_partners_post()
     {

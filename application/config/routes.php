@@ -241,6 +241,7 @@ $route['finish_action'] = 'api/Partner/finish_action';
 $route['add_reject_restart'] = 'api/Partner/add_reject_restart';
 $route['add_accept_restart'] = 'api/Partner/add_accept_restart';
 
+$route['get_partners_by_property'] = 'api/Partner/get_partners_by_property';
 
 
 
