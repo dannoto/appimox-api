@@ -449,6 +449,7 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $user_id = $this->input->post('user_id');
@@ -456,7 +457,7 @@ class Partner extends REST_Controller
 
             $partners_found = $this->partner_data->get_partners_by_property($property_id);
 
-            if (  $partners_found) {
+            if ($partners_found) {
 
                 $final['status'] = true;
                 $final['response'] =  $partners_found;
