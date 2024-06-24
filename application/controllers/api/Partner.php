@@ -9,7 +9,7 @@ class Partner extends REST_Controller
 
     public function __construct()
     {
-        
+
 
         parent::__construct();
         $this->load->library('Authorization_Token');
@@ -325,7 +325,7 @@ class Partner extends REST_Controller
             if ($partner_data) {
 
 
-                
+
                 $response = array();
                 $response['partner_data'] = $partner_data;
                 $response['owner_data'] = $this->user_model->get_user($partner_data->partner_property_owner);
@@ -436,8 +436,9 @@ class Partner extends REST_Controller
         }
     }
 
-    public function get_partners_by_property_post() {
-        
+    public function get_partners_by_property_post()
+    {
+
 
         $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
         $this->form_validation->set_rules('property_id', 'ID do imóvel', 'trim|required');
@@ -449,7 +450,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $user_id = $this->input->post('user_id');
@@ -458,12 +458,11 @@ class Partner extends REST_Controller
             $partners_found = $this->partner_data->get_partners_by_property($property_id);
 
 
-    
-            $final['status'] = false;
-                $final['message'] = 'Nao existem parceriso';
-                $final['note'] = 'Nao existem parceriso';
 
-                $this->response($final, REST_Controller::HTTP_OK);
+            $final['status'] = false;
+            $final['message'] = 'Nao existem parceriso';
+            $final['note'] = 'Nao existem parceriso';
+
 
             $this->response($final, REST_Controller::HTTP_OK);
 
@@ -485,9 +484,6 @@ class Partner extends REST_Controller
             //     $this->response($final, REST_Controller::HTTP_OK);
             // }
         }
-
-        
-
     }
 
 
@@ -646,7 +642,7 @@ class Partner extends REST_Controller
 
         $this->form_validation->set_rules('partner_offer', 'partner_offer', 'trim|required');
         $this->form_validation->set_rules('partner_receiver', 'partner_receiver', 'trim|required');
-       
+
 
         $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
         // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
@@ -659,7 +655,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-            
         } else {
 
             $data['partner_id'] = $this->input->post('partner_id');
@@ -709,7 +704,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -773,7 +767,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -806,7 +799,6 @@ class Partner extends REST_Controller
                 $final['note'] = 'Parceria aceita com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -995,7 +987,7 @@ class Partner extends REST_Controller
             }
         }
     }
- 
+
     public function contra_action_post()
     {
 
@@ -1183,7 +1175,8 @@ class Partner extends REST_Controller
         return $action_expiration;
     }
 
-    function calculateExpirationDaysDiff($partner_id, $partner_expiration) {
+    function calculateExpirationDaysDiff($partner_id, $partner_expiration)
+    {
 
         $check_partner_action_restart_pending = $this->partner_model->check_partner_action_restart_pending($partner_id);
 
@@ -1195,20 +1188,18 @@ class Partner extends REST_Controller
         $interval = $currentDate->diff($expirationDate);
         // Obtém a diferença em dias
         $daysDiff = (int)$interval->format('%r%a');
-        
+
         // Verifica se a diferença é menor que 2 dias
         // if ($daysDiff < 2) {
         //     return true;
         // } else {
         //     return false;
         // }
-       if ($check_partner_action_restart_pending) {
+        if ($check_partner_action_restart_pending) {
 
-        return 100;
-
-       } else {
-        return $daysDiff;
-       }
+            return 100;
+        } else {
+            return $daysDiff;
+        }
     }
-    
 }
