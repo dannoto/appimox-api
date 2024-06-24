@@ -719,6 +719,7 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -735,7 +736,7 @@ class Partner extends REST_Controller
             // 2 - ativa
             // 3 -finalizada
 
-            $partner_action_data['partner_status'] = 2;
+            $partner_action_data['partner_status'] = 1;
             // $partner_data['partner_status'] = 3;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
