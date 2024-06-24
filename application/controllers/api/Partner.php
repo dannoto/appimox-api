@@ -458,9 +458,9 @@ class Partner extends REST_Controller
 
             foreach ($partners_found as $p) {
 
-                $p_data = $this->partner_data->get_partner($p->partner_id);
+                // $p_data = $this->partner_data->get_partner($p->partner_id);
 
-                print($p_data);
+                print($p);
 
             }
 
