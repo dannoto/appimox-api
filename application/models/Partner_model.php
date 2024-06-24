@@ -39,10 +39,13 @@ class Partner_model extends CI_Model
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
             // Process the result as needed
-            foreach ($result as $row) {
-                echo 'Broker ID: ' . $row['partner_property_broker'] . '<br>';
-            }
+            return $result;
+            // foreach ($result as $row) {
+            //     echo 'Broker ID: ' . $row['partner_property_broker'] . '<br>';
+            // }
         } else {
+
+            return false;
             echo 'No active partnerships found for the given property.';
         }
         
