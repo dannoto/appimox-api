@@ -37,7 +37,7 @@ class Partner_model extends CI_Model
         $query = $this->db->get();
         
         if ($query->num_rows() > 0) {
-            $result = $query->result_array();
+            $result = $query->result();
             // Process the result as needed
             return $result;
             // foreach ($result as $row) {
