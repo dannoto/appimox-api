@@ -456,19 +456,18 @@ class Partner extends REST_Controller
 
             $partners_found = $this->partner_model->get_partners_by_property($property_id);
 
-           
-            // $response = array();
-
-
+            $response = array();
 
             foreach ($partners_found as $p) {
 
                 // print_r($partners_found);
                 // $p_data = $this->partner_data->get_partner($p->partner_id);
-
-                print_r($p->partner_property_broker);
+                $broker_data= $this->user_model->get_user($p->partner_property_broker);
+                $response[] = $broker_data;
 
             }
+            
+            print_r($response);
 
             // if ($partners_found) {
 
