@@ -37,9 +37,9 @@ class Partner_model extends CI_Model
         $query = $this->db->get();
         
         if ($query->num_rows() > 0) {
-            $result = $query->result();
+            // $result = $query->result();
             // Process the result as needed
-            return $result;
+            return $query;
             // foreach ($result as $row) {
             //     echo 'Broker ID: ' . $row['partner_property_broker'] . '<br>';
             // }
