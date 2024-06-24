@@ -466,26 +466,25 @@ class Partner extends REST_Controller
                 $response[] = $broker_data;
 
             }
-            
-            print_r($response);
 
-            // if ($partners_found) {
+       
+            if ($partners_found) {
 
-            //     $final['status'] = true;
-            //     $final['response'] = $partners_found ;
-            //     $final['message'] = 'Parceiros encontrada com sucesso.';
-            //     $final['note'] = 'Parceiros encontrada com sucesso.';
+                $final['status'] = true;
+                $final['response'] = $$response ;
+                $final['message'] = 'Parceiros encontrada com sucesso.';
+                $final['note'] = 'Parceiros encontrada com sucesso.';
 
-            //     $this->response($final, REST_Controller::HTTP_OK);
+                $this->response($final, REST_Controller::HTTP_OK);
 
-            // } else {
+            } else {
 
-            //     $final['status'] = false;
-            //     $final['message'] = 'Nao existem parceriso';
-            //     $final['note'] = 'Nao existem parceriso';
+                $final['status'] = false;
+                $final['message'] = 'Nao existem parceriso';
+                $final['note'] = 'Nao existem parceriso';
 
-            //     $this->response($final, REST_Controller::HTTP_OK);
-            // }
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
         }
     }
 
