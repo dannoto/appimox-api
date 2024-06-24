@@ -439,53 +439,55 @@ class Partner extends REST_Controller
     public function get_partners_by_property_post() {
         
 
-        // $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
-        // $this->form_validation->set_rules('property_id', 'ID do imóvel', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'ID do imóvel', 'trim|required');
 
-        // if ($this->form_validation->run() === false) {
+        if ($this->form_validation->run() === false) {
 
-        //     $final['status'] = false;
-        //     $final['message'] = validation_errors();
-        //     $final['note'] = 'Erro no formulário.';
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
 
-        //     $this->response($final, REST_Controller::HTTP_OK);
+            $this->response($final, REST_Controller::HTTP_OK);
 
-        // } else {
+        } else {
 
-        //     $user_id = $this->input->post('user_id');
-        //     $property_id = $this->input->post('property_id');
+            $user_id = $this->input->post('user_id');
+            $property_id = $this->input->post('property_id');
 
-        //     $partners_found = $this->partner_data->get_partners_by_property($property_id);
+            $partners_found = $this->partner_data->get_partners_by_property($property_id);
 
 
     
+            $final['status'] = false;
+                $final['message'] = 'Nao existem parceriso';
+                $final['note'] = 'Nao existem parceriso';
 
-        //     if ($partners_found) {
+                $this->response($final, REST_Controller::HTTP_OK);
 
-        //         $final['status'] = true;
-        //         $final['response'] = '';
-        //         $final['message'] = 'Parceiros encontrada com sucesso.';
-        //         $final['note'] = 'Parceiros encontrada com sucesso.';
+            $this->response($final, REST_Controller::HTTP_OK);
 
-        //         $this->response($final, REST_Controller::HTTP_OK);
+            // if ($partners_found) {
 
-        //     } else {
+            //     $final['status'] = true;
+            //     $final['response'] = '';
+            //     $final['message'] = 'Parceiros encontrada com sucesso.';
+            //     $final['note'] = 'Parceiros encontrada com sucesso.';
 
-        //         $final['status'] = false;
-        //         $final['message'] = 'Nao existem parceriso';
-        //         $final['note'] = 'Nao existem parceriso';
+            //     $this->response($final, REST_Controller::HTTP_OK);
 
-        //         $this->response($final, REST_Controller::HTTP_OK);
-        //     }
-        // }
+            // } else {
+
+            //     $final['status'] = false;
+            //     $final['message'] = 'Nao existem parceriso';
+            //     $final['note'] = 'Nao existem parceriso';
+
+            //     $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
 
         
-        $final['status'] = true;
-        $final['response'] = '';
-        $final['message'] = 'Parceiros encontrada com sucesso.';
-        $final['note'] = 'Parceiros encontrada com sucesso.';
 
-        $this->response($final, REST_Controller::HTTP_OK);
     }
 
 
