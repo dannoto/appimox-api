@@ -463,7 +463,7 @@ class Partner extends REST_Controller
                 // print_r($partners_found);
                 // $p_data = $this->partner_data->get_partner($p->partner_id);
                 $broker_data= $this->user_model->get_user($p->partner_property_broker);
-                $response[] = $broker_data;
+                $response[] = (array)$broker_data;
 
             }
 
