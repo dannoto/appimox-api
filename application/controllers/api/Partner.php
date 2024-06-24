@@ -459,7 +459,7 @@ class Partner extends REST_Controller
            
             // $response = array();
 
-            print($partners_found);
+            print_r($partners_found);
 
 
             // foreach ($partners_found as $p) {
