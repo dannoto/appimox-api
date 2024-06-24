@@ -1129,7 +1129,10 @@ class Partner extends REST_Controller
         return $action_expiration;
     }
 
-    function calculateExpirationDaysDiff($partner_expiration) {
+    function calculateExpirationDaysDiff($partner_id, $partner_expiration) {
+
+        $check_partner_action_restart_pending = $this->partner_model->check_partner_action_restart_pending($partner_id);
+
         // Converte a data de expiração para um objeto DateTime
         $expirationDate = new DateTime($partner_expiration);
         // Obtém a data e hora atual
@@ -1145,7 +1148,13 @@ class Partner extends REST_Controller
         // } else {
         //     return false;
         // }
+       if ($check_partner_action_restart_pending) {
+
+        return 100;
+
+       } else {
         return $daysDiff;
+       }
     }
     
 }

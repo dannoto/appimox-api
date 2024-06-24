@@ -31,6 +31,13 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners')->row();
     }
 
+    public function check_partner_action_restart_pending($partner_id) {
+        $this->db->where('partner_id', $partner_id);
+        // $this->db->where('partner_action_type', 3);
+        $this->db->where('partner_status', 0);
+
+        return $this->db->get('user_partners_actions')->row();
+    }
 
     public function get_property($property_id)
     {
