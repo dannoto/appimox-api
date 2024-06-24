@@ -459,17 +459,16 @@ class Partner extends REST_Controller
            
             // $response = array();
 
-            print_r($partners_found);
 
 
-            // foreach ($partners_found as $p) {
+            foreach ($partners_found as $p) {
 
-            //     // print_r($partners_found);
-            //     // $p_data = $this->partner_data->get_partner($p->partner_id);
+                // print_r($partners_found);
+                // $p_data = $this->partner_data->get_partner($p->partner_id);
 
-            //     print($p);
+                print_r($p);
 
-            // }
+            }
 
             // if ($partners_found) {
 
