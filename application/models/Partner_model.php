@@ -29,7 +29,7 @@ class Partner_model extends CI_Model
         // get brokers tha have active partner on the property
         $this->db->select('up.partner_property_broker');
         $this->db->from('user_partners_propertys upp');
-        $this->db->join('user_partners up', 'upp.partner_id = up.partner_id', 'inner');
+        $this->db->join('user_partners up', 'upp.partner_id = up.id', 'inner');
         $this->db->where('upp.partner_property_id', $property_id);
         $this->db->where('upp.is_deleted', 0);
         $this->db->where('up.partner_status', 2);
