@@ -456,7 +456,7 @@ class Partner extends REST_Controller
 
             $partners_found = $this->partner_model->get_partners_by_property($property_id);
 
-            $response = [];
+            $response = array();
 
             foreach ($partners_found as $p) {
 
@@ -471,7 +471,7 @@ class Partner extends REST_Controller
             if ($partners_found) {
 
                 $final['status'] = true;
-                $final['response'] = $$response ;
+                $final['response'] = $response ;
                 $final['message'] = 'Parceiros encontrada com sucesso.';
                 $final['note'] = 'Parceiros encontrada com sucesso.';
 
