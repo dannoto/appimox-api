@@ -16,6 +16,13 @@ class Partner_model extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function get_partners_property($partner_id) {
+        $this->db->where('partner_id', $partner_id);
+        $this->db->where('is_deleted', 0);
+        return $this->db->get('user_partners_propertys')->result();
+
+    }
+
     public function get_partner_associated($partner_id)
     {
 
@@ -24,6 +31,14 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
+    public function get_partners_by_broker($broker_id) {
+
+        $this->db->where('partner_property_broker', $broker_id);
+        $this->db->where('is_deleted', 0);
+        $this->db->where('partner_status', 2);
+        return $this->db->get('user_partners')->result();
+
+    }
 
     public function get_partners_by_property($property_id) {
         // get brokers tha have active partner on the property

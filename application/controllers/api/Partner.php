@@ -436,6 +436,62 @@ class Partner extends REST_Controller
         }
     }
 
+
+
+    public function get_partners_by_broker_post () {
+
+        $this->form_validation->set_rules('broker_id', 'ID do usuario', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $broker_id = $this->input->post('broker_id');
+
+            $partners_found = $this->partner_model->get_partners_by_broker($broker_id);
+
+            $response = array();
+
+            foreach ($partners_found as $p) {
+
+                $propertys_by_partner = $this->property_model->get_partners_property($p->id);
+
+                foreach ($propertys_by_partner as $pf) {
+
+                    $broker_data = $this->property_model->get_property($pf->partner_property_id);
+                    $response[] = $broker_data;
+
+                }
+
+            }
+
+       
+            if ($partners_found) {
+
+                $final['status'] = true;
+                $final['response'] = $response ;
+                $final['message'] = 'Parceiros encontrada com sucesso.';
+                $final['note'] = 'Parceiros encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nao existem parceriso';
+                $final['note'] = 'Nao existem parceriso';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+
+    }
     public function get_partners_by_property_post()
     {
 
