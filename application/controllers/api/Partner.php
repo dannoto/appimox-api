@@ -460,7 +460,7 @@ class Partner extends REST_Controller
 
             foreach ($partners_found as $p) {
 
-                $propertys_by_partner = $this->property_model->get_partners_property($p->id);
+                $propertys_by_partner = $this->partner_model->get_partners_property($p->id);
 
                 foreach ($propertys_by_partner as $pf) {
 
