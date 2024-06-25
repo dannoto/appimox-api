@@ -21,6 +21,9 @@ class Partner extends REST_Controller
         $this->load->model('rating_model');
         $this->load->model('schedule_model');
         $this->load->model('partner_model');
+        $this->load->model('property_model');
+
+        
     }
 
 
