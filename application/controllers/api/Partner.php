@@ -472,7 +472,7 @@ class Partner extends REST_Controller
             }
 
        
-            if ($partners_found) {
+            if (count($response) > 0) {
 
                 $final['status'] = true;
                 $final['response'] = $response ;
