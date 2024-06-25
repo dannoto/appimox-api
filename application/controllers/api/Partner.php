@@ -465,7 +465,9 @@ class Partner extends REST_Controller
                 // $p_data = $this->partner_data->get_partner($p->partner_id);
                 $broker_data= $this->user_model->get_user($p->partner_property_broker);
                 
-                if ($broker_data->id != $user_id) {
+                if ($p->partner_property_broker == $user_id) {
+                   
+                } else {
                     $response[] = $broker_data;
                 }
 
