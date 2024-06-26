@@ -102,6 +102,47 @@ class Partner extends REST_Controller
         }
     }
 
+    public function check_exist_partner($property_id, $user_id) {
+
+        
+        $this->form_validation->set_rules('user_id', 'ID do Proprietário', 'trim|required');
+        $this->form_validation->set_rules('property_id', 'ID do Broker', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+
+            $property_id = $this->input->post('property_id');
+            $user_id    = $this->input->post('user_id');
+
+            $partner_id = $this->partner_model->check_exist_partner($property_id, $user_id);
+
+            if ($partner_id) {
+
+                $final['status'] = true;
+                $final['response'] = $partner_id;
+                $final['message'] = 'Parceria encontrada com sucesso.';
+                $final['note'] = 'Parceria encontrada com sucesso.';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao encontrar Parceria';
+                $final['note'] = 'Erro ao encontrar Parceria';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+
+    }
+
 
 
     public function add_partner_portfolio_post()

@@ -23,6 +23,18 @@ class Partner_model extends CI_Model
 
     }
 
+    public function check_exist_partner($property_id, $user_id) {
+
+        $this->db->where('partner_id', $user_id);
+        $this->db->where('partner_property_owner', $property_id);
+        $this->db->or_where('partner_property_broker', $property_id);
+
+        $this->db->where('is_deleted', 0);
+        $this->db->where('partner_status', 2);
+
+        return $this->db->get('user_partners')->row();
+    }
+
     public function get_partner_associated($partner_id)
     {
 
