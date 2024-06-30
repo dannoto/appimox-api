@@ -95,6 +95,8 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+
+			
 		} else {
 
 			// set variables from the form
@@ -126,7 +128,7 @@ class User extends REST_Controller
 				$final['note'] = 'Você está logado.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
-				
+
 			} else {
 
 				$final['status'] = false;
