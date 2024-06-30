@@ -25,7 +25,7 @@ class Partner_model extends CI_Model
 
     public function check_exist_partner($property_id, $user_id) {
 
-        $this->db->where('partner_id', $user_id);
+        $this->db->where('id', $user_id);
         $this->db->where('partner_property_owner', $property_id);
         $this->db->or_where('partner_property_broker', $property_id);
 
