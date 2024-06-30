@@ -24,16 +24,58 @@ class Partner_model extends CI_Model
     }
 
     public function check_exist_partner($property_id, $user_id) {
-
-        $this->db->where('id', $user_id);
-        $this->db->where('partner_property_owner', $property_id);
-        $this->db->or_where('partner_property_broker', $property_id);
-
-        $this->db->where('is_deleted', 0);
+        // Passo 1: Buscar todos os registros em user_partners_propertys com o partner_property_id
+        $this->db->select('partner_id');
+        $this->db->where('partner_property_id', $property_id);
+        $query = $this->db->get('user_partners_propertys');
+        $partner_ids = array();
+        
+        foreach ($query->result() as $row) {
+            $partner_ids[] = $row->partner_id;
+        }
+        
+        if (empty($partner_ids)) {
+            return null; // Nenhum partner_id encontrado
+        }
+        
+        // Passo 2: Filtrar os partner_ids em user_partners onde partner_status = 2 e is_deleted = 0
+        $this->db->select('id');
+        $this->db->where_in('id', $partner_ids);
         $this->db->where('partner_status', 2);
-
-        return $this->db->get('user_partners')->row();
+        $this->db->where('is_deleted', 0);
+        $query = $this->db->get('user_partners');
+        $valid_partner_ids = array();
+        
+        foreach ($query->result() as $row) {
+            $valid_partner_ids[] = $row->id;
+        }
+        
+        if (empty($valid_partner_ids)) {
+            return null; // Nenhum partner_id válido encontrado
+        }
+        
+        // Passo 3: Verificar se o user_id existe em partner_property_owner ou partner_property_broker
+        $this->db->where('user_id', $user_id);
+        $this->db->group_start();
+        $this->db->where_in('partner_id', $valid_partner_ids);
+        $this->db->where('partner_property_owner', $user_id);
+        $this->db->or_where('partner_property_broker', $user_id);
+        $this->db->group_end();
+        
+        return $this->db->get('user_partners_propertys')->row();
     }
+    
+    // public function check_exist_partner($property_id, $user_id) {
+
+    //     $this->db->where('id', $user_id);
+    //     $this->db->where('partner_property_owner', $user_id);
+    //     $this->db->or_where('partner_property_broker', $user_id);
+
+    //     $this->db->where('is_deleted', 0);
+    //     $this->db->where('partner_status', 2);
+
+    //     return $this->db->get('user_partners')->row();
+    // }
 
     public function get_partner_associated($partner_id)
     {
