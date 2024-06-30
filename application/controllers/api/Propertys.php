@@ -40,7 +40,23 @@ class Propertys extends REST_Controller
                 if ($decodedToken['status']) {
 
                     $user_id = $this->input->post('user_id');
+
+                    $_total_broker_propertys = array();
                     $_broker_propertys =  $this->broker_model->get_broker_propertys($user_id);
+
+                    foreach ($_broker_propertys as $c) {
+
+                        if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
+
+                            $c->check_partner = true;
+                            $_total_broker_propertys[] = $c;
+
+                        } else {
+
+                            $c->check_partner = CURLOPT_SSL_FALSESTART;
+                            $_total_broker_propertys[] = $c;
+                        }
+                    }
 
                     if ($_broker_propertys) {
 
@@ -1502,7 +1518,7 @@ class Propertys extends REST_Controller
                                 // Não faz nada, mantém a ordem atual
                             }
                         }
-                        
+
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
