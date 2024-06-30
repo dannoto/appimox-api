@@ -102,7 +102,7 @@ class Partner extends REST_Controller
         }
     }
 
-    public function check_exist_partner_post($property_id, $user_id) {
+    public function check_exist_partner_post() {
 
         
         $this->form_validation->set_rules('user_id', 'ID do Proprietário', 'trim|required');
