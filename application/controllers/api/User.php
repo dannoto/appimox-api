@@ -126,6 +126,7 @@ class User extends REST_Controller
 				$final['note'] = 'Você está logado.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
+				
 			} else {
 
 				$final['status'] = false;
