@@ -57,12 +57,12 @@ class Partner_model extends CI_Model
         // Passo 3: Verificar se o user_id existe em partner_property_owner ou partner_property_broker
         $this->db->where('user_id', $user_id);
         $this->db->group_start();
-        $this->db->where_in('partner_id', $valid_partner_ids);
+        $this->db->where_in('id', $valid_partner_ids);
         $this->db->where('partner_property_owner', $user_id);
         $this->db->or_where('partner_property_broker', $user_id);
         $this->db->group_end();
         
-        return $this->db->get('user_partners_propertys')->row();
+        return $this->db->get('user_partners')->row();
     }
     
     // public function check_exist_partner($property_id, $user_id) {
