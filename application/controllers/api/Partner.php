@@ -115,11 +115,12 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
 
             $property_id = $this->input->post('property_id');
-            $user_id    = $this->input->post('user_id');
+            $user_id     = $this->input->post('user_id');
 
             $partner_id = $this->partner_model->check_exist_partner($property_id, $user_id);
 
