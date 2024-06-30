@@ -807,7 +807,7 @@ abstract class REST_Controller extends CI_Controller {
      * @param bool $continue TRUE to flush the response to the client and continue
      * running the script; otherwise, exit
      */
-    public function check_exist_partnerresponse($data = NULL, $http_code = NULL, $continue = FALSE)
+    public function response($data = NULL, $http_code = NULL, $continue = FALSE)
     {
         //if profiling enabled then print profiling data
 		$isProfilingEnabled = $this->config->item('enable_profiling');
