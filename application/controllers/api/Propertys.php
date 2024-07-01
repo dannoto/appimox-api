@@ -18,7 +18,7 @@ class Propertys extends REST_Controller
         $this->load->model('property_model');
     }
 
-    public function broker_propriety_partner_post()
+    public function broker_propertys_partner_post()
     {
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 

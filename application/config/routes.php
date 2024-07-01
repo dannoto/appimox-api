@@ -87,7 +87,7 @@ $route['update_client_location'] = 'api/User/update_client_location';
 
 // Propertys Broker
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
-$route['broker_propertys_partner'] = 'api/Propertys/broker_propriety_partner';
+$route['broker_propertys_partner'] = 'api/Propertys/broker_propertys_partner';
 
 $route['search_broker_propertys'] = 'api/Propertys/search_broker_propertys';
 $route['add_broker_property'] = 'api/Propertys/add_broker_property';
