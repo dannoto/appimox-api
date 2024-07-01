@@ -18,6 +18,80 @@ class Propertys extends REST_Controller
         $this->load->model('property_model');
     }
 
+    // public function broker_propriety_post()
+    // {
+    //     $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+    //     if ($this->form_validation->run() == false) {
+
+    //         $final['status'] = false;
+    //         $final['message'] = validation_errors();
+    //         $final['note'] = 'Erro no formulário.';
+
+    //         $this->response($final, REST_Controller::HTTP_OK);
+    //     } else {
+
+    //         $headers = $this->input->request_headers();
+
+    //         if (isset($headers['Authorization'])) {
+
+    //             $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+    //             if ($decodedToken['status']) {
+
+    //                 $user_id = $this->input->post('user_id');
+
+    //                 $_total_broker_propertys = array();
+    //                 $_broker_propertys =  $this->broker_model->get_broker_propertys($user_id);
+
+    //                 foreach ($_broker_propertys as $c) {
+
+    //                     if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
+
+    //                         $c->check_partner = true;
+    //                         $_total_broker_propertys[] = $c;
+
+    //                     } else {
+
+    //                         $c->check_partner = false;
+    //                         $_total_broker_propertys[] = $c;
+    //                     }
+    //                 }
+
+    //                 if ($_broker_propertys) {
+
+    //                     $final['status'] = true;
+    //                     $final['message'] = 'Imóveis encontradas com sucesso.';
+    //                     $final['response'] = $_total_broker_propertys;
+    //                     $final['note'] = 'Dados   encontrados get_broker_propertys()';
+
+    //                     $this->response($final, REST_Controller::HTTP_OK);
+    //                 } else {
+
+    //                     $final['status'] = false;
+    //                     $final['message'] = 'Nenhum imoveil encontrado.';
+    //                     $final['note'] = 'Erro em get_broker_propertys()';
+
+    //                     $this->response($final, REST_Controller::HTTP_OK);
+    //                 }
+    //             } else {
+
+    //                 $final['status'] = false;
+    //                 $final['message'] = 'Sua sessão expirou.';
+    //                 $final['note'] = 'Erro em $decodedToken["status"]';
+    //                 $this->response($decodedToken);
+    //             }
+    //         } else {
+
+    //             $final['status'] = false;
+    //             $final['message'] = 'Falha na autenticação.';
+    //             $final['note'] = 'Erro em validateToken()';
+
+    //             $this->response($final, REST_Controller::HTTP_OK);
+    //         }
+    //     }
+    // }
+
     public function broker_propriety_post()
     {
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
@@ -40,29 +114,13 @@ class Propertys extends REST_Controller
                 if ($decodedToken['status']) {
 
                     $user_id = $this->input->post('user_id');
-
-                    $_total_broker_propertys = array();
                     $_broker_propertys =  $this->broker_model->get_broker_propertys($user_id);
-
-                    foreach ($_broker_propertys as $c) {
-
-                        if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
-
-                            $c->check_partner = true;
-                            $_total_broker_propertys[] = $c;
-
-                        } else {
-
-                            $c->check_partner = false;
-                            $_total_broker_propertys[] = $c;
-                        }
-                    }
 
                     if ($_broker_propertys) {
 
                         $final['status'] = true;
                         $final['message'] = 'Imóveis encontradas com sucesso.';
-                        $final['response'] = $_total_broker_propertys;
+                        $final['response'] = $_broker_propertys;
                         $final['note'] = 'Dados   encontrados get_broker_propertys()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
@@ -1518,7 +1576,7 @@ class Propertys extends REST_Controller
                                 // Não faz nada, mantém a ordem atual
                             }
                         }
-
+                        
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {
