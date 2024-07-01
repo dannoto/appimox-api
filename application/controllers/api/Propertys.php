@@ -42,6 +42,7 @@ class Propertys extends REST_Controller
                 if ($decodedToken['status']) {
 
                     $user_id = $this->input->post('user_id');
+                    
                     $_broker_propertys =  $this->broker_model->get_broker_propertys($user_id);
 
                     if ($_broker_propertys) {
