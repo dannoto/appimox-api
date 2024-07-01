@@ -64,7 +64,7 @@ class Propertys extends REST_Controller
 
                         $final['status'] = true;
                         $final['message'] = 'Imóveis encontradas com sucesso.';
-                        $final['response'] = $_broker_propertys;
+                        $final['response'] = $_total_broker_propertys;
                         $final['note'] = 'Dados   encontrados get_broker_propertys()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
