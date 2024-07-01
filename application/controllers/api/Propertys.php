@@ -20,8 +20,6 @@ class Propertys extends REST_Controller
 
     }
 
-
-
     public function broker_propertys_partner_post()
     {
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
@@ -35,13 +33,13 @@ class Propertys extends REST_Controller
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
 
-            // $headers = $this->input->request_headers();
+            $headers = $this->input->request_headers();
 
-            // if (isset($headers['Authorization'])) {
+            if (isset($headers['Authorization'])) {
 
-            //     $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-            //     if ($decodedToken['status']) {
+                if ($decodedToken['status']) {
 
                     $user_id = $this->input->post('user_id');
 
@@ -78,21 +76,21 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-            //     } else {
+                } else {
 
-            //         $final['status'] = false;
-            //         $final['message'] = 'Sua sessão expirou.';
-            //         $final['note'] = 'Erro em $decodedToken["status"]';
-            //         $this->response($decodedToken);
-            //     }
-            // } else {
+                    $final['status'] = false;
+                    $final['message'] = 'Sua sessão expirou.';
+                    $final['note'] = 'Erro em $decodedToken["status"]';
+                    $this->response($decodedToken);
+                }
+            } else {
 
-            //     $final['status'] = false;
-            //     $final['message'] = 'Falha na autenticação.';
-            //     $final['note'] = 'Erro em validateToken()';
+                $final['status'] = false;
+                $final['message'] = 'Falha na autenticação.';
+                $final['note'] = 'Erro em validateToken()';
 
-            //     $this->response($final, REST_Controller::HTTP_OK);
-            // }
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
         }
     }
 
