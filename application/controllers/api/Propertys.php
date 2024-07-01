@@ -44,25 +44,25 @@ class Propertys extends REST_Controller
                     $_total_broker_propertys = array();
                     $_broker_propertys =  $this->broker_model->get_broker_propertys($user_id);
 
-                    foreach ($_broker_propertys as $c) {
+                    // foreach ($_broker_propertys as $c) {
 
-                        if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
+                    //     if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
 
-                            $c->check_partner = true;
-                            $_total_broker_propertys[] = $c;
+                    //         $c->check_partner = true;
+                    //         $_total_broker_propertys[] = $c;
 
-                        } else {
+                    //     } else {
 
-                            $c->check_partner = false;
-                            $_total_broker_propertys[] = $c;
-                        }
-                    }
+                    //         $c->check_partner = false;
+                    //         $_total_broker_propertys[] = $c;
+                    //     }
+                    // }
 
                     if ($_broker_propertys) {
 
                         $final['status'] = true;
                         $final['message'] = 'Imóveis encontradas com sucesso.';
-                        $final['response'] = $_total_broker_propertys;
+                        $final['response'] = $_broker_propertys;
                         $final['note'] = 'Dados   encontrados get_broker_propertys()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
