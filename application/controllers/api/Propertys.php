@@ -16,7 +16,11 @@ class Propertys extends REST_Controller
         $this->load->model('email_model');
         $this->load->model('broker_model');
         $this->load->model('property_model');
+        $this->load->model('partner_model');
+
     }
+
+
 
     public function broker_propertys_partner_post()
     {
