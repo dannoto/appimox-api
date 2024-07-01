@@ -48,12 +48,12 @@ class Propertys extends REST_Controller
 
                         if ($this->partner_model->check_exist_partner($c->id, $user_id)) {
 
-                            // $c->check_partner = true;
+                            $c->check_partner = true;
                             $_total_broker_propertys[] = $c;
 
                         } else {
 
-                            // $c->check_partner = false;
+                            $c->check_partner = false;
                             $_total_broker_propertys[] = $c;
                         }
                     }
