@@ -84,6 +84,7 @@ $route['update_client_location'] = 'api/User/update_client_location';
 
 // creci
 
+$route['inactive'] = 'api/User/inactive';
 
 // Propertys Broker
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';

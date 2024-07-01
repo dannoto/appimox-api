@@ -23,6 +23,48 @@ class User extends REST_Controller
 		
 	}
 
+	public function inactive_post() {
+		
+
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			// set variables from the form
+			$user_id = $this->input->post('user_id');
+
+			$data = array(
+				'user_status' => 2
+			);
+
+
+			if ($this->user_model->update_user_profile($user_id, $data)) {
+
+				$final['status'] = true;
+				$final['message'] = 'Sua conta foi desativada com sucesso.';
+				$final['note'] = 'Sua conta foi desativada com sucesso.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+				
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Não foi possivel desativar sua conta. Tente novamente.';
+				$final['note'] = 'Não foi possivel desativar sua conta. Tente novamente.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
 	public function register_post()
 	{
 
@@ -96,7 +138,7 @@ class User extends REST_Controller
 
 			$this->response($final, REST_Controller::HTTP_OK);
 
-			
+
 		} else {
 
 			// set variables from the form
