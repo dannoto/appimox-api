@@ -263,3 +263,18 @@ $route['get_partners'] = 'api/Partner/get_partners';
 $route['get_partners_by_user'] = 'api/Partner/get_partners_by_user';
 
 // Parnet
+
+// Planos
+$route['get_planos'] = 'api/Plans/get_planos';
+// Planos
+
+// Suporte
+$route['get_support_categorias'] = 'api/Support/get_support_categorias';
+$route['get_support_artigos'] = 'api/Support/get_support_artigos';
+// Suporte
+
+// Termos
+$route['get_terms'] = 'api/Terms/get_support_categorias';
+// Termos
+
+// 

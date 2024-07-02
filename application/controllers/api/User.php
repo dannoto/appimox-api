@@ -158,6 +158,8 @@ class User extends REST_Controller
 				$tokenData = $this->authorization_token->generateToken($token_data);
 				$final = array();
 				$final['uid'] = $user_id;
+				$final['user_name'] =  $user->user_name;
+
 				$final['user_status'] =  $user->user_status;
 				$final['user_notification_token'] =  $user->user_notification_token;
 
