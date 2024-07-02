@@ -181,7 +181,7 @@ class User extends REST_Controller
 
 
 
-	public function add_notification_token()
+	public function add_notification_token_post()
 	{
 
 		// set validation rules
