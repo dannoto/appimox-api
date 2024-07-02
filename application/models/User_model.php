@@ -45,7 +45,7 @@ class User_model extends CI_Model
 		$data = array(
 			'user_type' => $user_type
 		);
-		
+
 		return $this->db->update('users', $data);
 	}
 	public function update_user($user_id, $data)
@@ -91,7 +91,8 @@ class User_model extends CI_Model
 		return $this->db->get()->row();
 	}
 
-	public function check_creci_is_unique($user_creci, $user_cpf) {
+	public function check_creci_is_unique($user_creci, $user_cpf)
+	{
 		$this->db->where('user_creci', $user_creci);
 		$this->db->where('user_cpf', $user_cpf);
 		$this->db->where('user_verified_creci', 1);
@@ -125,11 +126,11 @@ class User_model extends CI_Model
 
 	// Preferences
 
-	public function get_user_preferences($user_id) {
+	public function get_user_preferences($user_id)
+	{
 
 		$this->db->where('user_id', $user_id);
 		return $this->db->get('user_preferences')->result();
-
 	}
 
 	public function get_db_preferences()
@@ -228,7 +229,7 @@ class User_model extends CI_Model
 		$this->db->join('propertys', 'user_favorits.favorit_property_id = propertys.id');
 		$this->db->where('user_favorits.favorit_user_id', $user_id);
 		$this->db->where('user_favorits.is_deleted', 0);
-		$this->db->order_by('user_favorits.id' , 'desc');
+		$this->db->order_by('user_favorits.id', 'desc');
 
 		// Executa a consulta e retorna os resultados
 		return $this->db->get()->result();
@@ -285,6 +286,26 @@ class User_model extends CI_Model
 	}
 	// favorits
 
+	// notifications
+	public function check_notification_token($user_id, $notifcation_token)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->where('user_notification_token', $notifcation_token);
+		return $this->db->get('users')->row();
+	}
+
+	public function add_notification_token($user_id, $notifcation_token)
+	{
+
+		$this->db->where('id', $user_id);
+
+		$data = array(
+			'user_notification_token' => $notifcation_token
+		);
+
+		return $this->db->update('users', $data);
+	}
+	// notifications
 
 
 
@@ -306,22 +327,23 @@ class User_model extends CI_Model
 
 	// cidades
 
-	public function get_cidades_by_estado($uf) {
+	public function get_cidades_by_estado($uf)
+	{
 		$this->db->where('uf', $uf);
 		return $this->db->get('db_cidades')->result();
 	}
 
-	public function get_estados() {
+	public function get_estados()
+	{
 		$this->db->where('available', 1);
 		return $this->db->get('db_estados')->result();
 	}
 
 
-	public function get_estados_client() {
+	public function get_estados_client()
+	{
 		// $this->db->where('available', 1);
 		return $this->db->get('db_estados')->result();
 	}
 	// cidades
 }
-
-

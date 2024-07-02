@@ -86,6 +86,11 @@ $route['update_client_location'] = 'api/User/update_client_location';
 
 $route['inactive'] = 'api/User/inactive';
 
+$route['add_notification_token'] = 'api/User/add_notification_token';
+
+
+
+
 // Propertys Broker
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
 $route['broker_propertys_partner'] = 'api/Propertys/broker_propertys_partner';

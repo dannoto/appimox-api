@@ -19,12 +19,11 @@ class User extends REST_Controller
 		$this->load->model('schedule_model');
 
 		$this->load->model('followers_model');
-
-		
 	}
 
-	public function inactive_post() {
-		
+	public function inactive_post()
+	{
+
 
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
@@ -35,7 +34,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
 			// set variables from the form
@@ -53,7 +51,6 @@ class User extends REST_Controller
 				$final['note'] = 'Sua conta foi desativada com sucesso.';
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
-				
 			} else {
 
 				$final['status'] = false;
@@ -137,8 +134,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
-
 		} else {
 
 			// set variables from the form
@@ -168,12 +163,11 @@ class User extends REST_Controller
 				$final['access_token'] = $tokenData;
 				$final['user_type'] = $user->user_type;
 				$final['status'] = true;
-	
+
 				$final['message'] = 'Logado com sucesso!';
 				$final['note'] = 'Você está logado.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
-
 			} else {
 
 				$final['status'] = false;
@@ -184,6 +178,59 @@ class User extends REST_Controller
 			}
 		}
 	}
+
+
+
+	public function add_notification_token()
+	{
+
+		// set validation rules
+		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+		$this->form_validation->set_rules('notifcation_token', 'notifcation_token ', 'trim|required');
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			// set variables from the form
+			$notifcation_token = $this->input->post('notifcation_token');
+			$user_id = $this->input->post('user_id');
+
+			if ($this->user_model->check_notification_token($user_id, $notifcation_token)) {
+
+				$final['status'] = true;
+				$final['message'] = 'Notification Token Já foi registrado.';
+				$final['note'] = 'Notification Token Já foi registrado.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+
+			} else {
+
+				if ($this->user_model->add_notification_token($user_id, $notifcation_token)) {
+
+					$final['status'] = false;
+					$final['message'] = 'Registrado com sucesso.';
+					$final['note'] = 'Registrado com sucesso.';
+					// login failed
+					$this->response($final, REST_Controller::HTTP_OK);
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Erro ao registrar token.';
+					$final['note'] = 'Erro ao registrar token.';
+					// login failed
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
+			}
+		}
+	}
+
 
 	public function set_user_type_post()
 	{
@@ -1675,7 +1722,6 @@ class User extends REST_Controller
 								$final['response'] = $default_broker_cidade;
 								$final['note'] = 'Dados encontrados suggest_property_by_estado()';
 								$this->response($final, REST_Controller::HTTP_OK);
-								
 							} else {
 
 								$final['status'] = false;
@@ -1793,7 +1839,7 @@ class User extends REST_Controller
 			}
 		}
 	}
-	
+
 
 	// Cliente dashboard
 }
