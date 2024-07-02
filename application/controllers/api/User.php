@@ -159,6 +159,7 @@ class User extends REST_Controller
 				$final = array();
 				$final['uid'] = $user_id;
 				$final['user_status'] =  $user->user_status;
+				$final['user_notification_token'] =  $user->user_notification_token;
 
 				$final['access_token'] = $tokenData;
 				$final['user_type'] = $user->user_type;
