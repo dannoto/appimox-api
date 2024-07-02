@@ -186,7 +186,7 @@ class User extends REST_Controller
 
 		// set validation rules
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-		$this->form_validation->set_rules('notifcation_token', 'notifcation_token ', 'trim|required');
+		$this->form_validation->set_rules('notification_token', 'notification_token ', 'trim|required');
 
 		if ($this->form_validation->run() == false) {
 
@@ -198,10 +198,10 @@ class User extends REST_Controller
 		} else {
 
 			// set variables from the form
-			$notifcation_token = $this->input->post('notifcation_token');
+			$notification_token = $this->input->post('notification_token');
 			$user_id = $this->input->post('user_id');
 
-			if ($this->user_model->check_notification_token($user_id, $notifcation_token)) {
+			if ($this->user_model->check_notification_token($user_id, $notification_token)) {
 
 				$final['status'] = true;
 				$final['message'] = 'Notification Token Já foi registrado.';
@@ -211,7 +211,7 @@ class User extends REST_Controller
 
 			} else {
 
-				if ($this->user_model->add_notification_token($user_id, $notifcation_token)) {
+				if ($this->user_model->add_notification_token($user_id, $notification_token)) {
 
 					$final['status'] = false;
 					$final['message'] = 'Registrado com sucesso.';
