@@ -274,7 +274,7 @@ $route['get_support_artigos'] = 'api/Support/get_support_artigos';
 // Suporte
 
 // Termos
-$route['get_terms'] = 'api/Terms/get_support_categorias';
+$route['get_terms'] = 'api/Terms/get_terms';
 // Termos
 
 // 

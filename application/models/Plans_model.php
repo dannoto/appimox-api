@@ -19,5 +19,10 @@ class Plans_model extends CI_Model
         $this->db->where('is_deleted', 0);
         return $this->db->get('user_plans')->result();
     }
+    public function get_terms()
+    {
+     
+        return $this->db->get('terms')->result();
+    }
 
 }
