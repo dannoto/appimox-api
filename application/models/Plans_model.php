@@ -22,7 +22,7 @@ class Plans_model extends CI_Model
     public function get_terms()
     {
      
-        return $this->db->get('terms')->result();
+        return $this->db->get('terms')->row();
     }
 
 }
