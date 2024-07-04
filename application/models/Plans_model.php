@@ -42,5 +42,8 @@ class Plans_model extends CI_Model
         return $this->db->get('support_content')->row();
     }
 
-    
+    public function search_artigos($query) {
+        $this->db->like('content_title', $query);
+        return $this->db->get('support_content')->result();
+    }
 }

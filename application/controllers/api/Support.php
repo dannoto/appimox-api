@@ -113,4 +113,43 @@ class Support extends REST_Controller
 			}
 		}
 	}
+
+    public function get_support_categorias_search() 	{
+
+        $this->form_validation->set_rules('query', 'User ID', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+            $artigo_data = $this->plans_model->search_artigos($this->input->post('query'));
+
+	
+			if ($artigo_data) {
+
+                $final['status'] = true;
+                $final['response'] =$artigo_data;
+				$final['message'] = 'Planos encontrados com sucesso.';
+				$final['note'] = 'Planos encontrados com sucesso.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Nenhum plano encontrado.';
+				$final['note'] = 'Nenhum plano encontrado.';
+				// login failed
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
+
+    
 }
