@@ -6,7 +6,7 @@ require APPPATH . '/libraries/REST_Controller.php';
 
 use Restserver\Libraries\REST_Controller;
 
-class Partner extends REST_Controller
+class Plans extends REST_Controller
 {
 
     public function __construct()
@@ -29,7 +29,7 @@ class Partner extends REST_Controller
         
     }
 
-    public function get_planos() 	{
+    public function get_planos_post() 	{
 
 
 		if ($this->form_validation->run() == false) {
