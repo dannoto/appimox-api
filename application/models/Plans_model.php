@@ -25,7 +25,7 @@ class Plans_model extends CI_Model
         return $this->db->get('terms')->row();
     }
 
-    public function support_categories() {
+    public function get_categorias() {
         $this->db->where('is_deleted', 0);
         return $this->db->get('support_categories')->result();
     }
