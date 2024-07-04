@@ -29,7 +29,7 @@ class Terms extends REST_Controller
         
     }
 
-    public function get_terms() 	{
+    public function get_terms_post() 	{
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
