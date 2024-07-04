@@ -114,7 +114,7 @@ class Support extends REST_Controller
 		}
 	}
 
-    public function get_support_categorias_search() 	{
+    public function get_support_categorias_search_post() 	{
 
         $this->form_validation->set_rules('query', 'User ID', 'trim|required');
 
