@@ -77,44 +77,9 @@ class Support extends REST_Controller
 		}
 	}
 
-    public function get_support_artigos() 	{
+    public function get_support_artigo_post() 	{
 
-        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
-
-
-		if ($this->form_validation->run() == false) {
-
-			$final['status'] = false;
-			$final['message'] = validation_errors();
-			$final['note'] = 'Erro no formulário.';
-
-			$this->response($final, REST_Controller::HTTP_OK);
-
-		} else {
-
-	
-			if ($this->plans_model->get_terms()) {
-
-                $final['status'] = true;
-                $final['response'] = $this->plans_model->get_terms();
-				$final['message'] = 'Planos encontrados com sucesso.';
-				$final['note'] = 'Planos encontrados com sucesso.';
-				// login failed
-				$this->response($final, REST_Controller::HTTP_OK);
-			} else {
-
-				$final['status'] = false;
-				$final['message'] = 'Nenhum plano encontrado.';
-				$final['note'] = 'Nenhum plano encontrado.';
-				// login failed
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
-		}
-	}
-
-    public function get_support_artigo() 	{
-
-        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+        $this->form_validation->set_rules('artigo_id', 'User ID', 'trim|required');
 
 
 		if ($this->form_validation->run() == false) {
@@ -127,11 +92,13 @@ class Support extends REST_Controller
 
 		} else {
 
+            $artigo_data = $this->plans_model->get_artigo($this->input->post('artigo_id'));
+
 	
-			if ($this->plans_model->get_terms()) {
+			if ($artigo_data) {
 
                 $final['status'] = true;
-                $final['response'] = $this->plans_model->get_terms();
+                $final['response'] =$artigo_data;
 				$final['message'] = 'Planos encontrados com sucesso.';
 				$final['note'] = 'Planos encontrados com sucesso.';
 				// login failed

@@ -270,7 +270,6 @@ $route['get_planos'] = 'api/Plans/get_planos';
 
 // Suporte
 $route['get_support_categorias'] = 'api/Support/get_support_categorias';
-$route['get_support_artigos'] = 'api/Support/get_support_artigos';
 $route['get_support_artigo'] = 'api/Support/get_support_artigo';
 
 // Suporte

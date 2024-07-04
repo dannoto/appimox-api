@@ -37,4 +37,10 @@ class Plans_model extends CI_Model
         return $this->db->get('support_content')->result();
     }
 
+    public function get_artigo($artigo_id) {
+        $this->db->where('id', $artigo_id);
+        return $this->db->get('support_content')->row();
+    }
+
+    
 }
