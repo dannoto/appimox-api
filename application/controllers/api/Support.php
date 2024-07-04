@@ -51,7 +51,7 @@ class Support extends REST_Controller
 
                 $artigos = $this->plans_model->get_categorias_artigos($e->id);
 
-                $e['artigos'] = $artigos;
+                $e->artigos = $artigos;
 
                 $response[] = $e;
             }
