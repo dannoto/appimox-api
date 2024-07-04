@@ -30,4 +30,11 @@ class Plans_model extends CI_Model
         return $this->db->get('support_categories')->result();
     }
 
+    public function get_categorias_artigos($categoria) {
+        $this->db->where('is_deleted', 0);
+        $this->db->where('content_category', $categoria);
+
+        return $this->db->get('support_content')->result();
+    }
+
 }

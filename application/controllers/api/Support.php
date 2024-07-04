@@ -44,11 +44,24 @@ class Support extends REST_Controller
 
 		} else {
 
+
+            $response = array();
+
+            foreach($this->plans_model->get_categorias() as $e) {
+
+                $artigos = $this->plans_model->get_categorias_artigos($e->id);
+
+                $e['artigos'] = $artigos;
+
+                $response[] = $e;
+            }
+
+
 	
-			if ($this->plans_model->get_categorias()) {
+			if ($response) {
 
                 $final['status'] = true;
-                $final['response'] = $this->plans_model->get_categorias();
+                $final['response'] = $response;
 				$final['message'] = 'Categorias encontrados com sucesso.';
 				$final['note'] = 'Categorias encontrados com sucesso.';
 				// login failed
