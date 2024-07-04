@@ -47,7 +47,7 @@ class Plans extends REST_Controller
 	
 			if ($this->plans_model->get_plans()) {
 
-                $final['status'] = false;
+                $final['status'] = true;
                 $final['response'] = $this->plans_model->get_plans();
 				$final['message'] = 'Planos encontrados com sucesso.';
 				$final['note'] = 'Planos encontrados com sucesso.';
