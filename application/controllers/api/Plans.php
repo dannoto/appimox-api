@@ -31,6 +31,8 @@ class Plans extends REST_Controller
 
     public function get_planos_post() 	{
 
+        $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
+
 
 		if ($this->form_validation->run() == false) {
 
