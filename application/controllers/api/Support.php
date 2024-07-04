@@ -29,7 +29,7 @@ class Support extends REST_Controller
         
     }
 
-    public function get_support_categorias() 	{
+    public function get_support_categorias_post() 	{
 
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
