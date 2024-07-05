@@ -260,12 +260,21 @@ class User_model extends CI_Model
 		return $this->db->get('user_favorits')->row();
 	}
 
-	public function add_favorit($user_id, $property_id)
+	public function get_leads($broker_id) {
+		
+		$this->db->where('property_broker_id', $broker_id);
+		return $this->db->get('user_favorits')->row();
+
+	}
+
+	public function add_favorit($user_id, $property_id, $property_broker_id)
 	{
 
 		$data = array(
 			'favorit_user_id' => $user_id,
 			'favorit_property_id' => $property_id,
+			'property_broker_id' => $property_broker_id,
+
 			'favorit_data' => date('Y-m-d H:i:s'),
 			'is_deleted' => 0
 		);

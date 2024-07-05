@@ -280,4 +280,7 @@ $route['get_support_categorias_search'] = 'api/Support/get_support_categorias_se
 $route['get_terms'] = 'api/Terms/get_terms';
 // Termos
 
+
+$route['get_leads'] = 'api/User/get_leads';
+
 // 

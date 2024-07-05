@@ -211,7 +211,6 @@ class User extends REST_Controller
 				$final['note'] = 'Notification Token Já foi registrado.';
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
-
 			} else {
 
 				if ($this->user_model->add_notification_token($user_id, $notification_token)) {
@@ -221,7 +220,6 @@ class User extends REST_Controller
 					$final['note'] = 'Registrado com sucesso.';
 					// login failed
 					$this->response($final, REST_Controller::HTTP_OK);
-
 				} else {
 
 					$final['status'] = false;
@@ -897,8 +895,10 @@ class User extends REST_Controller
 
 					$user_id = $this->input->post('user_id');
 					$property_id = $this->input->post('property_id');
+					$broker_property_id = $this->property_model->get_property($property_id);
+					$broker_property_id = $broker_property_id->property_user_id;
 
-					$add_favorit =  $this->user_model->add_favorit($user_id, $property_id);
+					$add_favorit =  $this->user_model->add_favorit($user_id, $property_id, $broker_property_id);
 
 					if ($add_favorit) {
 
@@ -1845,4 +1845,89 @@ class User extends REST_Controller
 
 
 	// Cliente dashboard
+
+	public function get_leads_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$broker_id = $this->input->post('user_id');
+					$leads_data =  $this->user_model->get_leads($broker_id);
+
+					if ($leads_data) {
+
+						$response = array();
+
+						foreach ($leads_data as $d) {
+
+							$lead_array = array();
+
+							$lead_array['lead_data'] = $this->user_model->get_user($d->favorit_user_id);
+							$lead_array['property_data'] = $this->property_model->get_property($d->favorit_property_id);
+
+							$response[] = $lead_array;
+						}
+
+						if ($response) {
+				
+							$final['status'] = true;
+							$final['message'] = 'Leads com sucesso.';
+							$final['response'] = $response;
+							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else {
+
+							$final['status'] = false;
+							$final['message'] = 'Nenhuma lead encontrada.';
+							$final['note'] = 'Nenhuma lead encontrada.';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+						$final['note'] = 'Erro em get_user()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+
+
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($decodedToken);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+		}
+	}
 }
