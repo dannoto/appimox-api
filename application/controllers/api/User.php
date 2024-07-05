@@ -1878,12 +1878,12 @@ class User extends REST_Controller
 
 						foreach ($leads_data as $d) {
 
-							$lead_array = array();
+						
 
-							$lead_array->lead_data = $this->user_model->get_user($d->favorit_user_id);
-							$lead_array->property_data = $this->property_model->get_property($d->favorit_property_id);
+							$d->lead_data = $this->user_model->get_user($d->favorit_user_id);
+							$d->property_data = $this->property_model->get_property($d->favorit_property_id);
 
-							$response[] = $lead_array;
+							$response[] = $d;
 						}
 
 						if ($response) {
