@@ -263,6 +263,7 @@ class User_model extends CI_Model
 	public function get_leads($broker_id) {
 
 		$this->db->where('property_broker_id', $broker_id);
+		$this->db->order_by('id','desc');
 		return $this->db->get('user_favorits')->result();
 
 	}
