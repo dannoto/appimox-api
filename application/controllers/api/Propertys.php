@@ -17,7 +17,6 @@ class Propertys extends REST_Controller
         $this->load->model('broker_model');
         $this->load->model('property_model');
         $this->load->model('partner_model');
-
     }
 
     public function broker_propertys_partner_post()
@@ -52,7 +51,6 @@ class Propertys extends REST_Controller
 
                             $c->check_partner = true;
                             $_total_broker_propertys[] = $c;
-
                         } else {
 
                             $c->check_partner = false;
@@ -1014,6 +1012,44 @@ class Propertys extends REST_Controller
         }
     }
 
+
+    public function get_property_new()
+    {
+
+        $this->form_validation->set_rules('limit', 'User ID', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulárioi.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $limit = $this->input->post('limit');
+
+
+            $propertys = $this->property_model->get_property_new($limit);
+
+            if ($propertys) {
+
+                $final['status'] = true;
+                $final['message'] = 'Propriedades encontrados';
+                $final['response'] =  $propertys;
+                $final['note'] = 'Erro em $decodedToken["status"]';
+                $this->response($final);
+            } else {
+
+                $final['status'] = false;
+
+                $final['message'] = 'Nenhuma propriedade encontrada';
+                $final['note'] = 'Erro em $decodedToken["status"]';
+                $this->response($final);
+            }
+        }
+    }
+
     public function get_propertys_by_range_filter_post()
     {
 
@@ -1578,7 +1614,7 @@ class Propertys extends REST_Controller
                                 // Não faz nada, mantém a ordem atual
                             }
                         }
-                        
+
 
                         // Definir os três melhores corretores como recomendados
                         for ($i = 0; $i < min(3, count($brokers_data)); $i++) {

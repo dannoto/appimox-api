@@ -102,6 +102,9 @@ $route['add_broker_property_others_images'] = 'api/Propertys/add_broker_property
 $route['get_broker_property_data'] = 'api/Propertys/get_broker_property_data';
 $route['delete_broker_property'] = 'api/Propertys/delete_broker_property';
 $route['get_broker_property_home'] = 'api/Propertys/get_broker_property_home';
+
+$route['get_property_new'] = 'api/Propertys/get_property_new';
+
 // delete imagenes
 
 $route['delete_property_image'] = 'api/Propertys/delete_property_image';

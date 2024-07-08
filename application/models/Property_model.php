@@ -20,6 +20,16 @@ class Property_model extends CI_Model
         return $this->db->get('propertys')->row();
     }
 
+    public function get_property_new($limit) {
+
+        $this->db->where('is_deleted', 0);
+        $this->db->limit($limit);
+
+        return $this->db->get('propertys')->result();
+
+        
+    }
+
     public function get_property_filter($property_id, $f_data)
     {
         $this->db->where('id', $property_id);
