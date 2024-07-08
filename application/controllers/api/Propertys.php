@@ -1013,7 +1013,7 @@ class Propertys extends REST_Controller
     }
 
 
-    public function get_property_new()
+    public function get_property_new_post()
     {
 
         $this->form_validation->set_rules('limit', 'User ID', 'trim|required');
