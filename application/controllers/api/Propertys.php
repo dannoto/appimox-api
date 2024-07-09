@@ -1014,9 +1014,9 @@ class Propertys extends REST_Controller
 
 
     public function get_property_post()
+    
     {
         
-
         $this->form_validation->set_rules('property_id', 'User ID', 'trim|required');
 
         if ($this->form_validation->run() == false) {
