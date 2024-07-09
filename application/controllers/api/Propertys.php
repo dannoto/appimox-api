@@ -1028,8 +1028,10 @@ class Propertys extends REST_Controller
 
         } else {
 
-            $property_data = $this->input->post('property_id');
+            $property_id = $this->input->post('property_id');
+            $property_data = $this->property_model->get_property($property_id);
 
+            
             if ($property_data) {
 
                 $final['status'] = true;
