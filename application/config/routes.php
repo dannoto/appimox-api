@@ -238,6 +238,7 @@ $route['add_partner_propertys'] = 'api/Partner/add_partner_propertys';
 
 $route['add_partner_property_portfolio'] = 'api/Partner/add_partner_property_portfolio';
 
+$route['get_property'] = 'api/Property/get_property';
 
 $route['add_partner_action'] = 'api/Partner/add_partner_action';
 $route['add_partner_finish_action'] = 'api/Partner/add_partner_finish_action';

@@ -1013,6 +1013,43 @@ class Propertys extends REST_Controller
     }
 
 
+    public function get_property()
+    {
+
+        $this->form_validation->set_rules('property_id', 'User ID', 'trim|required');
+
+        if ($this->form_validation->run() == false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulárioi.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $property_data = $this->input->post('property_id');
+
+            if ($property_data) {
+
+                $final['status'] = true;
+                $final['message'] = 'Propriedades encontrados';
+                $final['response'] =  $property_data;
+                $final['note'] = 'Erro em $decodedToken["status"]';
+                $this->response($final);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhuma propriedade encontrada';
+                $final['note'] = 'Erro em $decodedToken["status"]';
+                $this->response($final);
+            }
+        }
+    }
+
+
+
     public function get_property_new_post()
     {
 
