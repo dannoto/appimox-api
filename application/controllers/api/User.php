@@ -1542,12 +1542,15 @@ class User extends REST_Controller
 			$final['response'] = $estados_data;
 			$final['message'] = 'Estados encontrados com sucesso.';
 			$final['note'] = 'Estados encontrados com sucesso.';
+			
 			$this->response($final, REST_Controller::HTTP_OK);
+
 		} else {
 
 			$final['status'] = false;
 			$final['message'] = 'Nenhum estado encontrada.';
 			$final['note'] = 'Nenhum estado encontrada.';
+
 			$this->response($final, REST_Controller::HTTP_OK);
 		}
 	}

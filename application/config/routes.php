@@ -266,6 +266,11 @@ $route['get_partner_propertys'] = 'api/Partner/get_partner_propertys';
 $route['get_partners'] = 'api/Partner/get_partners';
 $route['get_partners_by_user'] = 'api/Partner/get_partners_by_user';
 
+
+$route['web_get_propretys'] = 'api/Propertys/web_get_propretys';
+$route['web_search_propretys'] = 'api/Propertys/web_search_propretys';
+
+
 // Parnet
 
 // Planos

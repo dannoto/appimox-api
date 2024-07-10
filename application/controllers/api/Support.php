@@ -12,7 +12,6 @@ class Support extends REST_Controller
     public function __construct()
     {
 
-
         parent::__construct();
         $this->load->library('Authorization_Token');
         $this->load->model('user_model');
@@ -56,8 +55,6 @@ class Support extends REST_Controller
                 $response[] = $e;
             }
 
-
-	
 			if ($response) {
 
                 $final['status'] = true;
@@ -131,7 +128,6 @@ class Support extends REST_Controller
 
             $artigo_data = $this->plans_model->search_artigos($this->input->post('query'));
 
-	
 			if ($artigo_data) {
 
                 $final['status'] = true;
