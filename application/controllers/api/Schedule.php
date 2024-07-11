@@ -883,4 +883,81 @@ class Schedule extends REST_Controller
         }
     }
 
+    // ====================================
+
+    public function delete_broker_schedule_post()
+    {
+        $this->form_validation->set_rules('schedule_id', 'schedule_status', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $schedule_id = $this->input->post('schedule_id');
+            $schedules_data = $this->schedule_model->delete_broker_schedule($schedule_id);
+
+            if ($schedules_data) {
+
+                $final['status'] = true;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function delete_client_schedule_post()
+    {
+        $this->form_validation->set_rules('schedule_id', 'schedule_status', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $schedule_id = $this->input->post('schedule_id');
+            $schedules_data = $this->schedule_model->delete_client_schedule($schedule_id);
+
+            if ($schedules_data) {
+
+                $final['status'] = true;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
 }

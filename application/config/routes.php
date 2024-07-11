@@ -162,6 +162,9 @@ $route['filter_broker_schedules'] = 'api/Schedule/filter_broker_schedules';
 
 $route['filter_client_schedules'] = 'api/Schedule/filter_client_schedules';
 
+$route['delete_client_schedule'] = 'api/Schedule/delete_client_schedule';
+$route['delete_broker_schedule'] = 'api/Schedule/delete_broker_schedule';
+
 // --------- client ----------
 
 $route['get_client_schedules'] = 'api/Schedule/get_client_schedules';
@@ -269,6 +272,7 @@ $route['get_partners_by_user'] = 'api/Partner/get_partners_by_user';
 
 $route['web_get_propretys'] = 'api/Propertys/web_get_propretys';
 $route['web_search_propretys'] = 'api/Propertys/web_search_propretys';
+
 
 
 // Parnet

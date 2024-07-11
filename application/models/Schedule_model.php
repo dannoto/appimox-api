@@ -49,6 +49,26 @@ class Schedule_model extends CI_Model
         return $this->db->insert('user_schedules', $data);
     }
 
+    public function delete_broker_schedule($schedule_id) {
+        $this->db->where('id',  $schedule_id);
+        
+        $data = array(
+            'schedule_broker_delete' => 1,
+        );
+
+        return $this->db->update('user_schedules', $data);
+    }
+
+    public function delete_client_schedule($schedule_id) {
+        $this->db->where('id',  $schedule_id);
+        
+        $data = array(
+            'schedule_client_delete' => 1,
+        );
+        
+        return $this->db->update('user_schedules', $data);
+    }
+
     public function add_schedule_action($schedule_data)
     {
 
