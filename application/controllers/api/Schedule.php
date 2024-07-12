@@ -137,7 +137,7 @@ class Schedule extends REST_Controller
 
             // set variables from the form
             $user_id = $this->input->post('user_id');
-            $user_type = $this->input->post('user_id');
+            $user_type = $this->input->post('user_type');
 
 
             $schedules_data = $this->schedule_model->get_broker_schedules($user_id, $user_type);
