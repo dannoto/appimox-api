@@ -956,7 +956,6 @@ class Schedule extends REST_Controller
         }
     }
 
-
     public function get_restrict_schedule_post()
     {
 
@@ -969,6 +968,7 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $user_id = $this->input->post('user_id');
@@ -977,6 +977,7 @@ class Schedule extends REST_Controller
             if ($schedules_data) {
 
                 $final['status'] = true;
+                $final['response'] = $schedules_data;
                 $final['message'] = 'Agendamentos encontrados com sucesso';
                 $final['note'] = 'Agendamentos encontrados com sucesso';
 
