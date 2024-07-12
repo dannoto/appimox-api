@@ -55,6 +55,23 @@ class Schedule extends REST_Controller
             }
 
 
+
+            // Verificando restrições de agenda
+            $check_restriction = $this->schedule_model->check_restrict_schedule($broker_id, $schedule_date);
+
+            if ($check_restriction) {
+
+                $final['status'] = false;
+                $final['message'] = 'O corretor não estará disponível neste horário. Escolha outro! ';
+                $final['note'] = 'O corretor não estará disponível neste horário. Escolha outro! ';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+
+
+
+            // Data Futura
+
             $date_time = DateTime::createFromFormat('Y-m-d H:i:s', $schedule_date);
             $formatted_date_time = $date_time->format('Y-m-d H:i:s');
             $current_datetime = date('Y-m-d H:i:s');
@@ -614,7 +631,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             // set variables from the form
@@ -653,7 +669,6 @@ class Schedule extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -975,7 +990,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $user_id = $this->input->post('user_id');
@@ -1015,13 +1029,12 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $data['user_id'] = $this->input->post('user_id');
             $data['schedule_date'] = $this->input->post('schedule_date');
 
-            if (!$this->schedule_model->check_restrict_schedule( $data['user_id'],  $data['schedule_date'])) {
+            if (!$this->schedule_model->check_restrict_schedule($data['user_id'],  $data['schedule_date'])) {
 
                 if ($this->schedule_model->add_restrict_schedule($data)) {
 
@@ -1031,7 +1044,6 @@ class Schedule extends REST_Controller
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
-
                 } else {
 
                     $final['status'] = false;
@@ -1041,7 +1053,6 @@ class Schedule extends REST_Controller
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
-
             } else {
 
                 $final['status'] = false;
