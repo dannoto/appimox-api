@@ -250,6 +250,7 @@ class Schedule_model extends CI_Model
     public function delete_restrict_schedule($schedule_id) {
 
         $this->db->where('id', $schedule_id);
+        $this->db->where('id', 'desc');
 
         $data = array(
             'is_deleted' => 1
