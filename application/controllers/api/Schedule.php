@@ -999,7 +999,6 @@ class Schedule extends REST_Controller
     {
 
         $this->form_validation->set_rules('user_id', 'Insira User ID', 'trim|required');
-        $this->form_validation->set_rules('schedule_type', 'Insira o tipo', 'trim|required');
         $this->form_validation->set_rules('schedule_date', 'Insira a data', 'trim|required');
 
         if ($this->form_validation->run() === false) {
@@ -1013,10 +1012,9 @@ class Schedule extends REST_Controller
         } else {
 
             $data['user_id'] = $this->input->post('user_id');
-            $data['schedule_type'] = $this->input->post('schedule_type');
             $data['schedule_date'] = $this->input->post('schedule_date');
 
-            if (!$this->schedule_model->check_restrict_schedule( $data['user_id'],  $data['schedule_date'],   $data['schedule_type'])) {
+            if (!$this->schedule_model->check_restrict_schedule( $data['user_id'],  $data['schedule_date'])) {
 
                 if ($this->schedule_model->add_resctrict_schedule($data)) {
 
