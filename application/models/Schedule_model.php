@@ -228,6 +228,7 @@ class Schedule_model extends CI_Model
     public function get_restrict_schedule($user_id) {
         $this->db->where('user_id', $user_id);
         $this->db->where('is_deleted', 0);
+        $this->db->where('id', 'desc');
 
         return $this->db->get('user_schedules_restrict')->result();
     }
@@ -249,7 +250,6 @@ class Schedule_model extends CI_Model
     public function delete_restrict_schedule($schedule_id) {
 
         $this->db->where('id', $schedule_id);
-        $this->db->where('id', 'desc');
 
         $data = array(
             'is_deleted' => 1
