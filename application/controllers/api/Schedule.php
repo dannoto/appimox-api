@@ -957,7 +957,7 @@ class Schedule extends REST_Controller
     }
 
 
-    public function get_restrict_schedule()
+    public function get_restrict_schedule_post()
     {
 
         $this->form_validation->set_rules('user_id', 'schedule_status', 'trim|required');
@@ -994,7 +994,7 @@ class Schedule extends REST_Controller
         }
     }
 
-    public function add_resctrict_schedule()
+    public function add_resctrict_schedule_post()
     {
 
         $this->form_validation->set_rules('user_id', 'Insira User ID', 'trim|required');
@@ -1048,7 +1048,7 @@ class Schedule extends REST_Controller
         }
     }
 
-    public function delete_restrict_schedule()
+    public function delete_restrict_schedule_post()
     {
 
 
