@@ -119,7 +119,7 @@ class Schedule_model extends CI_Model
         return $this->db->get('user_schedules')->result();
     }
 
-    public function search_broker_schedules($broker_id, $query = null)
+    public function search_broker_schedules($broker_id, $query = null, $user_type = null)
     {
         // Adiciona condição para verificar se o agendamento é do corretor especificado
         $this->db->where('user_schedules.schedule_broker', $broker_id);
@@ -129,6 +129,18 @@ class Schedule_model extends CI_Model
         if (!empty($query)) {
             $this->db->join('users', 'user_schedules.schedule_client = users.id');
             $this->db->like('users.user_name', $query);
+        }
+
+        if ($user_type != null) {
+
+            if ($user_type == "broker") {
+                $this->db->where('schedule_broker_delete', 0);
+
+            } else if ($user_type == "client") {
+                $this->db->where('schedule_client_delete', 0);
+
+            }
+
         }
     
         $this->db->order_by('user_schedules.id', 'desc');

@@ -473,6 +473,7 @@ class Schedule extends REST_Controller
         // set validation rules
         $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
         $this->form_validation->set_rules('query', 'Query', 'trim|required');
+        $this->form_validation->set_rules('user_type', 'ID do usuário', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -487,8 +488,9 @@ class Schedule extends REST_Controller
             // set variables from the form
             $user_id = $this->input->post('user_id');
             $query = $this->input->post('query');
+            $user_type = $this->input->post('user_type');
 
-            $schedules_data = $this->schedule_model->search_broker_schedules($user_id, $query);
+            $schedules_data = $this->schedule_model->search_broker_schedules($user_id, $query, $user_type);
 
             if ($schedules_data) {
 
