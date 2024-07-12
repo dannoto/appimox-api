@@ -1066,7 +1066,7 @@ class Schedule extends REST_Controller
 
             $restrict_id = $this->input->post('restrict_id');
 
-            if ($this->schedule_model->add_resctrict_schedule($restrict_id)) {
+            if ($this->schedule_model->delete_restrict_schedule($restrict_id)) {
 
                 $final['status'] = true;
                 $final['message'] = 'Agendamentos encontrados com sucesso';
