@@ -252,7 +252,7 @@ class Schedule_model extends CI_Model
         $this->db->where('id', $schedule_id);
 
         $data = array(
-            'is_deleted' => 0
+            'is_deleted' => 1
         );
 
         return $this->db->update('user_schedules_restrict', $data);
