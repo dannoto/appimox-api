@@ -238,7 +238,7 @@ class Schedule_model extends CI_Model
         $this->db->where('schedule_date', $schedule_data);
         $this->db->where('is_deleted', 0);
 
-        return $this->db->get('user_schedules_restrict')->result();
+        return $this->db->get('user_schedules_restrict')->row();
     }
 
     public function add_restrict_schedule($data) {

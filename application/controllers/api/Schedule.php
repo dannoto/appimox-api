@@ -1016,7 +1016,7 @@ class Schedule extends REST_Controller
 
             if (!$this->schedule_model->check_restrict_schedule( $data['user_id'],  $data['schedule_date'])) {
 
-                if ($this->schedule_model->add_resctrict_schedule($data)) {
+                if ($this->schedule_model->add_restrict_schedule($data)) {
 
                     $final['status'] = true;
                     $final['message'] = 'Restrição adicionada com sucesso.';
