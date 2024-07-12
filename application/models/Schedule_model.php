@@ -235,7 +235,7 @@ class Schedule_model extends CI_Model
     public function check_restrict_schedule($user_id, $schedule_data) {
 
         $this->db->where('user_id', $user_id);
-        $this->db->where('schedule_data', $schedule_data);
+        $this->db->where('schedule_date', $schedule_data);
         $this->db->where('is_deleted', 0);
 
         return $this->db->get('user_schedules_restrict')->result();
