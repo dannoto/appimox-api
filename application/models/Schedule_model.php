@@ -97,10 +97,23 @@ class Schedule_model extends CI_Model
     }
 
 
-    public function get_broker_schedules($broker_id)
+    public function get_broker_schedules($broker_id, $user_type = null)
     {
         $this->db->where('schedule_broker', $broker_id);
         $this->db->where('is_deleted', 0);
+
+        if ($user_type != null) {
+
+            if ($user_type == "broker") {
+                $this->db->where('schedule_broker_delete', 0);
+
+            } else if ($user_type == "client") {
+                $this->db->where('schedule_client_delete', 0);
+
+            }
+
+        }
+        
         $this->db->order_by('id', 'desc');
 
         return $this->db->get('user_schedules')->result();
@@ -209,4 +222,39 @@ class Schedule_model extends CI_Model
         return $this->db->get('user_schedules')->result();
     }
 
+
+    // =====
+
+    public function get_restrict_schedule($user_id) {
+        $this->db->where('user_id', $user_id);
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get('user_schedules_restrict')->result();
+    }
+
+    public function check_restrict_schedule($user_id, $schedule_data, $schedule_type) {
+
+        $this->db->where('user_id', $user_id);
+        $this->db->where('schedule_data', $schedule_data);
+        $this->db->where('schedule_type', $schedule_type);
+        $this->db->where('is_deleted', 0);
+
+        return $this->db->get('user_schedules_restrict')->result();
+    }
+
+    public function add_restrict_schedule($data) {
+
+        return $this->db->insert('user_schedules_restrict', $data);
+    }
+
+    public function delete_restrict_schedule($schedule_id) {
+
+        $this->db->where('id', $schedule_id);
+
+        $data = array(
+            'is_deleted' => 0
+        );
+
+        return $this->db->update('user_schedules_restrict', $data);
+    }
 }

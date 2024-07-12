@@ -123,6 +123,7 @@ class Schedule extends REST_Controller
 
         // set validation rules
         $this->form_validation->set_rules('user_id', 'ID do usuário', 'trim|required');
+        $this->form_validation->set_rules('user_type', 'ID do usuário', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -136,8 +137,10 @@ class Schedule extends REST_Controller
 
             // set variables from the form
             $user_id = $this->input->post('user_id');
+            $user_type = $this->input->post('user_id');
 
-            $schedules_data = $this->schedule_model->get_broker_schedules($user_id);
+
+            $schedules_data = $this->schedule_model->get_broker_schedules($user_id, $user_type);
 
             if ($schedules_data) {
 
@@ -608,7 +611,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             // set variables from the form
@@ -673,7 +675,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             // set variables from the form
@@ -797,7 +798,6 @@ class Schedule extends REST_Controller
 
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
-
                 } else {
 
                     $final['status'] = false;
@@ -807,7 +807,6 @@ class Schedule extends REST_Controller
                     // user creation failed, this should never happen
                     $this->response($final, REST_Controller::HTTP_OK);
                 }
-
             } else {
 
                 $final['status'] = false;
@@ -896,7 +895,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $schedule_id = $this->input->post('schedule_id');
@@ -910,7 +908,6 @@ class Schedule extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -934,7 +931,6 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $schedule_id = $this->input->post('schedule_id');
@@ -948,7 +944,135 @@ class Schedule extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
+            } else {
 
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+
+    public function get_restrict_schedule()
+    {
+
+        $this->form_validation->set_rules('user_id', 'schedule_status', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $user_id = $this->input->post('user_id');
+            $schedules_data = $this->schedule_model->get_restrict_schedule($user_id);
+
+            if ($schedules_data) {
+
+                $final['status'] = true;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Nenhum agendamento encontrado.';
+                $final['note'] = 'Nenhum agendamento encontrado.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function add_resctrict_schedule()
+    {
+
+        $this->form_validation->set_rules('user_id', 'Insira User ID', 'trim|required');
+        $this->form_validation->set_rules('schedule_type', 'Insira o tipo', 'trim|required');
+        $this->form_validation->set_rules('schedule_date', 'Insira a data', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+
+        } else {
+
+            $data['user_id'] = $this->input->post('user_id');
+            $data['schedule_type'] = $this->input->post('schedule_type');
+            $data['schedule_date'] = $this->input->post('schedule_date');
+
+            if (!$this->schedule_model->check_restrict_schedule( $data['user_id'],  $data['schedule_date'],   $data['schedule_type'])) {
+
+                if ($this->schedule_model->add_resctrict_schedule($data)) {
+
+                    $final['status'] = true;
+                    $final['message'] = 'Restrição adicionada com sucesso.';
+                    $final['note'] = 'Restrição adicionada com sucesso.';
+
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Erro ao adicionar restrição.';
+                    $final['note'] = 'Erro ao adicionar restrição.';
+
+                    // user creation failed, this should never happen
+                    $this->response($final, REST_Controller::HTTP_OK);
+                }
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Já existe uma restrição nesta data.';
+                $final['note'] = 'Já existe uma restrição nesta data.';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+        }
+    }
+
+    public function delete_restrict_schedule()
+    {
+
+
+        $this->form_validation->set_rules('restrict_id', 'schedule_status', 'trim|required');
+
+        if ($this->form_validation->run() === false) {
+
+            $final['status'] = false;
+            $final['message'] = validation_errors();
+            $final['note'] = 'Erro no formulário.';
+
+            $this->response($final, REST_Controller::HTTP_OK);
+        } else {
+
+            $restrict_id = $this->input->post('restrict_id');
+
+            if ($this->schedule_model->add_resctrict_schedule($restrict_id)) {
+
+                $final['status'] = true;
+                $final['message'] = 'Agendamentos encontrados com sucesso';
+                $final['note'] = 'Agendamentos encontrados com sucesso';
+
+                // user creation failed, this should never happen
+                $this->response($final, REST_Controller::HTTP_OK);
             } else {
 
                 $final['status'] = false;

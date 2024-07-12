@@ -172,6 +172,13 @@ $route['search_client_schedules'] = 'api/Schedule/search_client_schedules';
 $route['update_schedule_client_date'] = 'api/Schedule/update_schedule_client_date';
 $route['client_cancel_schedule'] = 'api/Schedule/client_cancel_schedule';
 
+
+
+$route['get_restrict_schedule'] = 'api/Schedule/get_restrict_schedule';
+$route['add_resctrict_schedule'] = 'api/Schedule/add_resctrict_schedule';
+$route['delete_restrict_schedule'] = 'api/Schedule/delete_restrict_schedule';
+
+
 // schedule
 
 
