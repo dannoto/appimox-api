@@ -189,16 +189,28 @@ class Schedule_model extends CI_Model
 
     // ================ SCHEDULE CLIENTE PART ===================
 
-    public function get_client_schedules($client_id)
+    public function get_client_schedules($client_id, $user_type = null)
     {
         $this->db->where('schedule_client', $client_id);
         $this->db->where('is_deleted', 0);
         $this->db->order_by('id', 'desc');
 
+        if ($user_type != null) {
+
+            if ($user_type == "broker") {
+                $this->db->where('schedule_broker_delete', 0);
+
+            } else if ($user_type == "client") {
+                $this->db->where('schedule_client_delete', 0);
+
+            }
+
+        }
+
         return $this->db->get('user_schedules')->result();
     }
 
-    public function search_client_schedules($client_id, $query = null)
+    public function search_client_schedules($client_id, $query = null, $user_type = null)
     {
         // Adiciona condição para verificar se o agendamento é do corretor especificado
         $this->db->where('user_schedules.schedule_client', $client_id);
@@ -208,6 +220,18 @@ class Schedule_model extends CI_Model
         if (!empty($query)) {
             $this->db->join('users', 'user_schedules.schedule_broker = users.id');
             $this->db->like('users.user_name', $query);
+        }
+
+        if ($user_type != null) {
+
+            if ($user_type == "broker") {
+                $this->db->where('schedule_broker_delete', 0);
+
+            } else if ($user_type == "client") {
+                $this->db->where('schedule_client_delete', 0);
+
+            }
+
         }
     
         $this->db->order_by('user_schedules.id', 'desc');
