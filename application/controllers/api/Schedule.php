@@ -614,6 +614,7 @@ class Schedule extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             // set variables from the form
@@ -623,7 +624,6 @@ class Schedule extends REST_Controller
             $schedules_data = $this->schedule_model->get_client_schedules($user_id, $user_type);
 
             if ($schedules_data) {
-
 
                 $response = array();
 
@@ -653,6 +653,7 @@ class Schedule extends REST_Controller
 
                 // user creation failed, this should never happen
                 $this->response($final, REST_Controller::HTTP_OK);
+
             } else {
 
                 $final['status'] = false;
