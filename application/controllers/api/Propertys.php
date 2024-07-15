@@ -462,7 +462,7 @@ class Propertys extends REST_Controller
                     $count_total_property_limit = count($this->broker_model->get_broker_propertys($data['property_user_id']));
                     $limit_property_by_plan = $plan_data->plan_limit_images;
 
-                    if ($limit_property_by_plan >= $count_total_property_limit) {
+                    if ($limit_property_by_plan <= $count_total_property_limit) {
 
                         $final['status'] = false;
                         $final['message'] = "FALHOU. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Faça upgrade para aumentar o limite! Até agora voce ja adicionou ".".$count_total_property_limit."." !";
