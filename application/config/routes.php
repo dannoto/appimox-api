@@ -141,6 +141,7 @@ $route['check_favorit'] = 'api/User/check_favorit';
 // Favorits
 $route['get_config'] = 'api/User/get_config';
 
+$route['get_current_plan_config'] = 'api/User/get_current_plan_config';
 
 // Profile
 $route['get_user_profile_data'] = 'api/User/get_user_profile_data';

@@ -1542,9 +1542,8 @@ class User extends REST_Controller
 			$final['response'] = $estados_data;
 			$final['message'] = 'Estados encontrados com sucesso.';
 			$final['note'] = 'Estados encontrados com sucesso.';
-			
-			$this->response($final, REST_Controller::HTTP_OK);
 
+			$this->response($final, REST_Controller::HTTP_OK);
 		} else {
 
 			$final['status'] = false;
@@ -1552,6 +1551,77 @@ class User extends REST_Controller
 			$final['note'] = 'Nenhum estado encontrada.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+		}
+	}
+
+	public function get_current_plan_config()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_data = $this->user_model->get_user($this->input->post('user_id'));
+
+					if ($user_data) {
+
+						$plan_data = $this->plan_model->get_plan($user_data->user_plan);
+
+						if ($plan_data) {
+
+							$final['status'] = true;
+							$final['message'] = 'Plano encontrado sucesso';
+							$final['response'] = $plan_data;
+							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						} else {
+
+							$final['status'] = true;
+							$final['message'] = 'Plano não foi encontrado';
+							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+
+					} else {
+
+						$final['status'] = false;
+						$final['message'] = 'Ocorreu um erro ao identificar usuario.';
+						$final['note'] = 'Erro em get_user()';
+						$this->response($final, REST_Controller::HTTP_OK);
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
 		}
 	}
 
@@ -1566,9 +1636,8 @@ class User extends REST_Controller
 			$final['response'] = $config_data;
 			$final['message'] = 'Config encontrada com sucesso.';
 			$final['note'] = 'Config encontrada com sucesso.';
-			
-			$this->response($final, REST_Controller::HTTP_OK);
 
+			$this->response($final, REST_Controller::HTTP_OK);
 		} else {
 
 			$final['status'] = false;
@@ -1912,13 +1981,12 @@ class User extends REST_Controller
 						}
 
 						if ($response) {
-				
+
 							$final['status'] = true;
 							$final['message'] = 'Leads com sucesso.';
 							$final['response'] = $response;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else {
 
 							$final['status'] = false;
@@ -1926,7 +1994,6 @@ class User extends REST_Controller
 							$final['note'] = 'Nenhuma lead encontrada.';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
-
 					} else {
 
 						$final['status'] = false;
@@ -1934,10 +2001,6 @@ class User extends REST_Controller
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-
-
-
-
 				} else {
 
 					$final['status'] = false;

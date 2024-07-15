@@ -12,7 +12,12 @@ class Plans_model extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
+    public function get_plan($plan_id)
+    {
+     
+        $this->db->where('id', $plan_id);
+        return $this->db->get('user_plans')->row();
+    }
     public function get_plans()
     {
      
