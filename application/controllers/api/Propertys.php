@@ -481,6 +481,7 @@ class Propertys extends REST_Controller
                     // =========================
                     
                     $porperty_id = $this->broker_model->add_broker_property($data);
+                    
                     if ($porperty_id) {
 
                         if (strlen($this->input->post('property_numero')) > 0) {
