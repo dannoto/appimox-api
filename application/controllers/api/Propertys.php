@@ -465,19 +465,20 @@ class Propertys extends REST_Controller
                     if ($limit_property_by_plan <= $count_total_property_limit) {
 
                         $final['status'] = false;
-                        $final['message'] = "FALHOU. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Faça upgrade para aumentar o limite! Até agora voce ja adicionou ".".$count_total_property_limit."." !";
+                        $final['message'] = "Você só pode adicionar até ".$limit_property_by_plan." imóveis. Faça upgrade para aumentar o limite!";
                         $final['note'] = 'Erro em add_broker_property_location()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
 
-                    } else {
+                    } 
+                    // else {
 
-                        $final['status'] = false;
-                        $final['message'] = "SUCESSO. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Até agora voce ja adicionou ".".$count_total_property_limit."." !";
-                        $final['note'] = 'Erro em add_broker_property_location()';
+                    //     $final['status'] = false;
+                    //     $final['message'] = "SUCESSO. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Até agora voce ja adicionou ".".$count_total_property_limit."." !";
+                    //     $final['note'] = 'Erro em add_broker_property_location()';
 
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    }
+                    //     $this->response($final, REST_Controller::HTTP_OK);
+                    // }
                     // =========================
                     
                     $porperty_id = $this->broker_model->add_broker_property($data);
