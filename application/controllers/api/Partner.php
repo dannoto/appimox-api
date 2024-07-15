@@ -723,7 +723,7 @@ class Partner extends REST_Controller
             if ($limit_partner_by_plan <= $count_total_partner_limit) {
 
                 $final['status'] = false;
-                $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!";
+                $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!  Até agora voce ja teve " . $count_total_partner_limit . " !";
                 $final['note'] = 'Erro em add_broker_property_location()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
