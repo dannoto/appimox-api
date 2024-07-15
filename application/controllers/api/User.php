@@ -1554,7 +1554,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function get_current_plan_config()
+	public function get_current_plan_config_post()
 	{
 
 		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
