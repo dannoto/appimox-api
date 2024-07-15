@@ -326,6 +326,11 @@ class User_model extends CI_Model
 		return $this->db->update('users', $data);
 	}
 
+	public function get_config() {
+
+		return $this->db->get('config')->row();
+	}
+
 	public function check_email($user_email, $user_id)
 	{
 		$this->db->where('user_email', $user_email);

@@ -139,6 +139,7 @@ $route['delete_favorit'] = 'api/User/delete_favorit';
 $route['check_favorit'] = 'api/User/check_favorit';
 
 // Favorits
+$route['get_config'] = 'api/User/get_config';
 
 
 // Profile

@@ -1555,6 +1555,30 @@ class User extends REST_Controller
 		}
 	}
 
+	public function get_config()
+	{
+
+		$config_data = $this->user_model->get_config();
+
+		if ($config_data) {
+
+			$final['status'] = true;
+			$final['response'] = $config_data;
+			$final['message'] = 'Config encontrada com sucesso.';
+			$final['note'] = 'Config encontrada com sucesso.';
+			
+			$this->response($final, REST_Controller::HTTP_OK);
+
+		} else {
+
+			$final['status'] = false;
+			$final['message'] = 'Nenhum config encontrada.';
+			$final['note'] = 'Nenhum config encontrada.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		}
+	}
+
 	public function get_estados_client_post()
 	{
 

@@ -65,6 +65,7 @@ class Schedule extends REST_Controller
                 $final['message'] = 'O corretor não estará disponível neste horário. Escolha outro! ';
                 $final['note'] = 'O corretor não estará disponível neste horário. Escolha outro! ';
 
+                
                 $this->response($final, REST_Controller::HTTP_OK);
             }
 
