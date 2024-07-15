@@ -347,27 +347,27 @@ class Propertys extends REST_Controller
 
         $this->form_validation->set_rules('property_user_id', 'User ID', 'trim|required');
         $this->form_validation->set_rules('property_title', 'Título do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_type', 'Tipo do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_type_offer', 'Tipo de Oferta do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_price', 'Preço do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_area', 'Área do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_type', 'Tipo do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_type_offer', 'Tipo de Oferta do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_price', 'Preço do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_area', 'Área do Imóvel', 'trim|required');
 
-        $this->form_validation->set_rules('property_function', 'Função do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_disponibility', 'Disponibilidade do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_exclusive', 'Exclusividade do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_function', 'Função do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_disponibility', 'Disponibilidade do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_exclusive', 'Exclusividade do Imóvel', 'trim|required');
 
-        $this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'numeric');
-        $this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'numeric');
-        $this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'integer');
-        $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
-        $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
+        // $this->form_validation->set_rules('property_condominio', 'Valor do Condominio do Imóvel', 'numeric');
+        // $this->form_validation->set_rules('property_iptu', 'IPTU do Imóvel', 'numeric');
+        // $this->form_validation->set_rules('property_room', 'Qtd de Quartos do Imóvel', 'integer');
+        // $this->form_validation->set_rules('property_bathroom', 'Qtd de Banheiros do Imóvel', 'integer');
+        // $this->form_validation->set_rules('property_places', 'Qtd de cômodos do Imóvel', 'integer');
 
-        // location
-        $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'trim|required');
-        $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'required');
-        $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
-        $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
+        // // location
+        // $this->form_validation->set_rules('property_logradouro', 'Logradouro do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_bairro', 'Bairro do Imóvel', 'trim|required');
+        // $this->form_validation->set_rules('property_cep', 'CEP do Imóvel', 'required');
+        // $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
+        // $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
 
 
         $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
@@ -481,7 +481,7 @@ class Propertys extends REST_Controller
                     // =========================
                     
                     $porperty_id = $this->broker_model->add_broker_property($data);
-                    
+
                     if ($porperty_id) {
 
                         if (strlen($this->input->post('property_numero')) > 0) {
