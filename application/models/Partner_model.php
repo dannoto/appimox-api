@@ -16,39 +16,42 @@ class Partner_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function count_partner_by_mounth($user_id, $month) {
-
+    public function count_partner_by_mounth($user_id, $month)
+    {
         $this->db->where('partner_property_owner', $user_id);
         $this->db->or_where('partner_property_broker', $user_id);
 
         $this->db->where('is_deleted', 0);
         $this->db->like('partner_date', $month);
+
         return $this->db->get('user_partners')->result();
+
 
     }
 
-    public function get_partners_property($partner_id) {
+    public function get_partners_property($partner_id)
+    {
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);
         return $this->db->get('user_partners_propertys')->result();
-
     }
 
-    public function check_exist_partner($property_id, $user_id) {
+    public function check_exist_partner($property_id, $user_id)
+    {
         // Passo 1: Buscar todos os registros em user_partners_propertys com o partner_property_id
         $this->db->select('partner_id');
         $this->db->where('partner_property_id', $property_id);
         $query = $this->db->get('user_partners_propertys');
         $partner_ids = array();
-        
+
         foreach ($query->result() as $row) {
             $partner_ids[] = $row->partner_id;
         }
-        
+
         if (empty($partner_ids)) {
             return null; // Nenhum partner_id encontrado
         }
-        
+
         // Passo 2: Filtrar os partner_ids em user_partners onde partner_status = 2 e is_deleted = 0
         $this->db->select('id');
         $this->db->where_in('id', $partner_ids);
@@ -56,25 +59,25 @@ class Partner_model extends CI_Model
         $this->db->where('is_deleted', 0);
         $query = $this->db->get('user_partners');
         $valid_partner_ids = array();
-        
+
         foreach ($query->result() as $row) {
             $valid_partner_ids[] = $row->id;
         }
-        
+
         if (empty($valid_partner_ids)) {
             return null; // Nenhum partner_id válido encontrado
         }
-        
+
         // Passo 3: Verificar se o user_id existe em partner_property_owner ou partner_property_broker
         $this->db->group_start();
         $this->db->where_in('id', $valid_partner_ids);
         $this->db->where('partner_property_owner', $user_id);
         $this->db->or_where('partner_property_broker', $user_id);
         $this->db->group_end();
-        
+
         return $this->db->get('user_partners')->row();
     }
-    
+
     // public function check_exist_partner($property_id, $user_id) {
 
     //     $this->db->where('id', $user_id);
@@ -95,16 +98,17 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners_propertys')->result();
     }
 
-    public function get_partners_by_broker($broker_id) {
+    public function get_partners_by_broker($broker_id)
+    {
 
         $this->db->where('partner_property_broker', $broker_id);
         $this->db->where('is_deleted', 0);
         $this->db->where('partner_status', 2);
         return $this->db->get('user_partners')->result();
-
     }
 
-    public function get_partners_by_property($property_id) {
+    public function get_partners_by_property($property_id)
+    {
         // get brokers tha have active partner on the property
         $this->db->select('up.partner_property_broker');
         $this->db->from('user_partners_propertys upp');
@@ -114,7 +118,7 @@ class Partner_model extends CI_Model
         $this->db->where('up.partner_status', 2);
         $this->db->where('up.is_deleted', 0);
         $query = $this->db->get();
-        
+
         if ($query->num_rows() > 0) {
             $result = $query->result();
             // Process the result as needed
@@ -127,8 +131,6 @@ class Partner_model extends CI_Model
             return false;
             echo 'No active partnerships found for the given property.';
         }
-        
-
     }
 
     public function check_able_to_rating($partner_id)
@@ -138,7 +140,8 @@ class Partner_model extends CI_Model
         return $this->db->get('user_partners')->row();
     }
 
-    public function check_partner_action_restart_pending($partner_id) {
+    public function check_partner_action_restart_pending($partner_id)
+    {
         $this->db->where('partner_id', $partner_id);
         // $this->db->where('partner_action_type', 3);
         $this->db->where('partner_status', 0);
