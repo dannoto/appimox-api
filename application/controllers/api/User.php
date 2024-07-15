@@ -1555,7 +1555,7 @@ class User extends REST_Controller
 		}
 	}
 
-	public function get_config()
+	public function get_config_post()
 	{
 
 		$config_data = $this->user_model->get_config();
