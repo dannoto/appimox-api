@@ -17,6 +17,8 @@ class Propertys extends REST_Controller
         $this->load->model('broker_model');
         $this->load->model('property_model');
         $this->load->model('partner_model');
+        $this->load->model('plans_model');
+
     }
 
     
@@ -453,7 +455,7 @@ class Propertys extends REST_Controller
                     }
                     // Main
 
-                    // =========================
+                    // =========== PLAN CONTROLLER ==============
                     $user_data = $this->user_model->get_user($data['property_user_id']);
                     $plan_data = $this->plans_model->get_plan($user_data->user_plan);
 

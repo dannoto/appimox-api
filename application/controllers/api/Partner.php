@@ -9,8 +9,6 @@ class Partner extends REST_Controller
 
     public function __construct()
     {
-
-
         parent::__construct();
         $this->load->library('Authorization_Token');
         $this->load->model('user_model');
@@ -22,8 +20,7 @@ class Partner extends REST_Controller
         $this->load->model('schedule_model');
         $this->load->model('partner_model');
         $this->load->model('property_model');
-
-        
+        $this->load->model('plans_model');
     }
 
 
@@ -102,9 +99,10 @@ class Partner extends REST_Controller
         }
     }
 
-    public function check_exist_partner_post() {
+    public function check_exist_partner_post()
+    {
 
-        
+
         $this->form_validation->set_rules('user_id', 'ID do Proprietário', 'trim|required');
         $this->form_validation->set_rules('property_id', 'ID do Broker', 'trim|required');
 
@@ -115,7 +113,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
 
@@ -141,7 +138,6 @@ class Partner extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
-
     }
 
 
@@ -483,7 +479,8 @@ class Partner extends REST_Controller
 
 
 
-    public function get_partners_by_broker_post () {
+    public function get_partners_by_broker_post()
+    {
 
         $this->form_validation->set_rules('broker_id', 'ID do usuario', 'trim|required');
 
@@ -494,7 +491,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $broker_id = $this->input->post('broker_id');
@@ -511,21 +507,18 @@ class Partner extends REST_Controller
 
                     $broker_data = $this->property_model->get_property($pf->partner_property_id);
                     $response[] = $broker_data;
-
                 }
-
             }
 
-       
+
             if (count($response) > 0) {
 
                 $final['status'] = true;
-                $final['response'] = $response ;
+                $final['response'] = $response;
                 $final['message'] = 'Parceiros encontrada com sucesso.';
                 $final['note'] = 'Parceiros encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -535,7 +528,6 @@ class Partner extends REST_Controller
                 $this->response($final, REST_Controller::HTTP_OK);
             }
         }
-
     }
     public function get_partners_by_property_post()
     {
@@ -550,7 +542,6 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $property_id = $this->input->post('property_id');
@@ -564,26 +555,23 @@ class Partner extends REST_Controller
 
                 // print_r($partners_found);
                 // $p_data = $this->partner_data->get_partner($p->partner_id);
-                $broker_data= $this->user_model->get_user($p->partner_property_broker);
-                
+                $broker_data = $this->user_model->get_user($p->partner_property_broker);
+
                 if ($p->partner_property_broker == $user_id) {
-                   
                 } else {
                     $response[] = $broker_data;
                 }
-
             }
 
-       
+
             if ($partners_found) {
 
                 $final['status'] = true;
-                $final['response'] = $response ;
+                $final['response'] = $response;
                 $final['message'] = 'Parceiros encontrada com sucesso.';
                 $final['note'] = 'Parceiros encontrada com sucesso.';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
@@ -724,25 +712,24 @@ class Partner extends REST_Controller
 
 
 
-            // =========================
-            $user_data = $this->user_model->get_user($data['property_user_id']);
+            // =========== PLAN CONTROLLER ==============
+            $user_data = $this->user_model->get_user($data['partner_user']);
             $plan_data = $this->plans_model->get_plan($user_data->user_plan);
 
-            $count_total_partner_limit = count($this->partner_moidel->count_partner_by_mounth($data['property_user_id'], date('Y-m')));
+            $count_total_partner_limit = count($this->partner_model->count_partner_by_mounth($data['partner_user'], date('Y-m')));
             $limit_partner_by_plan = $plan_data->plan_limit_partner;
 
             if ($limit_partner_by_plan >= $count_total_partner_limit) {
 
                 $final['status'] = false;
-                $final['message'] = "FALHOU. Você só pode ter até ".$limit_partner_by_plan." parcerias por mês. Faça upgrade para aumentar o limite!";
+                $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!";
                 $final['note'] = 'Erro em add_broker_property_location()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
-
             } else {
 
                 $final['status'] = false;
-                $final['message'] = "SUCESSO. Você só pode ter até ".$limit_partner_by_plan." parcerias por mes. Até agora voce ja teve ".".$count_total_partner_limit."." !";
+                $final['message'] = "SUCESSO. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . ".$count_total_partner_limit." . " !";
                 $final['note'] = 'Erro em add_broker_property_location()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
@@ -955,6 +942,7 @@ class Partner extends REST_Controller
 
         $this->form_validation->set_rules('partner_id', 'ID da Parceria', 'trim|required');
         $this->form_validation->set_rules('action_id', 'ID da Ação', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'ID do Usuario', 'trim|required');
 
         if ($this->form_validation->run() === false) {
 
@@ -963,6 +951,7 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -987,6 +976,31 @@ class Partner extends REST_Controller
             $partner_action_data['partner_status'] = 2;
 
             $partner_action_data = $this->partner_model->update_partner_action($action_id, $partner_action_data);
+
+            // =========== PLAN CONTROLLER ==============
+            $user_data = $this->user_model->get_user($this->input->post('user_id'));
+            $plan_data = $this->plans_model->get_plan($user_data->user_plan);
+
+            $count_total_partner_limit = count($this->partner_model->count_partner_by_mounth($this->input->post('user_id'), date('Y-m')));
+            $limit_partner_by_plan = $plan_data->plan_limit_partner;
+
+            if ($limit_partner_by_plan >= $count_total_partner_limit) {
+
+                $final['status'] = false;
+                $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!";
+                $final['note'] = 'Erro em add_broker_property_location()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = "SUCESSO. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . ".$count_total_partner_limit." . " !";
+                $final['note'] = 'Erro em add_broker_property_location()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+            // =========================
+
 
 
             if ($partner_action_data) {
