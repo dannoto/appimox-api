@@ -379,6 +379,7 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $headers = $this->input->request_headers();
@@ -452,14 +453,34 @@ class Propertys extends REST_Controller
                     }
                     // Main
 
+                    // =========================
+                    $user_data = $this->user_model->get_user($data['property_user_id']);
+                    $plan_data = $this->plans_model->get_plan($user_data->user_plan);
 
-                    // print_r($data);
+                    $count_total_property_limit = count($this->property_model->get_broker_propertys($data['property_user_id']));
+                    $limit_property_by_plan = $plan_data->plan_limit_images;
 
-                    // $_broker_propertys =  $this->broker_model->search_broker_propertys($user_id, $query);
+                    if ($limit_property_by_plan >= $count_total_property_limit) {
+
+                        $final['status'] = false;
+                        $final['message'] = "FALHOU. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Faça upgrade para aumentar o limite!";
+                        $final['note'] = 'Erro em add_broker_property_location()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = "SUCESSO. Você só pode adicionar até ".$limit_property_by_plan." imóveis. Até agora voce ja adicionou ".".$count_total_property_limit."." !";
+                        $final['note'] = 'Erro em add_broker_property_location()';
+
+                        $this->response($final, REST_Controller::HTTP_OK);
+                    }
+                    
+                    // =========================
+                    
                     $porperty_id = $this->broker_model->add_broker_property($data);
                     if ($porperty_id) {
-
-
 
                         if (strlen($this->input->post('property_numero')) > 0) {
                             $data['property_numero'] = ', nº ' . $this->input->post('property_numero');
