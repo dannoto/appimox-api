@@ -994,7 +994,7 @@ class Partner extends REST_Controller
             } else {
 
                 $final['status'] = false;
-                $final['message'] = "SUCESSO ".date('Y-m').". Você só  pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . ".$count_total_partner_limit." . " !";
+                $final['message'] = "SUCESSO ".date('Y-m').". Você só  pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . $count_total_partner_limit . " !";
                 $final['note'] = 'Erro em add_broker_property_location()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
