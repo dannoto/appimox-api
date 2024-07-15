@@ -722,6 +722,36 @@ class Partner extends REST_Controller
             $data['partner_action_type']  = 0;
             $data['is_deleted']    = 0;
 
+
+
+            // =========================
+            $user_data = $this->user_model->get_user($data['property_user_id']);
+            $plan_data = $this->plans_model->get_plan($user_data->user_plan);
+
+            $count_total_partner_limit = count($this->partner_moidel->count_partner_by_mounth($data['property_user_id'], date('Y-m')));
+            $limit_partner_by_plan = $plan_data->plan_limit_partner;
+
+            if ($limit_partner_by_plan >= $count_total_partner_limit) {
+
+                $final['status'] = false;
+                $final['message'] = "FALHOU. Você só pode ter até ".$limit_partner_by_plan." parcerias por mês. Faça upgrade para aumentar o limite!";
+                $final['note'] = 'Erro em add_broker_property_location()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = "SUCESSO. Você só pode ter até ".$limit_partner_by_plan." parcerias por mes. Até agora voce ja teve ".".$count_total_partner_limit."." !";
+                $final['note'] = 'Erro em add_broker_property_location()';
+
+                $this->response($final, REST_Controller::HTTP_OK);
+            }
+            // =========================
+
+
+
+
             $partner_data = $this->partner_model->add_partner_action($data);
 
             if ($partner_data) {

@@ -16,6 +16,17 @@ class Partner_model extends CI_Model
         return $this->db->insert_id();
     }
 
+    public function count_partner_by_mounth($user_id, $month) {
+
+        $this->db->where('partner_property_owner', $user_id);
+        $this->db->or_where('partner_property_broker', $user_id);
+
+        $this->db->where('is_deleted', 0);
+        $this->db->like('partner_date', $month);
+        return $this->db->get('user_partners')->result();
+
+    }
+
     public function get_partners_property($partner_id) {
         $this->db->where('partner_id', $partner_id);
         $this->db->where('is_deleted', 0);

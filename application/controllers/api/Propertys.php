@@ -476,7 +476,6 @@ class Propertys extends REST_Controller
 
                         $this->response($final, REST_Controller::HTTP_OK);
                     }
-                    
                     // =========================
                     
                     $porperty_id = $this->broker_model->add_broker_property($data);
