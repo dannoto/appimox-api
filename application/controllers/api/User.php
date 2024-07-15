@@ -19,6 +19,9 @@ class User extends REST_Controller
 		$this->load->model('schedule_model');
 
 		$this->load->model('followers_model');
+		$this->load->model('plans_model');
+
+		
 	}
 
 	public function inactive_post()
@@ -1582,7 +1585,7 @@ class User extends REST_Controller
 
 					if ($user_data) {
 
-						$plan_data = $this->plan_model->get_plan($user_data->user_plan);
+						$plan_data = $this->plans_model->get_plan($user_data->user_plan);
 
 						if ($plan_data) {
 
@@ -1591,6 +1594,7 @@ class User extends REST_Controller
 							$final['response'] = $plan_data;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
+
 						} else {
 
 							$final['status'] = true;
@@ -1614,6 +1618,7 @@ class User extends REST_Controller
 					$final['note'] = 'Erro em $decodedToken["status"]';
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
+
 			} else {
 
 				$final['status'] = false;
