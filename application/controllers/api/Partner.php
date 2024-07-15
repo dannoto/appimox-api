@@ -687,6 +687,7 @@ class Partner extends REST_Controller
         $this->form_validation->set_rules('partnet_duration_type', 'partnet_duration_type', 'trim|required');
         $this->form_validation->set_rules('partner_status', 'partner_status', 'trim|required');
         // $this->form_validation->set_rules('is_deleted', 'is_deleted', 'trim|required');
+        $this->form_validation->set_rules('user_id', 'user_id', 'trim|required');
 
 
         if ($this->form_validation->run() === false) {
@@ -713,13 +714,13 @@ class Partner extends REST_Controller
 
 
             // =========== PLAN CONTROLLER ==============
-            $user_data = $this->user_model->get_user($data['partner_user']);
+            $user_data = $this->user_model->get_user($this->input->post('user_id'));
             $plan_data = $this->plans_model->get_plan($user_data->user_plan);
 
-            $count_total_partner_limit = count($this->partner_model->count_partner_by_mounth($data['partner_user'], date('Y-m')));
+            $count_total_partner_limit = count($this->partner_model->count_partner_by_mounth($this->input->post('user_id'), date('Y-m')));
             $limit_partner_by_plan = $plan_data->plan_limit_partner;
 
-            if ($limit_partner_by_plan >= $count_total_partner_limit) {
+            if ($limit_partner_by_plan <= $count_total_partner_limit) {
 
                 $final['status'] = false;
                 $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!";
@@ -729,7 +730,7 @@ class Partner extends REST_Controller
             } else {
 
                 $final['status'] = false;
-                $final['message'] = "SUCESSO. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . ".$count_total_partner_limit." . " !";
+                $final['message'] = "SUCESSO ".date('Y-m').". Você só  pode ter até " . $limit_partner_by_plan . " parcerias por mes. Até agora voce ja teve " . $count_total_partner_limit . " !";
                 $final['note'] = 'Erro em add_broker_property_location()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
