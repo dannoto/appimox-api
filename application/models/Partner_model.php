@@ -26,8 +26,8 @@ class Partner_model extends CI_Model
 
         // return $this->db->get('user_partners')->result();
 
-        return $this->db->query("SELECT * FROM `user_partners` WHERE (partner_property_owner = ".$user_id." OR partner_property_broker = ".$user_id.") AND partner_date LIKE '%".$month."%';");
-
+        $data =  $this->db->query("SELECT * FROM `user_partners` WHERE (partner_property_owner = " . $user_id . " OR partner_property_broker = " . $user_id . ") AND partner_date LIKE '%" . $month . "%';");
+        return $data->result();
     }
 
     public function get_partners_property($partner_id)
