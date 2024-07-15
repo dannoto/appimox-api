@@ -984,7 +984,7 @@ class Partner extends REST_Controller
             $count_total_partner_limit = count($this->partner_model->count_partner_by_mounth($this->input->post('user_id'), date('Y-m')));
             $limit_partner_by_plan = $plan_data->plan_limit_partner;
 
-            if ($limit_partner_by_plan >= $count_total_partner_limit) {
+            if ($limit_partner_by_plan <= $count_total_partner_limit) {
 
                 $final['status'] = false;
                 $final['message'] = "FALHOU. Você só pode ter até " . $limit_partner_by_plan . " parcerias por mês. Faça upgrade para aumentar o limite!";
