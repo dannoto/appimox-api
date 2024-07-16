@@ -55,3 +55,4 @@ class Notification extends REST_Controller
         (new Expo)->send($messages)->to($defaultRecipients)->push();
 
     }
+}
