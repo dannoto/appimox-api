@@ -90,6 +90,7 @@ $route['add_notification_token'] = 'api/User/add_notification_token';
 
 
 
+$route['send_notification'] = 'api/Notification/send_notification';
 
 // Propertys Broker
 $route['broker_propertys'] = 'api/Propertys/broker_propriety';
