@@ -36,7 +36,7 @@ class Notification extends REST_Controller
         $messages = [
             [
                 'title' => 'Test notification',
-                'to' => 'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX',
+                // 'to' => 'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]',
             ],
             new ExpoMessage([
                 'title' => 'Notification for default recipients',
@@ -47,10 +47,10 @@ class Notification extends REST_Controller
         /**
          * These recipients are used when ExpoMessage does not have "to" set
          */
-        // $defaultRecipients = [
-        //     'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]',
-        //     'ExponentPushToken[yyyy-yyyy-yyyy]'
-        // ];
+        $defaultRecipients = [
+            'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]]',
+            'ExponentPushToken[yyyy-yyyy-yyyy]'
+        ];
 
         (new Expo)->send($messages)->to($defaultRecipients)->push();
 
