@@ -31,7 +31,7 @@ class Notification extends REST_Controller
     }
 
 
-    public function nf_new_favorit_post() {
+    public function nf_new_favorit_get() {
 
                 /**
          * Composed messages, see above
