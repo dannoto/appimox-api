@@ -27,7 +27,7 @@ class Notification extends REST_Controller
     }
 
     public function index() {
-        
+
     }
 
 
@@ -56,7 +56,7 @@ class Notification extends REST_Controller
             'ExponentPushToken[yyyy-yyyy-yyyy]'
         ];
 
-        (new Expo)->send($messages)->to($defaultRecipients)->push();
-
+        $ok = (new Expo)->send($messages)->to($defaultRecipients)->push();
+        var_dump($ok);
     }
 }
