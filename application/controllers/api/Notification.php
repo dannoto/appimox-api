@@ -48,12 +48,14 @@ class Notification extends REST_Controller
             ]),
         ];
 
+        print_r($messages);
+
         /**
          * These recipients are used when ExpoMessage does not have "to" set
          */
         $defaultRecipients = [
-            'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]]',
-            'ExponentPushToken[yyyy-yyyy-yyyy]'
+            'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]',
+            // 'ExponentPushToken[yyyy-yyyy-yyyy]'
         ];
 
         $ok = (new Expo)->send($messages)->to($defaultRecipients)->push();
