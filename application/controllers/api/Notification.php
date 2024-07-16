@@ -26,6 +26,10 @@ class Notification extends REST_Controller
         $this->load->model('plans_model');
     }
 
+    public function index() {
+        
+    }
+
 
     public function nf_new_favorit_post() {
 
