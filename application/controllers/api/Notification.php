@@ -1,9 +1,12 @@
 <?php
 
+require APPPATH . '/libraries/REST_Controller.php';
+
+require './vendor/autoload.php';
+
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 
-require APPPATH . '/libraries/REST_Controller.php';
 
 use Restserver\Libraries\REST_Controller;
 
