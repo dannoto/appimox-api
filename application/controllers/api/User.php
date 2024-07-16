@@ -20,8 +20,6 @@ class User extends REST_Controller
 
 		$this->load->model('followers_model');
 		$this->load->model('plans_model');
-
-		
 	}
 
 	public function inactive_post()
@@ -208,12 +206,15 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 
 			if ($this->user_model->check_notification_token($user_id, $notification_token)) {
+				
+				if ($this->user_model->add_notification_token($user_id, $notification_token)) {
 
-				$final['status'] = true;
-				$final['message'] = 'Notification Token Já foi registrado.';
-				$final['note'] = 'Notification Token Já foi registrado.';
-				// login failed
-				$this->response($final, REST_Controller::HTTP_OK);
+					$final['status'] = true;
+					$final['message'] = 'Notification Token Já foi registrado.';
+					$final['note'] = 'Notification Token Já foi registrado.';
+					// login failed
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
 			} else {
 
 				if ($this->user_model->add_notification_token($user_id, $notification_token)) {
@@ -1570,7 +1571,6 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
-
 		} else {
 
 			$headers = $this->input->request_headers();
@@ -1594,7 +1594,6 @@ class User extends REST_Controller
 							$final['response'] = $plan_data;
 							$final['note'] = 'Dados encontrados suggest_property_by_cidade()';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else {
 
 							$final['status'] = true;
@@ -1602,7 +1601,6 @@ class User extends REST_Controller
 							$final['note'] = 'Dados encontrados suggest_property_by_estado()';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
-
 					} else {
 
 						$final['status'] = false;
@@ -1610,7 +1608,6 @@ class User extends REST_Controller
 						$final['note'] = 'Erro em get_user()';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-
 				} else {
 
 					$final['status'] = false;
@@ -1618,7 +1615,6 @@ class User extends REST_Controller
 					$final['note'] = 'Erro em $decodedToken["status"]';
 					$this->response($final, REST_Controller::HTTP_OK);
 				}
-
 			} else {
 
 				$final['status'] = false;
