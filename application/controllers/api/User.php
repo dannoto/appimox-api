@@ -1558,6 +1558,17 @@ class User extends REST_Controller
 		}
 	}
 
+	private function hash_password($password)
+	{
+
+		return password_hash($password, PASSWORD_BCRYPT);
+	}
+
+	private function verify_password_hash($password, $hash)
+	{
+
+		return password_verify($password, $hash);
+	}
 
 
 	public function update_password_post()
@@ -1592,7 +1603,7 @@ class User extends REST_Controller
 
 					// check password
 
-					if (!$this->user_model->verify_password_hash($current_password, $user_data->user_password)) {
+					if (!$this->verify_password_hash($current_password, $user_data->user_password)) {
 
 						$final['status'] = false;
 						$final['message'] = 'Sua senha atual está incorreta.';
@@ -1602,7 +1613,7 @@ class User extends REST_Controller
 
 
 						$df = array(
-							'user_password' => $this->user_model->hash_password($new_password),
+							'user_password' => $this->hash_password($new_password),
 						);
 
 						if ($this->user_model->update_user($user_data->id, $df)) {
