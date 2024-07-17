@@ -129,6 +129,7 @@ $route['get_broker_associate_properties'] = 'api/Propertys/get_broker_associate_
 
 
 // Locations
+$route['update_password'] = 'api/User/update_password';
 
 
 // Favorits

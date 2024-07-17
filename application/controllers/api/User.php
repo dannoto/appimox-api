@@ -206,7 +206,7 @@ class User extends REST_Controller
 			$user_id = $this->input->post('user_id');
 
 			if ($this->user_model->check_notification_token($user_id, $notification_token)) {
-				
+
 				if ($this->user_model->add_notification_token($user_id, $notification_token)) {
 
 					$final['status'] = true;
@@ -1555,6 +1555,85 @@ class User extends REST_Controller
 			$final['note'] = 'Nenhum estado encontrada.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+		}
+	}
+
+
+
+	public function update_password_post()
+	{
+
+		$this->form_validation->set_rules('user_id', 'ID do usuario', 'trim|required');
+		$this->form_validation->set_rules('current_password', 'ID do usuario', 'trim|required');
+		$this->form_validation->set_rules('new_password', 'ID do usuario', 'trim|required');
+		// $this->form_validation->set_rules('new_password_confirm', 'ID do usuario', 'trim|required');
+
+
+		if ($this->form_validation->run() == false) {
+
+			$final['status'] = false;
+			$final['message'] = validation_errors();
+			$final['note'] = 'Erro no formulário.';
+
+			$this->response($final, REST_Controller::HTTP_OK);
+		} else {
+
+			$headers = $this->input->request_headers();
+
+			if (isset($headers['Authorization'])) {
+
+				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+
+				if ($decodedToken['status']) {
+
+					$user_data = $this->user_model->get_user($this->input->post('user_id'));
+					$current_password = $this->input->post('current_password');
+					$new_password = $this->input->post('new_password');
+
+					// check password
+
+					if (!$this->user_model->verify_password_hash($current_password, $user_data->user_password)) {
+
+						$final['status'] = false;
+						$final['message'] = 'Sua senha atual está incorreta.';
+						$this->response($final, REST_Controller::HTTP_OK);
+
+					} else {
+
+
+						$df = array(
+							'user_password' => $this->user_model->hash_password($new_password),
+						);
+
+						if ($this->user_model->update_user($user_data->id, $df)) {
+
+							$final['status'] = true;
+							$final['message'] = 'Sua senha foi alterada com sucesso.';
+							$this->response($final, REST_Controller::HTTP_OK);
+
+						} else {
+
+							$final['status'] = true;
+							$final['message'] = 'Erro temporário. Tente novamente.';
+							$this->response($final, REST_Controller::HTTP_OK);
+						}
+					}
+
+				} else {
+
+					$final['status'] = false;
+					$final['message'] = 'Sua sessão expirou.';
+					$final['note'] = 'Erro em $decodedToken["status"]';
+					$this->response($final, REST_Controller::HTTP_OK);
+				}
+			} else {
+
+				$final['status'] = false;
+				$final['message'] = 'Falha na autenticação.';
+				$final['note'] = 'Erro em validateToken()';
+
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
 		}
 	}
 
