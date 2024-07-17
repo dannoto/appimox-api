@@ -1613,7 +1613,7 @@ class User extends REST_Controller
 
 						} else {
 
-							$final['status'] = true;
+							$final['status'] = false;
 							$final['message'] = 'Erro temporário. Tente novamente.';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
