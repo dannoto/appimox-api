@@ -18,10 +18,9 @@ class Propertys extends REST_Controller
         $this->load->model('property_model');
         $this->load->model('partner_model');
         $this->load->model('plans_model');
-
     }
 
-    
+
     public function web_get_propretys_post()
     {
         $this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
@@ -35,45 +34,24 @@ class Propertys extends REST_Controller
             $this->response($final, REST_Controller::HTTP_OK);
         } else {
 
-            $headers = $this->input->request_headers();
 
-            if (isset($headers['Authorization'])) {
 
-                $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+            $web_get_propertys =  $this->property_model->web_get_propertys();
 
-                if ($decodedToken['status']) {
 
-                    $web_get_propertys =  $this->property_model->web_get_propertys();
+            if ($web_get_propertys) {
 
-        
-                    if ($web_get_propertys) {
+                $final['status'] = true;
+                $final['message'] = 'Imóveis encontradas com sucesso.';
+                $final['response'] = $web_get_propertys;
+                $final['note'] = 'Dados   encontrados get_broker_propertys()';
 
-                        $final['status'] = true;
-                        $final['message'] = 'Imóveis encontradas com sucesso.';
-                        $final['response'] = $web_get_propertys;
-                        $final['note'] = 'Dados   encontrados get_broker_propertys()';
-
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    } else {
-
-                        $final['status'] = false;
-                        $final['message'] = 'Nenhum imoveil encontrado.';
-                        $final['note'] = 'Erro em get_broker_propertys()';
-
-                        $this->response($final, REST_Controller::HTTP_OK);
-                    }
-                } else {
-
-                    $final['status'] = false;
-                    $final['message'] = 'Sua sessão expirou.';
-                    $final['note'] = 'Erro em $decodedToken["status"]';
-                    $this->response($decodedToken);
-                }
+                $this->response($final, REST_Controller::HTTP_OK);
             } else {
 
                 $final['status'] = false;
-                $final['message'] = 'Falha na autenticação.';
-                $final['note'] = 'Erro em validateToken()';
+                $final['message'] = 'Nenhum imoveil encontrado.';
+                $final['note'] = 'Erro em get_broker_propertys()';
 
                 $this->response($final, REST_Controller::HTTP_OK);
             }
@@ -91,7 +69,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $headers = $this->input->request_headers();
@@ -115,7 +92,7 @@ class Propertys extends REST_Controller
 
                     $web_get_propertys =  $this->property_model->web_search_propertys($f_data);
 
-        
+
                     if ($web_get_propertys) {
 
                         $final['status'] = true;
@@ -381,7 +358,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $headers = $this->input->request_headers();
@@ -465,12 +441,11 @@ class Propertys extends REST_Controller
                     if ($limit_property_by_plan <= $count_total_property_limit) {
 
                         $final['status'] = false;
-                        $final['message'] = "Você só pode adicionar até ".$limit_property_by_plan." imóveis. Faça upgrade para aumentar o limite!";
+                        $final['message'] = "Você só pode adicionar até " . $limit_property_by_plan . " imóveis. Faça upgrade para aumentar o limite!";
                         $final['note'] = 'Erro em add_broker_property_location()';
 
                         $this->response($final, REST_Controller::HTTP_OK);
-
-                    } 
+                    }
                     // else {
 
                     //     $final['status'] = false;
@@ -480,9 +455,9 @@ class Propertys extends REST_Controller
                     //     $this->response($final, REST_Controller::HTTP_OK);
                     // }
                     // =========================
-                    
+
                     $porperty_id = $this->broker_model->add_broker_property($data);
-                    
+
                     if ($porperty_id) {
 
                         if (strlen($this->input->post('property_numero')) > 0) {
@@ -1169,7 +1144,7 @@ class Propertys extends REST_Controller
     public function get_property_post()
 
     {
-        
+
         $this->form_validation->set_rules('property_id', 'User ID', 'trim|required');
 
         if ($this->form_validation->run() == false) {
@@ -1179,7 +1154,6 @@ class Propertys extends REST_Controller
             $final['note'] = 'Erro no formulárioi.';
 
             $this->response($final, REST_Controller::HTTP_OK);
-
         } else {
 
             $property_id = $this->input->post('property_id');
@@ -1193,7 +1167,6 @@ class Propertys extends REST_Controller
                 $final['response'] =  $property_data;
                 $final['note'] = 'Erro em $decodedToken["status"]';
                 $this->response($final);
-
             } else {
 
                 $final['status'] = false;
