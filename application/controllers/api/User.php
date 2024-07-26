@@ -1491,13 +1491,13 @@ class User extends REST_Controller
 			$this->response($final, REST_Controller::HTTP_OK);
 		} else {
 
-			$headers = $this->input->request_headers();
+			// $headers = $this->input->request_headers();
 
-			if (isset($headers['Authorization'])) {
+			// if (isset($headers['Authorization'])) {
 
-				$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+			// 	$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-				if ($decodedToken['status']) {
+				// if ($decodedToken['status']) {
 
 					$uf = $this->input->post('uf');
 
@@ -1517,21 +1517,21 @@ class User extends REST_Controller
 						$final['note'] = 'Nenhuma cidade encontrada.';
 						$this->response($final, REST_Controller::HTTP_OK);
 					}
-				} else {
+				// } else {
 
-					$final['status'] = false;
-					$final['message'] = 'Sua sessão expirou.';
-					$final['note'] = 'Erro em $decodedToken["status"]';
-					$this->response($decodedToken);
-				}
-			} else {
+				// 	$final['status'] = false;
+				// 	$final['message'] = 'Sua sessão expirou.';
+				// 	$final['note'] = 'Erro em $decodedToken["status"]';
+				// 	$this->response($decodedToken);
+				// }
+			// } else {
 
-				$final['status'] = false;
-				$final['message'] = 'Falha na autenticação.';
-				$final['note'] = 'Erro em validateToken()';
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Falha na autenticação.';
+			// 	$final['note'] = 'Erro em validateToken()';
 
-				$this->response($final, REST_Controller::HTTP_OK);
-			}
+			// 	$this->response($final, REST_Controller::HTTP_OK);
+			// }
 		}
 	}
 
