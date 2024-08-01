@@ -7,7 +7,7 @@ use Restserver\Libraries\REST_Controller;
 
 class Propertys extends REST_Controller
 {
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -1905,7 +1905,10 @@ class Propertys extends REST_Controller
         return ($total_preferences > 0) ? ($matches / $total_preferences) * 100 : 0;
     }
 
-    public function web_process_property_main_image($base_image) {
+    public function web_process_property_main_image()
+    {
+
+        $base_image = $this->input->post('base_image');
 
         $path = 'public/images/property/';
         $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
@@ -1917,13 +1920,10 @@ class Propertys extends REST_Controller
         if (file_put_contents($base_image, $property_main_image)) {
 
             return $base_image;
-
-
         } else {
 
             return false;
         }
-
     }
 
     // private function filter_broker_proprietys($broker_proprietys, $f_data)
