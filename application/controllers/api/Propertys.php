@@ -1905,27 +1905,6 @@ class Propertys extends REST_Controller
         return ($total_preferences > 0) ? ($matches / $total_preferences) * 100 : 0;
     }
 
-    public function web_process_property_main_image()
-    {
-
-        $base_image = $this->input->post('base_image');
-
-        $path = 'public/images/property/';
-        $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
-
-        $file_name = uniqid() . '.jpg';
-
-        $base_image = $path . $file_name;
-
-        if (file_put_contents($base_image, $property_main_image)) {
-
-            return $base_image;
-        } else {
-
-            return false;
-        }
-    }
-
     // private function filter_broker_proprietys($broker_proprietys, $f_data)
     // {
     //     foreach ($broker_proprietys as $b) {
@@ -2008,5 +1987,38 @@ class Propertys extends REST_Controller
         // }
 
         return false;
+    }
+
+
+    public function web_process_property_main_image()
+    {
+
+        $base_image = $this->input->post('base_image');
+
+        $path = 'public/images/property/';
+        $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
+
+        $file_name = uniqid() . '.jpg';
+
+        $base_image = $path . $file_name;
+
+        if (file_put_contents($base_image, $property_main_image)) {
+
+
+            $final['status'] = true;
+            $final['message'] = 'Processado com sucesso.';
+            $final['path'] =  $base_image;
+
+            $this->response($final);
+
+        } else {
+
+            return false;
+
+            $final['status'] = false;
+            $final['message'] = 'Erro ao processar imagem.';
+
+            $this->response($final);
+        }
     }
 }
