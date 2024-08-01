@@ -2002,10 +2002,9 @@ class Propertys extends REST_Controller
 
         $base_image = $path . $file_name;
 
-
-
         $result = file_put_contents($base_image, $property_main_image);
-        $err = "note";
+
+        print_r($base_image);
 
         if ($result == false) {
             // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
