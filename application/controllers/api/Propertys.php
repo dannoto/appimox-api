@@ -2010,7 +2010,7 @@ class Propertys extends REST_Controller
             // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
             $final['status'] = false;
             $final['message'] = 'Erro ao processar imagem. Tente novamente ';
-            $final['base_64'] = $base_image;
+            $final['base_64'] =  $this->input->post('base_image');
 
             $this->response($final);
 
@@ -2018,7 +2018,7 @@ class Propertys extends REST_Controller
 
             $final['status'] = true;
             $final['message'] = 'Processado com sucesso.';
-            $final['path'] =  $base_image;
+            $final['path'] =   $this->input->post('base_image');
 
             $this->response($final);
         }
