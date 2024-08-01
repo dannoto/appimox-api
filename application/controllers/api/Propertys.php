@@ -1990,7 +1990,7 @@ class Propertys extends REST_Controller
     }
 
 
-    public function web_process_property_main_image()
+    public function web_process_property_main_image_post()
     {
 
         $base_image = $this->input->post('base_image');
@@ -2008,7 +2008,7 @@ class Propertys extends REST_Controller
             // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
             $final['status'] = false;
             $final['message'] = 'Erro ao processar imagem. Tente novamente' . print_r(error_get_last(), true);
-            
+
             $this->response($final);
             
         } else {
