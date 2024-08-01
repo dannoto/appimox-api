@@ -2002,23 +2002,23 @@ class Propertys extends REST_Controller
 
         $base_image = $path . $file_name;
 
-        if (file_put_contents($base_image, $property_main_image)) {
+        $result = file_put_contents($base_image, $property_main_image);
 
-
+        if ($result === false) {
+            // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
+            $final['status'] = false;
+            $final['message'] = 'Erro ao processar imagem. Tente novamente' . print_r(error_get_last(), true);
+            $this->response($final);
+            return;
+        } else {
             $final['status'] = true;
             $final['message'] = 'Processado com sucesso.';
             $final['path'] =  $base_image;
 
             $this->response($final);
-
-        } else {
-
-            return false;
-
-            $final['status'] = false;
-            $final['message'] = 'Erro ao processar imagem.';
-
-            $this->response($final);
         }
+
+
+    
     }
 }
