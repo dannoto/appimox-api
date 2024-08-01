@@ -24,8 +24,6 @@ class User extends REST_Controller
 
 	public function inactive_post()
 	{
-
-
 		$this->form_validation->set_rules('user_id', 'User ID', 'trim|required');
 
 		if ($this->form_validation->run() == false) {
@@ -135,6 +133,7 @@ class User extends REST_Controller
 			$final['note'] = 'Erro no formulário.';
 
 			$this->response($final, REST_Controller::HTTP_OK);
+
 		} else {
 
 			// set variables from the form
@@ -172,6 +171,7 @@ class User extends REST_Controller
 				$final['note'] = 'Você está logado.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
+
 			} else {
 
 				$final['status'] = false;
@@ -182,8 +182,6 @@ class User extends REST_Controller
 			}
 		}
 	}
-
-
 
 	public function add_notification_token_post()
 	{
@@ -1497,33 +1495,33 @@ class User extends REST_Controller
 
 			// 	$decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
-				// if ($decodedToken['status']) {
+			// if ($decodedToken['status']) {
 
-					$uf = $this->input->post('uf');
+			$uf = $this->input->post('uf');
 
-					$cidades_data = $this->user_model->get_cidades_by_estado($uf);
+			$cidades_data = $this->user_model->get_cidades_by_estado($uf);
 
-					if ($cidades_data) {
+			if ($cidades_data) {
 
-						$final['status'] = true;
-						$final['response'] = $cidades_data;
-						$final['message'] = 'Cidades encontradas com sucesso.';
-						$final['note'] = 'Cidades encontradas com sucesso.';
-						$this->response($final, REST_Controller::HTTP_OK);
-					} else {
+				$final['status'] = true;
+				$final['response'] = $cidades_data;
+				$final['message'] = 'Cidades encontradas com sucesso.';
+				$final['note'] = 'Cidades encontradas com sucesso.';
+				$this->response($final, REST_Controller::HTTP_OK);
+			} else {
 
-						$final['status'] = false;
-						$final['message'] = 'Nenhuma cidade encontrada.';
-						$final['note'] = 'Nenhuma cidade encontrada.';
-						$this->response($final, REST_Controller::HTTP_OK);
-					}
-				// } else {
+				$final['status'] = false;
+				$final['message'] = 'Nenhuma cidade encontrada.';
+				$final['note'] = 'Nenhuma cidade encontrada.';
+				$this->response($final, REST_Controller::HTTP_OK);
+			}
+			// } else {
 
-				// 	$final['status'] = false;
-				// 	$final['message'] = 'Sua sessão expirou.';
-				// 	$final['note'] = 'Erro em $decodedToken["status"]';
-				// 	$this->response($decodedToken);
-				// }
+			// 	$final['status'] = false;
+			// 	$final['message'] = 'Sua sessão expirou.';
+			// 	$final['note'] = 'Erro em $decodedToken["status"]';
+			// 	$this->response($decodedToken);
+			// }
 			// } else {
 
 			// 	$final['status'] = false;
@@ -1570,7 +1568,6 @@ class User extends REST_Controller
 		return password_verify($password, $hash);
 	}
 
-
 	public function update_password_post()
 	{
 
@@ -1608,7 +1605,6 @@ class User extends REST_Controller
 						$final['status'] = false;
 						$final['message'] = 'Sua senha atual está incorreta.';
 						$this->response($final, REST_Controller::HTTP_OK);
-
 					} else {
 
 
@@ -1621,7 +1617,6 @@ class User extends REST_Controller
 							$final['status'] = true;
 							$final['message'] = 'Sua senha foi alterada com sucesso.';
 							$this->response($final, REST_Controller::HTTP_OK);
-
 						} else {
 
 							$final['status'] = false;
@@ -1629,7 +1624,6 @@ class User extends REST_Controller
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
 					}
-
 				} else {
 
 					$final['status'] = false;
@@ -2032,7 +2026,6 @@ class User extends REST_Controller
 
 
 	// Cliente dashboard
-
 	public function get_leads_post()
 	{
 

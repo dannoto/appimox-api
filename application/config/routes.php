@@ -307,4 +307,7 @@ $route['get_terms'] = 'api/Terms/get_terms';
 
 $route['get_leads'] = 'api/User/get_leads';
 
-// 
+
+// web ============
+
+$route['web_process_property_main_image'] = 'api/Propertys/web_process_property_main_image';

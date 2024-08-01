@@ -7,7 +7,7 @@ use Restserver\Libraries\REST_Controller;
 
 class Propertys extends REST_Controller
 {
-
+    
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +19,6 @@ class Propertys extends REST_Controller
         $this->load->model('partner_model');
         $this->load->model('plans_model');
     }
-
 
     public function web_get_propretys_post()
     {
@@ -346,10 +345,7 @@ class Propertys extends REST_Controller
         $this->form_validation->set_rules('property_cidade', 'Cidade do Imóvel', 'integer');
         $this->form_validation->set_rules('property_estado', 'Estado do Imóvel', 'integer');
 
-
         $this->form_validation->set_rules('property_age', 'Idade do Imóvel', 'integer');
-
-
 
         if ($this->form_validation->run() == false) {
 
@@ -403,16 +399,12 @@ class Propertys extends REST_Controller
                     }
 
 
-
                     $address_comp = $data['property_logradouro'] . "" . $p_numero . ", " . $data['property_bairro'] . " | " . $this->property_model->get_cidade_label($data['property_cidade']) . " - " . $this->property_model->get_estado_label($data['property_estado']) . ", " . $data['property_cep'];
                     $data['property_address'] = $address_comp;
 
                     // localização
 
                     $data['is_deleted'] = 0;
-
-
-
 
                     // Images
 
@@ -1815,9 +1807,6 @@ class Propertys extends REST_Controller
         }
     }
 
-
-    // ====================
-
     public function get_broker_associate_properties_post()
     {
 
@@ -1899,7 +1888,6 @@ class Propertys extends REST_Controller
         }
     }
 
-
     private function calculate_match_percentage($user_preferences, $broker_preferences)
     {
         if (empty($user_preferences) || empty($broker_preferences)) {
@@ -1915,6 +1903,27 @@ class Propertys extends REST_Controller
 
         $total_preferences = count($user_preferences);
         return ($total_preferences > 0) ? ($matches / $total_preferences) * 100 : 0;
+    }
+
+    public function web_process_property_main_image($base_image) {
+
+        $path = 'public/images/property/';
+        $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
+
+        $file_name = uniqid() . '.jpg';
+
+        $base_image = $path . $file_name;
+
+        if (file_put_contents($base_image, $property_main_image)) {
+
+            return $base_image;
+
+
+        } else {
+
+            return false;
+        }
+
     }
 
     // private function filter_broker_proprietys($broker_proprietys, $f_data)
@@ -1958,6 +1967,7 @@ class Propertys extends REST_Controller
 
     //     return false;
     // }
+
     private function filter_broker_proprietys($bp, $f_data)
     {
 
