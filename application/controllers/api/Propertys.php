@@ -2008,9 +2008,11 @@ class Propertys extends REST_Controller
             // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
             $final['status'] = false;
             $final['message'] = 'Erro ao processar imagem. Tente novamente' . print_r(error_get_last(), true);
+            
             $this->response($final);
-            return;
+            
         } else {
+
             $final['status'] = true;
             $final['message'] = 'Processado com sucesso.';
             $final['path'] =  $base_image;
