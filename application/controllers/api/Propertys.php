@@ -2057,23 +2057,48 @@ class Propertys extends REST_Controller
 
                     // Salva a imagem no servidor
                     if (file_put_contents($file_path, $image_data)) {
-                        return  $file_path;
+
+
+                        $final['status'] = true;
+                        $final['message'] = 'Processado com sucesso.';
+                        $final['path'] =   $file_path;
+
+                        $this->response($final);
+
                     } else {
-                        return false;
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                        
+
+                        $this->response($final);
                     }
-                    
+
                 } else {
-                    return false;
+
+                    $final['status'] = false;
+                    $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                    
+
+                    $this->response($final);
                 }
 
             } else {
-                return false;
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                
+
+                $this->response($final);
             }
-         
+
         } else {
 
-            return false;
+            $final['status'] = false;
+            $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+            $final['base_64'] =  $this->input->post('base_image');
+
+            $this->response($final);
         }
-        
     }
 }
