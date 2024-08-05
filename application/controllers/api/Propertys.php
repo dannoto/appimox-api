@@ -2013,7 +2013,6 @@ class Propertys extends REST_Controller
             $final['base_64'] =  $this->input->post('base_image');
 
             $this->response($final);
-
         } else {
 
             $final['status'] = true;
@@ -2022,5 +2021,59 @@ class Propertys extends REST_Controller
 
             $this->response($final);
         }
+    }
+
+    public function web_process_profile_image_post()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Diretório onde a imagem será salva
+            $target_dir = 'public/images/property/';
+
+            // Verifica se o diretório existe, caso contrário, cria
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true);
+            }
+
+            // Verifica se o campo de imagem base64 foi enviado
+            if (isset($_POST['user_image']) && !empty($_POST['user_image'])) {
+                // Pega os dados da imagem base64
+                $image_base64 = $_POST['user_image'];
+
+                // Verifica se a string começa com a descrição da imagem (por exemplo, "data:image/jpeg;base64,")
+                if (preg_match('/^data:image\/(\w+);base64,/', $image_base64, $type)) {
+                    // Separa o tipo de imagem e os dados base64
+                    $image_data = substr($image_base64, strpos($image_base64, ',') + 1);
+                    $image_data = base64_decode($image_data);
+
+                    // Verifica a extensão da imagem
+                    $type = strtolower($type[1]); // jpg, png, gif, etc.
+
+                    // Define um nome de arquivo único
+                    $file_name = uniqid() . '.' . $type;
+
+                    // Define o caminho completo para o arquivo
+                    $file_path = $target_dir . $file_name;
+
+                    // Salva a imagem no servidor
+                    if (file_put_contents($file_path, $image_data)) {
+                        return  $file_path;
+                    } else {
+                        return false;
+                    }
+                    
+                } else {
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+         
+        } else {
+
+            return false;
+        }
+        
     }
 }
