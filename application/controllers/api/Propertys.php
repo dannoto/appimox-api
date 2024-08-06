@@ -1993,37 +1993,6 @@ class Propertys extends REST_Controller
     public function web_process_property_main_image_post()
     {
 
-        // $base_image = $this->input->post('base_image');
-
-        // $path = 'public/images/property/';
-        // $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
-
-        // $file_name = uniqid() . '.jpg';
-
-        // $base_image = $path . $file_name;
-
-        // $result = file_put_contents($base_image, $property_main_image);
-
-        // // print_r($base_image);
-
-        // if ($result == false) {
-        //     // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
-        //     $final['status'] = false;
-        //     $final['message'] = 'Erro ao processar imagem. Tente novamente ';
-        //     $final['base_64'] =  $this->input->post('base_image');
-
-        //     $this->response($final);
-        // } else {
-
-        //     $final['status'] = true;
-        //     $final['message'] = 'Processado com sucesso.';
-        //     $final['path'] =   $this->input->post('base_image');
-
-        //     $this->response($final);
-        // }
-
-
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Diretório onde a imagem será salva
             $target_dir = 'public/images/property/';
@@ -2094,7 +2063,7 @@ class Propertys extends REST_Controller
 
             $final['status'] = false;
             $final['message'] = 'Erro ao processar imagem. Tente novamente ';
-            $final['base_64'] =  $this->input->post('base_image');
+            $final['base_64'] =  $this->input->post('property_main_image');
 
             $this->response($final);
         }
