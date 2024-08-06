@@ -1993,31 +1993,108 @@ class Propertys extends REST_Controller
     public function web_process_property_main_image_post()
     {
 
-        $base_image = $this->input->post('base_image');
+        // $base_image = $this->input->post('base_image');
 
-        $path = 'public/images/property/';
-        $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
+        // $path = 'public/images/property/';
+        // $property_main_image = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base_image));
 
-        $file_name = uniqid() . '.jpg';
+        // $file_name = uniqid() . '.jpg';
 
-        $base_image = $path . $file_name;
+        // $base_image = $path . $file_name;
 
-        $result = file_put_contents($base_image, $property_main_image);
+        // $result = file_put_contents($base_image, $property_main_image);
 
-        // print_r($base_image);
+        // // print_r($base_image);
 
-        if ($result == false) {
-            // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
+        // if ($result == false) {
+        //     // error_log('Erro ao salvar a imagem: ' . print_r(error_get_last(), true));
+        //     $final['status'] = false;
+        //     $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+        //     $final['base_64'] =  $this->input->post('base_image');
+
+        //     $this->response($final);
+        // } else {
+
+        //     $final['status'] = true;
+        //     $final['message'] = 'Processado com sucesso.';
+        //     $final['path'] =   $this->input->post('base_image');
+
+        //     $this->response($final);
+        // }
+
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Diretório onde a imagem será salva
+            $target_dir = 'public/images/property/';
+
+            // Verifica se o diretório existe, caso contrário, cria
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0755, true);
+            }
+
+            // Verifica se o campo de imagem base64 foi enviado
+            if (isset($_POST['property_main_image']) && !empty($_POST['property_main_image'])) {
+                // Pega os dados da imagem base64
+                $image_base64 = $_POST['property_main_image'];
+
+                // Verifica se a string começa com a descrição da imagem (por exemplo, "data:image/jpeg;base64,")
+                if (preg_match('/^data:image\/(\w+);base64,/', $image_base64, $type)) {
+                    // Separa o tipo de imagem e os dados base64
+                    $image_data = substr($image_base64, strpos($image_base64, ',') + 1);
+                    $image_data = base64_decode($image_data);
+
+                    // Verifica a extensão da imagem
+                    $type = strtolower($type[1]); // jpg, png, gif, etc.
+
+                    // Define um nome de arquivo único
+                    $file_name = uniqid() . '.' . $type;
+
+                    // Define o caminho completo para o arquivo
+                    $file_path = $target_dir . $file_name;
+
+                    // Salva a imagem no servidor
+                    if (file_put_contents($file_path, $image_data)) {
+
+
+                        $final['status'] = true;
+                        $final['message'] = 'Processado com sucesso.';
+                        $final['path'] =   $file_path;
+
+                        $this->response($final);
+
+                    } else {
+
+                        $final['status'] = false;
+                        $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                        
+
+                        $this->response($final);
+                    }
+
+                } else {
+
+                    $final['status'] = false;
+                    $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                    
+
+                    $this->response($final);
+                }
+
+            } else {
+
+                $final['status'] = false;
+                $final['message'] = 'Erro ao processar imagem. Tente novamente ';
+                
+
+                $this->response($final);
+            }
+
+        } else {
+
             $final['status'] = false;
             $final['message'] = 'Erro ao processar imagem. Tente novamente ';
             $final['base_64'] =  $this->input->post('base_image');
-
-            $this->response($final);
-        } else {
-
-            $final['status'] = true;
-            $final['message'] = 'Processado com sucesso.';
-            $final['path'] =   $this->input->post('base_image');
 
             $this->response($final);
         }
