@@ -29,14 +29,56 @@ class Notification extends REST_Controller
         $this->load->model('plans_model');
     }
 
-    public function index() {
+    public function index() {}
 
+
+    function enviar_notificacao($recipients, $title, $body)
+    {
+        // Cria a mensagem da notificação
+        $messages = [];
+
+        foreach ($recipients as $recipient) {
+            $messages[] = new ExpoMessage([
+                'to' => $recipient,
+                'title' => $title,
+                'body' => $body,
+            ]);
+        }
+
+        // Instancia a classe Expo
+        $expo = new Expo();
+
+        // Envia as mensagens
+        try {
+            $ok = $expo->send($messages)->push();
+            return $ok;
+        } catch (Exception $e) {
+            return 'Erro ao enviar a notificação: ' . $e->getMessage();
+        }
     }
 
+    public function t_notificacao_get()
+    {
 
-    public function nf_new_favorit_get() {
 
-                /**
+        // Função para enviar a notificação push
+
+
+        // Tokens de exemplo (certifique-se de que esses tokens são capturados corretamente no aplicativo)
+        $tokens = [
+            'ExponentPushToken[xxxxxxxxxxxxxx]', // Token Expo (geralmente para Android)
+            'ExponentPushToken[yyyyyyyyyyyyyy]', // Token APNs (para iOS)
+        ];
+
+        // Chama a função para enviar a notificação
+        $resultado = $this->enviar_notificacao($tokens, 'Título da Notificação', 'Corpo da Notificação');
+        var_dump($resultado);
+    }
+
+    public function nf_new_favorit_get()
+    {
+
+        /**
          * Composed messages, see above
          * Can be an array of arrays, ExpoMessage instances will be made internally
          */

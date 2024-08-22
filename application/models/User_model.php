@@ -29,7 +29,7 @@ class User_model extends CI_Model
 			'user_verified_preferences' => 0,
 			'user_rating' => 0,
 			'user_status' => 0,
-
+			'user_plan' => 0,
 		);
 
 		$this->db->insert('users', $data);
@@ -205,17 +205,11 @@ class User_model extends CI_Model
 		return $this->db->get('propertys')->row();
 	}
 
-	public function add_property($property_id, $property_data)
-	{
-	}
+	public function add_property($property_id, $property_data) {}
 
-	public function update_property($property_id, $property_data)
-	{
-	}
+	public function update_property($property_id, $property_data) {}
 
-	public function delete_property($property_id)
-	{
-	}
+	public function delete_property($property_id) {}
 	// Property
 
 
@@ -260,12 +254,12 @@ class User_model extends CI_Model
 		return $this->db->get('user_favorits')->row();
 	}
 
-	public function get_leads($broker_id) {
+	public function get_leads($broker_id)
+	{
 
 		$this->db->where('property_broker_id', $broker_id);
-		$this->db->order_by('id','desc');
+		$this->db->order_by('id', 'desc');
 		return $this->db->get('user_favorits')->result();
-
 	}
 
 	public function add_favorit($user_id, $property_id, $property_broker_id)
@@ -326,7 +320,8 @@ class User_model extends CI_Model
 		return $this->db->update('users', $data);
 	}
 
-	public function get_config() {
+	public function get_config()
+	{
 
 		return $this->db->get('config')->row();
 	}

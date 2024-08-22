@@ -319,10 +319,8 @@ class User extends REST_Controller
 			$user_city = $this->input->post('user_city');
 
 			if ($user_state == "20") {
-
 				$creci_data = $this->broker_model->check_creci_rn($user_creci, $user_cpf);
 			} else if ($user_state == "15") {
-
 				$creci_data = $this->broker_model->check_creci_pb($user_creci, $user_cpf);
 			} else if ($user_state == "16") {
 
@@ -789,6 +787,7 @@ class User extends REST_Controller
 				$final['note'] = 'Sessão ativa.';
 
 				$this->response($final, REST_Controller::HTTP_OK);
+
 			} else {
 
 				$final['status'] = false;
@@ -1999,6 +1998,7 @@ class User extends REST_Controller
 							$final['note'] = 'Nenhuma postagem encontrada.';
 							$this->response($final, REST_Controller::HTTP_OK);
 						}
+						
 					} else {
 
 						$final['status'] = false;

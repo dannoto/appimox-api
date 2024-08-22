@@ -273,6 +273,7 @@ $route['get_partners_by_broker'] = 'api/Partner/get_partners_by_broker';
 $route['check_exist_partner'] = 'api/Partner/check_exist_partner';
 
 
+
 $route['get_partner'] = 'api/Partner/get_partner';
 $route['get_partner_actions'] = 'api/Partner/get_partner_actions';
 $route['get_partner_propertys'] = 'api/Partner/get_partner_propertys';
