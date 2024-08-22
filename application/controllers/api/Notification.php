@@ -99,7 +99,7 @@ class Notification extends REST_Controller
          * These recipients are used when ExpoMessage does not have "to" set
          */
         $defaultRecipients = [
-            'ExponentPushToken[-z8PPVBsx930SUOHCbOcEX]',
+            'ctRGGNYxRW210nxQdg3N8p:APA91bE6DaIVJw6Bhg9at4eM5F0FT2SFDhfHURdqGkUHeqmb-XzCPWCHHY-PI--HOJPpNkKRkyoXsf78E61ATWTJG36nE-f1hMo9AYoYtMjJcax-nXna5rvGZTbtkMNmncZMwV2QCRwf',
             // 'ExponentPushToken[yyyy-yyyy-yyyy]'
         ];
 
