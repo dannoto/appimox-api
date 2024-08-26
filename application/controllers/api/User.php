@@ -165,6 +165,7 @@ class User extends REST_Controller
 
 				$final['access_token'] = $tokenData;
 				$final['user_type'] = $user->user_type;
+				$final['user_admin'] = $user->user_admin;
 				$final['status'] = true;
 
 				$final['message'] = 'Logado com sucesso!';
