@@ -145,6 +145,7 @@ class User extends REST_Controller
 				$user_id = $this->user_model->get_user_id_from_email($user_email);
 				$user    = $this->user_model->get_user($user_id);
 
+
 				// set session user datas
 				$_SESSION['user_id']      = (int)$user->id;
 				$_SESSION['user_email']     = (string)$user->user_email;

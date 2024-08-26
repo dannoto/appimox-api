@@ -101,10 +101,8 @@ class User_model extends CI_Model
 	}
 
 	// Init
-
 	public function get_user($user_id)
 	{
-
 		$this->db->from('users');
 		$this->db->where('id', $user_id);
 		return $this->db->get()->row();
