@@ -447,7 +447,7 @@ class User extends REST_Controller
 			// set variables from the form
 			$user_email = $this->input->post('user_email');
 
-			if ($res = $this->user_model->get_user_id_from_email($user_email)) {
+			if ( $this->user_model->get_user_id_from_email($user_email)) {
 
 
 				if ($this->email_model->send_user_recovery($user_email)) {
