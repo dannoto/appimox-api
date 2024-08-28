@@ -453,7 +453,7 @@ class User extends REST_Controller
 				if ($this->email_model->send_user_recovery($user_email)) {
 
 					$final['status'] = true;
-					$final['message'] = 'Se existir o e-mail, você receberá um link para alterar sua senha.';
+					$final['message'] = 'Se existirx o e-mail, você receberá um link para alterar sua senha.';
 					$final['note'] = 'O e-mail foi encontrado em get_user_id_from_email()';
 
 					$this->response($final, REST_Controller::HTTP_OK);
@@ -468,7 +468,7 @@ class User extends REST_Controller
 			} else {
 
 				$final['status'] = true;
-				$final['message'] = 'Se existir o e-mail, você receberá um link para alterar sua senha.';
+				$final['message'] = 'Se existiry o e-mail, você receberá um link para alterar sua senha.';
 				$final['note'] = 'O e-mail não foi encontrado em get_user_id_from_email()';
 				// login failed
 				$this->response($final, REST_Controller::HTTP_OK);
