@@ -65,6 +65,13 @@ class User_model extends CI_Model
 		return $this->verify_password_hash($user_password, $hash);
 	}
 
+	public function get_user_by_email($user_email) {
+		
+		$this->db->where('user_email', $user_email);
+		return $this->db->get('users')->row();
+
+	}
+
 	public function get_user_id_from_email($user_email)
 	{
 

@@ -23,7 +23,6 @@ class Partner extends REST_Controller
         $this->load->model('plans_model');
     }
 
-
     public function add_partner_property_post()
     {
 
@@ -139,8 +138,6 @@ class Partner extends REST_Controller
             }
         }
     }
-
-
 
     public function add_partner_portfolio_post()
     {
@@ -330,7 +327,6 @@ class Partner extends REST_Controller
     }
 
 
-
     public function get_partner_post()
     {
 
@@ -344,6 +340,7 @@ class Partner extends REST_Controller
             $final['note'] = 'Erro no formulário.';
 
             $this->response($final, REST_Controller::HTTP_OK);
+
         } else {
 
             $partner_id = $this->input->post('partner_id');
@@ -351,21 +348,18 @@ class Partner extends REST_Controller
             $partner_data = $this->partner_model->get_partner($partner_id);
 
             $propertys_data = array();
+
             foreach ($this->partner_model->get_partner_associated($partner_id) as $p) {
                 $p_data = $this->partner_model->get_property($p->partner_property_id);
                 $propertys_data[] = $p_data;
             }
-
 
             $actions_data = array();
             foreach ($this->partner_model->get_partner_actions($partner_id) as $p) {
                 $actions_data[] = $p;
             }
 
-
             if ($partner_data) {
-
-
 
                 $response = array();
                 $response['partner_data'] = $partner_data;
@@ -476,8 +470,6 @@ class Partner extends REST_Controller
             }
         }
     }
-
-
 
     public function get_partners_by_broker_post()
     {
